@@ -670,7 +670,7 @@ fastify.get('/activecode', async (request: FastifyRequest, reply: FastifyReply) 
   })
 /**************************************************/     
 fastify.get('/verify', /*ป้องกัน การใช้งาน โดย Token */{
-    preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
+    preValidation: [fastify.authenticate] 
   },/*ป้องกัน การใช้งาน โดย Token */ async (request: FastifyRequest, reply: FastifyReply) => {
     try {
         /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
@@ -745,7 +745,7 @@ fastify.get('/verify', /*ป้องกัน การใช้งาน โ�
   })
 /**************************************************/    
 fastify.post('/verify', /*ป้องกัน การใช้งาน โดย Token */{
-    preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
+    preValidation: [fastify.authenticate] 
   },/*ป้องกัน การใช้งาน โดย Token */ async (request: FastifyRequest, reply: FastifyReply) => {
     try {
         /******************************ตรวจสอบวันหมดอายุ Token check*************************************/

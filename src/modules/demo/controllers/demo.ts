@@ -74,7 +74,7 @@ export default async function demo(fastify: FastifyInstance) {
   fastify.delete('/:userId', async (request: FastifyRequest, reply: FastifyReply) => {
     const params: any = request.params
     const userId = params.userId
-    reply.send({ ok: true, userId })
+    reply.send({ status: true, userId })
   })
 /*************************************/
   // test ejs view
@@ -89,7 +89,7 @@ export default async function demo(fastify: FastifyInstance) {
       const rs: any = await DemoModel.read(db)
       reply.view('/views/content', { users: rs })
     } catch (error) {
-      reply.code(500).send({ ok: false, error: error.message })
+      reply.code(500).send({ status: false, error: error.message })
     }
   })
 }

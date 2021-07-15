@@ -6,6 +6,8 @@ import { FastifyInstance } from 'fastify'
 	import indexRouter from './modules/index/controllers/index'
 	/*******mail************/
 	import mailRouter from './modules/mail/controllers/mail'
+    /*******oauth2************/
+    import oauth2Router from './modules/oauth2/controllers/oauth2'
 	/*******user************/
     import authRouter from './modules/auth/controllers/auth'
 	import userRouter from './modules/user/controllers/user'
@@ -33,13 +35,15 @@ export default async function router(fastify: FastifyInstance) {
 	fastify.register(indexRouter, { prefix: '/' }) // http://localhost:8081/
 	/*******mail************/
 	fastify.register(mailRouter, { prefix: '/mail' })
+    /*******oauth2************/
+    fastify.register(oauth2Router, { prefix: '/oauth2' })  
 	/*******user************/
     fastify.register(authRouter, { prefix: '/auth' })  
 	fastify.register(userRouter, { prefix: '/user' })  
 	fastify.register(loginRouter, { prefix: '/login' })  
 	/*******file************/
 	fastify.register(fileRouter, { prefix: '/file' })  
-	fastify.register(uploadRouter, { prefix: '/uploads' })
+	fastify.register(uploadRouter, { prefix: '/upload' })
     /*******************Demo************************/
     fastify.register(demoRouter, { prefix: '/demo' })  
 	/*******************Test************************/

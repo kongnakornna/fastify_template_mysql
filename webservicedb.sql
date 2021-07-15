@@ -11,7 +11,7 @@
  Target Server Version : 100510
  File Encoding         : 65001
 
- Date: 15/07/2021 13:48:39
+ Date: 15/07/2021 18:38:33
 */
 
 SET NAMES utf8mb4;
@@ -22,9 +22,13 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `files`;
 CREATE TABLE `files`  (
-  `filesid` int NOT NULL AUTO_INCREMENT,
-  `files_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`filesid`) USING BTREE
+  `file_id` int NOT NULL AUTO_INCREMENT,
+  `date` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `originalname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `mimetype` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `filesize` int NULL DEFAULT NULL,
+  `filename` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`file_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------

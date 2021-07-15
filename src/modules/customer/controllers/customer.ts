@@ -12,7 +12,7 @@ export default async function index(fastify: FastifyInstance) {
       const rs: any = await customerModel.test(db)
       reply.send(rs)
     } catch (error) {
-      reply.code(500).send({ ok: false, error: error.message })
+      reply.code(500).send({ status: false, error: error.message })
     }
   })
 

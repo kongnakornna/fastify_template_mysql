@@ -33,7 +33,7 @@ export default async function schema(fastify: FastifyInstance) {
 
     if (request.validationError) {
       console.log(request.validationError)
-      reply.code(400).send({ ok: false, error: 'ข้อมูลไม่ถูกต้อง', code: 1005 })
+      reply.code(400).send({ status: false, error: 'ข้อมูลไม่ถูกต้อง', code: 1005 })
 
     } else {
 
@@ -42,7 +42,7 @@ export default async function schema(fastify: FastifyInstance) {
       console.log(headers)
       const token = headers['x-fastify-token']
 
-      reply.send({ ok: true, token })
+      reply.send({ status: true, token })
     }
 
   })

@@ -27,7 +27,7 @@ export default async function users(fastify: FastifyInstance) {
       reply.send({ message: 'Insert data', status: true })
     } catch (error) {
       console.log(error)
-      reply.code(500).send({ ok: false, message: error.message })
+      reply.code(500).send({ status: false, message: error.message })
     }
   })
  /**************************************************/    
@@ -39,7 +39,7 @@ export default async function users(fastify: FastifyInstance) {
       reply.send(rs)
     } catch (error) {
       console.log(error)
-      reply.code(500).send({ ok: false, error: error.message })
+      reply.code(500).send({ status: false, error: error.message })
     }
   })
  /**************************************************/     
@@ -54,7 +54,7 @@ export default async function users(fastify: FastifyInstance) {
       reply.send(rs)
     } catch (error) {
       console.log(error)
-      reply.code(500).send({ ok: false, error: error.message })
+      reply.code(500).send({ status: false, error: error.message })
     }
   })
  /**************************************************/    
@@ -82,10 +82,10 @@ export default async function users(fastify: FastifyInstance) {
       }
 
       await userModel.update(db, userId, data)
-      reply.send({ ok: true })
+      reply.send({ status: true })
     } catch (error) {
       console.log(error)
-      reply.code(500).send({ ok: false, message: error.message })
+      reply.code(500).send({ status: false, message: error.message })
     }
 
   })
@@ -98,10 +98,10 @@ export default async function users(fastify: FastifyInstance) {
       const userId = params.userId
 
       await userModel.remove(db, userId)
-      reply.send({ ok: true })
+      reply.send({ status: true })
     } catch (error) {
       console.log(error)
-      reply.code(500).send({ ok: false, error: error.message })
+      reply.code(500).send({ status: false, error: error.message })
     }
   })
   /**************************************************/    

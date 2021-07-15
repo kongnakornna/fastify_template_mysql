@@ -160,7 +160,7 @@ export default async function test(fastify: FastifyInstance) {
       reply.send(rs[0])
     } catch (error) {
       console.log(error)
-      reply.code(500).send({ ok: false, error: error.message })
+      reply.code(500).send({ status: false, error: error.message })
     }
   })
 
