@@ -27,7 +27,7 @@ export default async (fastify: FastifyInstance) => {
 
       const sendMail = await transporter.sendMail({
         from: '"Satit Rianpit" <tiffany.abshire@ethereal.email>',
-        to: '"demo@demo.com',
+        to: '"kongnakornna@gmail.com',
         subject: "สวัสดี",
         text: "ทดสอบการส่งเมล์",
         html: "สวัสดี <b>สถิตย์ เรียนพิศ</b>"
@@ -58,7 +58,7 @@ export default async (fastify: FastifyInstance) => {
 
       const sendMail = await transporter.sendMail({
         from: '"Satit Rianpit" <tiffany.abshire@ethereal.email>',
-        to: '"demo@demo.com',
+        to: '"kongnakornna@gmail.com',
         subject: "ทดสอบส่งไฟล์",
         text: "ส่งไฟล์",
         html: "ส่งไฟล์",
@@ -90,13 +90,13 @@ export default async (fastify: FastifyInstance) => {
 
       const rs = await userModel.read(db)
 
-      const templateFile = path.join(__dirname, '../../views/mail-template.ejs')
+      const templateFile = path.join(__dirname, '../../../../views/mail-template.ejs')
       const html: any = ejs.render(fs.readFileSync(templateFile, 'utf8'), { users: rs })
 
 
       const sendMail = await transporter.sendMail({
         from: '"Satit Rianpit" <tiffany.abshire@ethereal.email>',
-        to: '"demo@demo.com',
+        to: '"kongnakornna@gmail.com',
         subject: "สวัสดี",
         text: "ทดสอบการส่งเมล์",
         html: html
