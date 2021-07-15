@@ -1,0 +1,22 @@
+<div class="row d-flex justify-content-center">
+  <div *ngFor="let project of projects" class="col-lg-6   mb-5">
+      <div class="card border-0 box-shadow">
+        <img class="card-img-top w-100" [src]="project.image" alt="1">
+        <div class="card-body"> 
+            <h4 class="card-title text-center">{{project.name}}</h4>
+            <p class="card-text text-justify">{{project.desc}}</p>
+        </div>
+        <div class="card-footer py-3">
+            <a href="javascript:void(0);" class="mr-2 text-gray">
+              <i class="fa fa-share-alt"></i>
+            </a>
+            <a href="javascript:void(0);" class="mr-2 text-gray">
+              <i class="fa fa fa-heart-o mr-2"></i>{{project.followers}}
+            </a>
+            <a href="javascript:void(0);" class="text-info float-right">
+              Live Preview <i class="fa fa-photo ml-1"></i>
+            </a>
+        </div>
+      </div>
+  </div>
+</div>

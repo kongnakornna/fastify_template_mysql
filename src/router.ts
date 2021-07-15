@@ -19,6 +19,10 @@ import { FastifyInstance } from 'fastify'
 	import testRouter from './modules/test/controllers/test' 
 	/*******************Service************************/
     import customerRouter from './modules/customer/controllers/customer' 
+
+    /***********oauth2-server start***************/
+
+    /***********oauth2-server end***************/
 /*******************export************************/
 export default async function router(fastify: FastifyInstance) {
    // router prefix
@@ -42,5 +46,11 @@ export default async function router(fastify: FastifyInstance) {
 	fastify.register(testRouter, { prefix: '/test' })  
 	/*******************Service************************/
     fastify.register(customerRouter, { prefix: '/customers' })  
+
   /*******************modules************************/
+    /***********oauth2-server start***************/
+
+    /***********oauth2-server end***************/
+
+
 }

@@ -14,7 +14,7 @@ const app: fastify.FastifyInstance = fastify.fastify({
         level: 'info'
     }
 })
-/**************************/
+
 app.setErrorHandler((error, req, res) => {
     req.log.error(error.toString())
     res.send({ error })
@@ -147,6 +147,12 @@ mongoose.connection.on('error', (error) => app.log.error(error))
 mongoose.connection.once('open', () => app.log.info('MongoDB has been connected'))
 console.log('mongoose on ' + mongoose)
 /**************************/
+/***********oauth2-server start***************/
+
+/***********oauth2-server end***************/
+
+
+
 app.register(routers)
 /**************************/
 export default app

@@ -1,0 +1,99 @@
+<div class="card card-info border-0 box-shadow">
+    <div class="card-header text-white text-center">
+        <h4>Edit your data:</h4>
+    </div>
+    <div class="card-body bg-white">
+
+        <form [formGroup]="personalForm" (ngSubmit)="onSubmit(personalForm.value)" class="row">
+
+            <div class="form-group col-md-2">
+                <label class="form-control-label">Salutation</label>
+                <select formControlName="salutation" class="form-control">
+                    <option>Mr</option>
+                    <option>Mrs</option>
+                </select>
+            </div> 
+
+            <div class="form-group col-md-5" [ngClass]="{'has-danger' : personalForm.get('firstname').touched && personalForm.get('firstname').hasError('required'), 'has-success' : !personalForm.get('firstname').hasError('required') }">
+                <label class="form-control-label">First Name</label>
+                <input formControlName="firstname" class="form-control" [ngClass]="{'form-control-danger' :  personalForm.get('firstname').hasError('required'), 'form-control-success' :  !personalForm.get('firstname').hasError('required') }" type="text"> 
+                <small class="text-danger" *ngIf="personalForm.get('firstname').touched && personalForm.get('firstname').hasError('required')">First Name is required</small>                             
+            </div>
+
+            <div class="form-group col-md-5" [ngClass]="{'has-danger' : personalForm.get('lastname').touched && personalForm.get('lastname').hasError('required'), 'has-success' : !personalForm.get('lastname').hasError('required') }">
+                <label class="form-control-label">Last Name</label>
+                <input formControlName="lastname" class="form-control" [ngClass]="{'form-control-danger' :  personalForm.get('lastname').hasError('required'), 'form-control-success' :  !personalForm.get('lastname').hasError('required') }" type="text"> 
+                <small class="text-danger" *ngIf="personalForm.get('lastname').touched && personalForm.get('lastname').hasError('required')">Last Name is required</small>                             
+            </div>
+
+            <div class="form-group col-md-3">
+                <label class="form-control-label">Gender</label>
+                <select formControlName="gender" class="form-control">
+                    <option>Male</option>
+                    <option>Female</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-5" [ngClass]="{'has-danger' : (personalForm.get('email').touched && personalForm.get('email').hasError('required')) || (personalForm.get('email').touched && personalForm.get('email').hasError('invalidEmail')), 
+                                                         'has-success' : !personalForm.get('email').hasError('required') && !personalForm.get('email').hasError('invalidEmail')}">
+                <label class="form-control-label">Contact email</label>
+                <div class="input-group">
+                    <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-envelope"></i></span></div>
+                    <input formControlName="email" class="form-control" [ngClass]="{'form-control-danger' : (personalForm.get('email').touched && personalForm.get('email').hasError('required')) || (personalForm.get('email').touched && personalForm.get('email').hasError('invalidEmail')), 
+                                                                                    'form-control-success' :  !personalForm.get('email').hasError('required') && !personalForm.get('email').hasError('invalidEmail')}" type="text">                      
+                </div>
+                <small class="text-danger" *ngIf="personalForm.get('email').touched && personalForm.get('email').hasError('required')">Email is required</small>                              
+                <small class="text-danger" *ngIf="personalForm.get('email').touched && personalForm.get('email').hasError('invalidEmail')">Invalid email address</small>
+            </div>
+
+            <div class="form-group col-md-4" [ngClass]="{'has-danger' : personalForm.get('phone').touched && personalForm.get('phone').hasError('required'), 'has-success' : !personalForm.get('phone').hasError('required') }">
+                <label class="form-control-label">Phone</label>
+                <div class="input-group">
+                    <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-phone"></i></span></div>
+                    <input formControlName="phone" class="form-control" [ngClass]="{'form-control-danger' :  personalForm.get('phone').hasError('required'), 'form-control-success' :  !personalForm.get('phone').hasError('required') }" type="number"> 
+                </div>
+                <small class="text-danger" *ngIf="personalForm.get('phone').touched && personalForm.get('phone').hasError('required')">Phone is required</small>                             
+            </div>
+
+            <div class="form-group col-md-2" [ngClass]="{'has-danger' : personalForm.get('zipcode').touched && personalForm.get('zipcode').hasError('required'), 'has-success' : !personalForm.get('zipcode').hasError('required') }">
+                <label class="form-control-label">Zip Code</label>
+                <input formControlName="zipcode" class="form-control" [ngClass]="{'form-control-danger' :  personalForm.get('zipcode').hasError('required'), 'form-control-success' :  !personalForm.get('zipcode').hasError('required') }" type="text"> 
+                <small class="text-danger" *ngIf="personalForm.get('zipcode').touched && personalForm.get('zipcode').hasError('required')">required</small>                             
+            </div>
+
+            <div class="form-group col-md-5" [ngClass]="{'has-danger' : personalForm.get('country').touched && personalForm.get('country').hasError('required'), 'has-success' : !personalForm.get('country').hasError('required') }">
+                <label class="form-control-label">Select Country</label>
+                <select formControlName="country" class="form-control" [ngClass]="{'form-control-danger' : personalForm.get('country').touched && personalForm.get('country').hasError('required'), 'form-control-success' : !personalForm.get('country').hasError('required') }">
+                    <option>USA</option>
+                    <option>Canada</option>
+                    <option>Mexico</option>
+                    <option>UK</option>
+                    <option>France</option>
+                    <option>Italy</option>
+                </select>
+                <small class="text-danger" *ngIf="personalForm.get('country').touched && personalForm.get('country').hasError('required')">Country is required</small>                             
+            </div>
+
+            <div class="form-group col-md-5">
+                <label class="form-control-label">Select State</label>
+                <select formControlName="state" class="form-control">
+                    <option>Arkansas</option>
+                    <option>Texas</option>
+                    <option>California</option>
+                    <option>Florida</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <div class="form-group col">
+                <label class="form-control-label">Address</label>
+                <textarea formControlName="address" class="form-control"></textarea>
+            </div> 
+           
+            <div class="form-group col-12 pt-3 text-center">
+                <button [disabled]="!personalForm.valid" class="btn btn-success" type="submit">Update</button>
+            </div>
+        </form>
+
+    </div>
+</div>

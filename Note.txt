@@ -25,8 +25,46 @@ https://www.bezkoder.com/react-node-express-mysql/
 https://futureskill.co/
 https://www.udemy.com/
 
+https://github.com/fastify/fastify-oauth2
+npm i --save fastify-oauth2 -S  // ต่อ google or facebook 
+
+https://github.com/ToonvanStrijp/fastify-oauth-server
+npm install fastify-oauth-server -S  // ทำ oauth
 
 https://github.com/fastify/fastify-mongodb
+
+npm i --save fastify-oauth2 -S
+https://github.com/fastify/fastify-oauth2
+
+
+oauth2
+https://www.npmjs.com/package/oauth2-server
+-https://github.com/14gasher/oauth-example
+
+https://www.npmjs.com/package/oauth2-server-typescript
+npm install oauth2-server
+npm install oauth2-server -S
+https://oauth2-server.readthedocs.io/en/latest/misc/migrating-v2-to-v3.html
+
+###########
+https://www.npmjs.com/package/client-oauth2
+
+  npm install client-oauth2 --save
+
+var ClientOAuth2 = require('client-oauth2')
+var githubAuth = new ClientOAuth2({
+  clientId: 'abc',
+  clientSecret: '123',
+  accessTokenUri: 'https://github.com/login/oauth/access_token',
+  authorizationUri: 'https://github.com/login/oauth/authorize',
+  redirectUri: 'http://example.com/auth/github/callback',
+  scopes: ['notifications', 'gist']
+})
+
+
+
+npm install body-parser -S
+
 
 node -v
 npm -v
