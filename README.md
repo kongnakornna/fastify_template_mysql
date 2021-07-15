@@ -13,9 +13,11 @@ By  kongnakorn jantakun
 email kongnakornjantakun@gmail.com
 
 install app
+
 npm i
 
-run app by typescript
+run typescript
+
 npx nodemon 
 
 ############
