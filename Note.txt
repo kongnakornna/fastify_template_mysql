@@ -1,4 +1,9 @@
 127.0.0.1 : 8001
+test rest api
+https://insomnia.rest/download
+https://www.jenkins.io/
+https://www.docker.com/
+
 
 list document
 https://www.fastify.io/
@@ -19,8 +24,6 @@ https://www.bezkoder.com/react-node-express-mysql/
 
 https://futureskill.co/
 https://www.udemy.com/
-
-
 
 
 https://github.com/fastify/fastify-mongodb
