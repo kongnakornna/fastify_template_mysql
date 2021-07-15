@@ -290,3 +290,6 @@ pm2 restart <id|name|all>
 pm2 stop <id|name|all>
 # คำสั่งดูรายละเอียดของเครื่อง server และ process ที่ทำงาน
 pm2 dash
+
+https://github.com/websockets/ws
+https://www.softpedia.com/get/Internet/Other-Internet-Related/Socket-io-tester.shtml

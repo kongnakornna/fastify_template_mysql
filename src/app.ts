@@ -85,10 +85,10 @@ app.ready((error: any) => {
     console.log('WebSocket server running....')
     app.io.on('connection', (socket: any) => {
         console.log('user socket connected!')
-        socket.on('welcome socket', (message: any) => {
-            socket.emit('welcome socket', 'Hello from server socket')
+        socket.on('welcome', (message: any) => {
+            socket.emit('welcome', 'Hello from server socket')
         })
-        socket.on('chat message ', (message: any) => {
+        socket.on('chat message', (message: any) => {
             socket.broadcast.emit('chat message', message)
         })
     })
