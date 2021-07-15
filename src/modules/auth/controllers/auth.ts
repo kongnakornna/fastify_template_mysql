@@ -359,12 +359,42 @@ fastify.post('/resetpass', async (request: FastifyRequest, reply: FastifyReply) 
         }   
       const rs: any = await userModel.resetPassword(db, datareset)
       if (rs.length > 0) {
-        const user: any = rs[0] 
+          const user: any = rs[0]
+          /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
+            var day = 1;
+            var TIMEEXPIRE =process.env.TIMEEXPIRE;
+            var time_expire_set = parseInt(TIMEEXPIRE*day);
+            var time_expire_set1 = 60 * 5;
+            var time_setting = time_expire_set;
+            var today = new Date();
+            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            var dateTime = date + ' ' + time;
+            var issued_at=Date.now();
+            var timestamp = Date.now();
+            var expiration_time=issued_at+time_setting; 
+            const token = fastify.jwt.sign({
+                user_id: user.user_id,level: user.level,
+                username: user.username,email: user.email,
+                // firstName: user.first_name,lastName: user.last_name,
+                at: {
+                       startdate: dateTime, 
+                       issued_at: issued_at,
+                       time_expired: expiration_time,
+                       time_setting: time_setting,
+                       day_expired: day, 
+                       timeconfig: TIMEEXPIRE,
+                    }
+          })
+         /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
+        const decoded = fastify.jwt.verify(token)
+        // asycnhronously
           reply.send({
               status: true, code: 200,
               message: 'Reset password username ' + user.username + ' email ' + user.email,
               message_th: 'ข้อมูลลืมรหัสผ่าน ' + user.username + ' email ' + user.email,
-              data: rs, input: {reset_valule: datareset },
+              data: token, //rs,
+              input: { reset_valule: datareset }, //token: token,
 
           })
           console.log('query result :' + rs)
@@ -383,7 +413,9 @@ fastify.post('/resetpass', async (request: FastifyRequest, reply: FastifyReply) 
     }
   })
     /**************************************************/
-fastify.post('/changepassword', async (request: FastifyRequest, reply: FastifyReply) => {
+fastify.post('/changepassword', /*ป้องกัน การใช้งาน โดย Token */{
+    preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
+  },/*ป้องกัน การใช้งาน โดย Token */  async (request: FastifyRequest, reply: FastifyReply) => {
     const body: any = request.body
     const username = body.username
     const user_id = body.user_id

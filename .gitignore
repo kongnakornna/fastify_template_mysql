@@ -1,5 +1,6 @@
 node_modules/*
 dist/*
 upload/*
+www/*
 package-lock.json
 config.conf
