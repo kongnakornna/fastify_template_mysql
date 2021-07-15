@@ -1,0 +1,9 @@
+{   
+  "LOGIN": "เข้าระบบ", 
+  "LOGOUT": "ออกจากระบบ", 
+  "ADMIN_NAV": {  
+    "DASHBOARD": "หน้าหลัก",  
+    "PAGES": "หน้า", 
+    "EXTERNAL_LINK": "ลิงค์ภายนออก" 
+  } 
+}

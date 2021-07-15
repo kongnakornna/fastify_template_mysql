@@ -1,14 +1,8 @@
-$icon-font-path: "../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
+$icon-font-path: "../node_modules/bootstrap-sass/assets/fonts/bootstrap";
 @import "../node_modules/bootstrap/scss/bootstrap";
-// $fa-font-path: "../node_modules/font-awesome/fonts";
+// $fa-font-path : "../node_modules/font-awesome/fonts";
 // @import "../node_modules/font-awesome/scss/font-awesome";
 @import "../node_modules/font-awesome/css/font-awesome.css";
-@import "../node_modules/dragula/dist/dragula.min.css";
-@import "../node_modules/ngx-toastr/toastr.css";
-@import "../node_modules/leaflet/dist/leaflet.css"; 
-@import "../node_modules/@swimlane/ngx-datatable/themes/material.css";
-@import "../node_modules/@swimlane/ngx-datatable/assets/icons.css"; 
-@import "../node_modules/angular-calendar/css/angular-calendar.css";
 
 @font-face {
     font-family: 'MoonHouse';
@@ -18,7 +12,7 @@ $icon-font-path: "../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
 }
 
 @import "app/theme/styles/variables";
-@import "app/theme/styles/mixins";  
+@import "app/theme/styles/mixins";
 @import "app/theme/styles/libs-override";
 @import "app/theme/styles/base";
 

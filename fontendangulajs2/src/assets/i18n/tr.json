@@ -1,0 +1,9 @@
+{   
+  "LOGIN": "Oturum aç", 
+  "LOGOUT": "Çıkış", 
+  "ADMIN_NAV": {  
+    "DASHBOARD": "Kontrol Paneli",  
+    "PAGES": "Sayfalar",
+    "EXTERNAL_LINK": "Harici Bağlantı" 
+  } 
+}

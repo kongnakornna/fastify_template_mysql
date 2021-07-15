@@ -5,13 +5,15 @@ import { Location } from '@angular/common';
 import { Menu } from './menu.model';
 import { verticalMenuItems } from './menu';
 import { horizontalMenuItems } from './menu';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class MenuService {
 
   constructor(private location:Location, 
               private renderer2:Renderer2,
-              private router:Router){ } 
+              private router:Router,
+              public translateService: TranslateService){ } 
 
 
   public getVerticalMenuItems():Array<Menu> {
@@ -22,20 +24,32 @@ export class MenuService {
     return horizontalMenuItems;
   }
 
-  public createMenu(menu:Array<Menu>, nativeElement, type){    
-     if(type=='vertical'){
-       this.createVerticalMenu(menu, nativeElement);
-     }
-     if(type=='horizontal'){
-       this.createHorizontalMenu(menu, nativeElement);
-     }
+  public createMenu(menu:Array<Menu>, nativeElement, type){ 
+    this.translateService.use(this.translateService.currentLang);  
+    setTimeout(() => { 
+       if(type=='vertical'){
+         this.createVerticalMenu(menu, nativeElement);
+       }
+       if(type=='horizontal'){
+         this.createHorizontalMenu(menu, nativeElement);
+       }
+    },50); 
   }
 
   public createVerticalMenu(menu:Array<Menu>, nativeElement){    
-    let menu0 = this.renderer2.createElement('div');
+    let menu0 = this.renderer2.createElement('div'); 
     this.renderer2.setAttribute(menu0, 'id', 'menu0');
     menu.forEach((menuItem) => {
         if(menuItem.parentId == 0){
+
+          // this.translateService.get(menuItem.title).subscribe((res: string) => { 
+          //   console.log(res)
+          //   menuItem.title = res;
+          //   let subMenu = this.createVerticalMenuItem(menu, menuItem);
+          //   this.renderer2.appendChild(menu0, subMenu);
+             
+          // }) 
+
           let subMenu = this.createVerticalMenuItem(menu, menuItem);
           this.renderer2.appendChild(menu0, subMenu);
         }
@@ -76,7 +90,9 @@ export class MenuService {
     let span = this.renderer2.createElement('span');
     this.renderer2.addClass(span, 'menu-title');
     this.renderer2.appendChild(link, span);
-    let menuText = this.renderer2.createText(menuItem.title);
+    // let menuText = this.renderer2.createText(menuItem.title); 
+    let menuText = this.renderer2.createText(this.translateService.instant(menuItem.title));  
+    
     this.renderer2.appendChild(span, menuText);
     this.renderer2.setAttribute(link, 'id', 'link'+menuItem.id);
     this.renderer2.addClass(link, 'transition');
@@ -100,7 +116,7 @@ export class MenuService {
       this.renderer2.addClass(caret, 'fa');
       this.renderer2.addClass(caret, 'fa-angle-up');
       this.renderer2.appendChild(link, caret);
-      this.renderer2.setAttribute(link, 'data-toggle', 'collapse');      
+      this.renderer2.setAttribute(link, 'data-toggle', 'collapse');
       this.renderer2.setAttribute(link, 'href', '#collapse'+menuItem.id);
       let collapse = this.renderer2.createElement('div');
       this.renderer2.setAttribute(collapse, 'id', 'collapse'+menuItem.id);
@@ -183,7 +199,7 @@ export class MenuService {
 
   public getActiveLink(menu:Array<Menu>){
       let url = this.location.path();
-      let routerLink = (url) ? url : '/';  // url.substring(1, url.length);
+      let routerLink = (url) ? url : '/'; // url.substring(1, url.length);
       let activeMenuItem = menu.filter(item => item.routerLink === routerLink);
       if(activeMenuItem[0]){
         let activeLink = document.querySelector("#link"+activeMenuItem[0].id);

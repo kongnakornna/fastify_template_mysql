@@ -1,0 +1,9 @@
+{   
+  "LOGIN": "Войти", 
+  "LOGOUT": "Выйти", 
+  "ADMIN_NAV": {  
+    "DASHBOARD": "Приборная панель",
+    "PAGES": "Страницы",
+    "EXTERNAL_LINK": "Ссылка" 
+  } 
+}

@@ -14,7 +14,7 @@ export class BackTopComponent {
   @Input() showSpeed:number = 500;
   @Input() moveSpeed:number = 700;
 
-  @ViewChild('backTop') private _selector:ElementRef;
+  @ViewChild('backTop', {static: true}) private _selector:ElementRef;
 
   ngAfterViewInit () {
     this._onWindowScroll();

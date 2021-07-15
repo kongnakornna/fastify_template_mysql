@@ -1,4 +1,4 @@
-@import "mixins";
+@import "mixins"; 
 @import "../styles/bootstrap-override";
 
 /*Top Navbar*/
@@ -26,21 +26,7 @@
         color: $logo-ng-color; 
     }
 }
-.menu-icon .line{ 
-    background-color: $top-navbar-text-color;
-}
-#info-content-icon{
-    .triangle{
-        border-color: $top-navbar-text-color transparent transparent transparent;
-    }
-    &.show{
-        background: $info-content-bg-color;
-        box-shadow: 0px 0px 0px 8px $info-content-bg-color, 0px -16px 0px 8px $info-content-bg-color;
-        .triangle{
-            border-color: $info-content-icon-color transparent transparent transparent;
-        }
-    }
-}
+
 
 .menu-wrapper .card a{ 
     color: $sidebar-item-color;
@@ -64,59 +50,12 @@
     color: $main-text-color;
 }
 
-#info-content{
-    background-color: $info-content-bg-color;
-    a.close{
-        color: $top-navbar-text-color;
-    }
-    .info{
-        color: $top-navbar-text-color;
-        .form-control{
-            background-color: $info-content-bg-color;
-            border-color: rgba($top-navbar-text-color, 0.4);
-            color: $top-navbar-text-color;           
-        }
-        @include placeholder-color($top-navbar-text-color, 0.7);
-    } 
-    .left-border{
-        border-left: 1px solid rgba($top-navbar-text-color, 0.3);
-    }  
-}
-
-#messagesDropDown .dropdown-menu .nav-link.active{
-    border-bottom: 4px solid $messages-ddl-link-active-border-color;
-}
-
 .dropdown-menu .user-menu .user-info{ 
     background-color: $user-menu-bg-color;
     color: $user-menu-text-color;
 }
 
-.favorites-container{
-    border-left: 1px solid rgba($top-navbar-text-color, 0.4);
-    border-right: 1px solid rgba($top-navbar-text-color, 0.4);
-}
-#favorites .dropdown .btn-block{
-    background-color: $top-navbar-bg-color;
-    color: $top-navbar-text-color;
-}
 
-/*Side-Chat*/
-.side-chat{ 
-    .media{ 
-        color: $side-chat-item-color;
-        background-color: $side-chat-item-bg-color;
-        border-bottom: 1px solid $side-chat-item-bottom-border-color;
-        @include placeholder-color($top-navbar-text-color, 0.8);
-    }
-    .chat-window{
-        color: $side-chat-item-color;
-        background-color: $side-chat-item-bg-color;
-        .header{
-            border-bottom: 1px solid $side-chat-item-color;
-        }        
-    }
-}
 
 /*Sidebar*/
 .sidebar-outer {
@@ -127,23 +66,23 @@
 }
 
 .vertical-menu-tooltip-place{
-    .tooltip {
-       opacity: 1;
-       &.bs-tooltip-right {        
-           .arrow::before {
-               border-right-color: $mini-sidebar-tooltip-arrow-color;
-           }
-       }
-       &.bs-tooltip-bottom {
-           .arrow::before {
-               border-bottom-color: $mini-sidebar-tooltip-arrow-color;
-           }
-       }
-   }
-   .tooltip-inner {
-       color: $mini-sidebar-tooltip-color;
-       background-color: $mini-sidebar-tooltip-bg-color;
-   }
+     .tooltip {
+        opacity: 1;
+        &.bs-tooltip-right {        
+            .arrow::before {
+                border-right-color: $mini-sidebar-tooltip-arrow-color;
+            }
+        }
+        &.bs-tooltip-bottom {
+            .arrow::before {
+                border-bottom-color: $mini-sidebar-tooltip-arrow-color;
+            }
+        }
+    }
+    .tooltip-inner {
+        color: $mini-sidebar-tooltip-color;
+        background-color: $mini-sidebar-tooltip-bg-color;
+    }
 }
 
 
@@ -229,23 +168,12 @@
 }
 
 
-/*Libs */
-.widget-controls{
-    a{
-        color: $widget-controls-color;         
-        &:hover{
-            color: rgba($widget-controls-color, 0.7);
-        }
-    }
-}
 
 // Extra small devices (portrait phones, less than 576px)
 @media (max-width: 575px) {  }
 
 // Small devices (landscape phones, 576px and up)
-@media (min-width: 576px) and (max-width: 767px) { 
-   
-}
+@media (min-width: 576px) and (max-width: 767px) { }
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) and (max-width: 991px) {  }

@@ -84,16 +84,16 @@ app.ready((error: any) => {
     if (error) throw error
     console.log('WebSocket server running....')
     app.io.on('connection', (socket: any) => {
-        console.log('user connected!')
-        socket.on('welcome', (message: any) => {
-            socket.emit('welcome', 'Hello from server')
+        console.log('user socket connected!')
+        socket.on('welcome socket', (message: any) => {
+            socket.emit('welcome socket', 'Hello from server socket')
         })
-        socket.on('chat message', (message: any) => {
+        socket.on('chat message ', (message: any) => {
             socket.broadcast.emit('chat message', message)
         })
     })
     app.ws.on('connection', (ws: any) => {
-        console.log('Client connected!')
+        console.log('Client connected websocket!')
         ws.on('message', (message: any) => {
             const clients: any[] = app.ws.clients
             clients.forEach((client: any) => {
@@ -144,15 +144,14 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/ultimate', {
     useUnifiedTopology: true
 })
 mongoose.connection.on('error', (error) => app.log.error(error))
-mongoose.connection.once('open', () => app.log.info('MongoDB has been connected'))
+mongoose.connection.once('open', () => app.log.info('MongoDB has been connected'+ mongoose.connection.on))
 console.log('mongoose on ' + mongoose)
 /**************************/
 /***********oauth2-server start***************/
+var oauthserver = require('fastify-oauth-server'); // กำลัง Dev
+/*******************************************************/
 
 /***********oauth2-server end***************/
-
-
-
 app.register(routers)
 /**************************/
 export default app

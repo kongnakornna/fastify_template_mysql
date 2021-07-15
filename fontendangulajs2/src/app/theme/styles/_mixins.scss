@@ -1,16 +1,3 @@
-//@import "variables";
-
-// @mixin menu-level(){
-//     $sel: '';
-//     @for $i from 1 through 10 {
-//         $sel: if($i == 1, ".card", selector-nest($sel, ".card"));
-//         #{$sel + ' a'} {
-//             padding-left: 15px * $i;         
-//         }
-//     }
-// }
-
-
 @mixin menu-level-bg-color($color){
     $elem: '';
     @for $i from 1 through 10 {
@@ -33,18 +20,6 @@
     textarea:-moz-placeholder           { color: rgba($color, $opacity); }/* Firefox 18- */
     textarea:-ms-input-placeholder      { color: rgba($color, $opacity); }/* IE 10+ */
 }
-
-
-// @mixin bg-dark-gradient() {
-//     background-image: -webkit-linear-gradient(#484e55, #3a3f44 60%, #313539);
-//     background-image: -o-linear-gradient(#484e55, #3a3f44 60%, #313539);
-//     background-image: -webkit-gradient(linear, left top, left bottom, from(#484e55), color-stop(60%, #3a3f44), to(#313539));
-//     background-image: linear-gradient(#484e55, #3a3f44 60%, #313539);
-//     background-repeat: no-repeat;
-//     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff484e55', endColorstr='#ff313539', GradientType=0);
-//     -webkit-filter: none;
-//             filter: none;
-// }
 
 
 @mixin table-row-variant($state, $background) {

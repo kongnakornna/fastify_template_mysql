@@ -10,4 +10,3 @@ interface Document {
     webkitExitFullscreen(): void;
     webkitCancelFullScreen(): void;  
 }
-declare var L:any;  //leaflet

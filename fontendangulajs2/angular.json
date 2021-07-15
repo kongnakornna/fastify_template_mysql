@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "startng": {
+    "startng-seed": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -53,10 +53,6 @@
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/popper.js/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
-            ],
-            "allowedCommonJsDependencies": [
-              "leaflet-map",
-              "dragula"
             ]
           },
           "configurations": {
@@ -78,13 +74,12 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "3mb",
+                  "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "500kb",
-                  "maximumError": "500kb"
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -93,18 +88,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "startng:build"
+            "browserTarget": "startng-seed:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "startng:build:production"
+              "browserTarget": "startng-seed:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "startng:build"
+            "browserTarget": "startng-seed:build"
           }
         },
         "test": {
@@ -141,19 +136,19 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "startng:serve"
+            "devServerTarget": "startng-seed:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "startng:serve:production"
+              "devServerTarget": "startng-seed:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "startng",
+  "defaultProject": "startng-seed",
   "cli": {
-    "analytics": "2b4ecd08-3877-41aa-ae45-1d1612aa5e99"
+    "analytics": "07a1def9-6ffd-49b4-8fe5-365668d9966a"
   }
 }

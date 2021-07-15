@@ -1,0 +1,9 @@
+{   
+  "LOGIN": "S'identifier", 
+  "LOGOUT": "Se déconnecter",
+  "ADMIN_NAV": {  
+    "DASHBOARD": "Tableau de bord",
+    "PAGES": "Des pages",  
+    "EXTERNAL_LINK": "Lien Externe" 
+  }
+}

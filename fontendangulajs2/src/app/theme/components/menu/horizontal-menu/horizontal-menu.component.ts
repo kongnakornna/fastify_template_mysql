@@ -24,13 +24,7 @@ export class HorizontalMenuComponent implements OnInit {
           if (event instanceof NavigationEnd) {
               window.scrollTo(0, 0);
               let activeLink = this.menuService.getActiveLink(this.menuItems);
-              this.menuService.setActiveLink(this.menuItems, activeLink);
-              jQuery('.tooltip').tooltip({
-                sanitize: false,
-                sanitizeFn: function (content) {
-                  return null;
-                }
-              }); 
+              this.menuService.setActiveLink(this.menuItems, activeLink); 
               jQuery('.tooltip').tooltip('hide');  
           }                
       }); 
@@ -40,16 +34,8 @@ export class HorizontalMenuComponent implements OnInit {
     let menu_wrapper = this.elementRef.nativeElement.children[0];
     this.menuService.createMenu(this.menuItems, menu_wrapper, 'horizontal'); 
 
-    if(this.settings.theme.menuType == 'mini'){
-      jQuery('.menu-item-link').tooltip({
-        sanitize: false,
-        sanitizeFn: function (content) {
-          return null;
-        }
-      });
-      jQuery('.menu-item-link').tooltip(); 
-    }
-        
+    if(this.settings.theme.menuType == 'mini')
+      jQuery('.menu-item-link').tooltip();   
   }
 
   ngAfterViewInit(){

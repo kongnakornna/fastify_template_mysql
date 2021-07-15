@@ -401,10 +401,6 @@ a.text-inverse:focus, a.text-inverse:hover{
     background-color: $dark-inverse-color;
     border-color: $dark-inverse-color;
 }
-.btn-link{
-    border: 1px solid transparent;
-}
-
 
 /*Badge*/
 .badge{
@@ -1039,6 +1035,7 @@ $app-form-icon-danger: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http:/
     }
 }
 
+
 /*Tables*/
 // Generate the contextual variants
 @include table-row-variant(success, $success-color);
@@ -1049,22 +1046,4 @@ $app-form-icon-danger: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http:/
 
 .rounded-0{
     border-radius: 0 !important;
-}
-
-/*Popovers*/
-.popover.bs-popover-top .arrow, 
-.popover.bs-popover-auto[x-placement^="top"] .arrow,
-.popover.bs-popover-auto[x-placement^=bottom] .arrow, 
-.popover.bs-popover-bottom .arrow{
-    left: 50%;
-}
-.popover.bs-popover-auto[x-placement^=right] .arrow, 
-.popover.bs-popover-right .arrow,
-.popover.bs-popover-auto[x-placement^=left] .arrow, 
-.popover.bs-popover-left .arrow{
-    top: 50%;
-}
-.popover.bs-popover-bottom .arrow::after, 
-.popover.bs-popover-auto[x-placement^="bottom"] .arrow::after{
-    border-bottom-color: #f7f7f7;
 }

@@ -1,0 +1,9 @@
+{   
+  "LOGIN": "Login", 
+  "LOGOUT": "Logout", 
+  "ADMIN_NAV": {  
+    "DASHBOARD": "Dashboard",  
+    "PAGES": "Pages", 
+    "EXTERNAL_LINK": "External Link" 
+  } 
+}
