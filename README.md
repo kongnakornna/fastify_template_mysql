@@ -39,6 +39,8 @@ pm2 stop <id|name|all>
 
 # คำสั่งดูรายละเอียดของเครื่อง server และ process ที่ทำงาน
 
+pm2 start dist\server.js --name "appservicev1"
+
 pm2 dash
 
 run typescript

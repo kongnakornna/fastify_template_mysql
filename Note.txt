@@ -291,5 +291,12 @@ pm2 stop <id|name|all>
 # คำสั่งดูรายละเอียดของเครื่อง server และ process ที่ทำงาน
 pm2 dash
 
+Run service
+pm2 start dist\server.js --name "appservicev1"
+
+pm2 start dist\server.js --name "appservicev1"
+
+pm2 restart 0
+
 https://github.com/websockets/ws
 https://www.softpedia.com/get/Internet/Other-Internet-Related/Socket-io-tester.shtml
