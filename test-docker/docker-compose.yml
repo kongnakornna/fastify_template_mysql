@@ -1,10 +1,10 @@
 version: "3"
 services: 
   fastify-demo:
-    image: "registry.gitlab.com/siteslave/fastify-restful-demo"
+    image: "registry.github.com/kongnakornna/fastify_template_mysql"
     container_name: "fastify-demo"
     ports: 
-      - 8080:8080
+      - 8001:8080
 
     volumes: 
       - config.conf:/home/api/config.conf
