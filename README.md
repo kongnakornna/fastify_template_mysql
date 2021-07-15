@@ -17,10 +17,6 @@ install app
 
 npm i
 
-run typescript
-ren dev
-npx nodemon
-
 ############
 npm install pm2 -S
 npm i pm2 install pm2-server-monit -S
@@ -44,6 +40,12 @@ pm2 stop <id|name|all>
 # คำสั่งดูรายละเอียดของเครื่อง server และ process ที่ทำงาน
 
 pm2 dash
+
+run typescript
+
+ren dev
+
+npx nodemon
 
 build package
 
