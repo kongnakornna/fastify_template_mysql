@@ -1,22 +1,20 @@
-# fastify_template_mysql
-- typescript
-- typeorm
-- knex.js
-- jwt token
-- json schema validation
-- build swagger documentation from routes
-- integration tests
-Vesion 1.0.0 
-fastify_template_mysql   
-By  kongnakorn jantakun  
-โดย คงนคร จันทะคุณ  
+typescript
+typeorm
+knex.js
+jwt token
+json schema validation
+build swagger documentation from routes
+integration tests Vesion 1.0.0 fastify_template_mysql
+By kongnakorn jantakun
+โดย คงนคร จันทะคุณ
 email kongnakornjantakun@gmail.com
-
 install app
+
 npm i
 
-run app by typescript
-npx nodemon 
+run typescript
+
+npx nodemon
 
 ############
 npm install  pm2 -S
