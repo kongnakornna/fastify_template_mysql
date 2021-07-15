@@ -1,4 +1,26 @@
-127.0.0.1 : 8081
+127.0.0.1 : 8001
+
+list document
+https://www.fastify.io/
+https://knexjs.org/
+https://nextjs.org/docs/advanced-features/custom-document
+https://typeorm.io/#/
+https://expressjs.com/en/starter/installing.html
+https://reactjs.org/
+https://angular.io/
+https://nodejs.org/en/docs/
+https://reactnative.dev/docs/getting-started
+https://www.typescriptlang.org/docs/
+https://dev.mysql.com/doc/
+https://docs.mongodb.com/manual/
+https://www.npmjs.com/package/jsonwebtoken
+
+https://www.bezkoder.com/react-node-express-mysql/
+
+https://futureskill.co/
+https://www.udemy.com/
+
+
 
 
 https://github.com/fastify/fastify-mongodb
