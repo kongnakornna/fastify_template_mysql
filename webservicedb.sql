@@ -11,7 +11,7 @@
  Target Server Version : 100510
  File Encoding         : 65001
 
- Date: 15/07/2021 09:25:51
+ Date: 15/07/2021 12:11:42
 */
 
 SET NAMES utf8mb4;
@@ -78,6 +78,7 @@ CREATE TABLE `oauth_appservice`  (
   `count` int NULL DEFAULT NULL,
   `expire_date` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `create_date` datetime NULL DEFAULT NULL,
+  `detail` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
@@ -221,6 +222,26 @@ CREATE TABLE `product`  (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for profile
+-- ----------------------------
+DROP TABLE IF EXISTS `profile`;
+CREATE TABLE `profile`  (
+  `user_id` int NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `last_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `date` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`) USING BTREE,
+  INDEX `uid`(`user_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of profile
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for sd_roles
 -- ----------------------------
 DROP TABLE IF EXISTS `sd_roles`;
@@ -282,7 +303,7 @@ CREATE TABLE `sd_users`  (
 -- ----------------------------
 -- Records of sd_users
 -- ----------------------------
-INSERT INTO `sd_users` VALUES (1, '55a54008ad1ba589aa210d2629c1df41', 'คงนคร', 'จันทะคุณ', 'kongnakornna', '7cb98c6deb32bd25bd735da156b91bf5', 'kongnakorna@gmail.com', '2021-07-15 01:15:29', 1, 1, NULL);
+INSERT INTO `sd_users` VALUES (1, '55a54008ad1ba589aa210d2629c1df41', 'คงนคร', 'จันทะคุณ', 'kongnakornna', '7cb98c6deb32bd25bd735da156b91bf5', 'kongnakorna@gmail.com', '2021-07-15 10:08:49', 1, 1, NULL);
 
 -- ----------------------------
 -- Table structure for users
@@ -302,11 +323,10 @@ CREATE TABLE `users`  (
   `network_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'fackbook_id google_id line_id api_id',
   PRIMARY KEY (`user_id`) USING BTREE,
   INDEX `uid`(`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, '55a54008ad1ba589aa210d2629c1df41', 'คงนคร', 'จันทะคุณ', 'kongnakornna', '7cb98c6deb32bd25bd735da156b91bf5', 'kongnakorna@gmail.com', '2021-07-15 01:15:29', 1, 1, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
