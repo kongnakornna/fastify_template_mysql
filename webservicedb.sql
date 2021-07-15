@@ -11,7 +11,7 @@
  Target Server Version : 100510
  File Encoding         : 65001
 
- Date: 15/07/2021 18:38:33
+ Date: 16/07/2021 01:22:39
 */
 
 SET NAMES utf8mb4;
@@ -23,17 +23,18 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `files`;
 CREATE TABLE `files`  (
   `file_id` int NOT NULL AUTO_INCREMENT,
+  `originalname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `mimetype` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `filesize` int NOT NULL,
+  `filename` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `date` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `originalname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `mimetype` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `filesize` int NULL DEFAULT NULL,
-  `filename` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`file_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of files
 -- ----------------------------
+INSERT INTO `files` VALUES (1, 'na001 (4).jpg', 'image/jpeg', 916680, '5006f3f1-76ad-4264-9a3b-670093a5c2b4.jpg', '2021-07-16 01:22:22');
 
 -- ----------------------------
 -- Table structure for oauth2_account
@@ -358,12 +359,14 @@ CREATE TABLE `sd_users`  (
   `network_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'fackbook_id google_id line_id api_id',
   PRIMARY KEY (`user_id`) USING BTREE,
   INDEX `uid`(`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sd_users
 -- ----------------------------
 INSERT INTO `sd_users` VALUES (1, '55a54008ad1ba589aa210d2629c1df41', 'คงนคร', 'จันทะคุณ', 'kongnakornna', '7cb98c6deb32bd25bd735da156b91bf5', 'kongnakorna@gmail.com', '2021-07-15 10:08:49', 1, 1, NULL);
+INSERT INTO `sd_users` VALUES (2, '9e688c58a5487b8eaf69c9e1005ad0bf', 'คงนคร', 'จันทะคุณ', 'kongnakornna', '7cb98c6deb32bd25bd735da156b91bf5', 'kongnakorna@gmail.com', '2021-07-16 01:06:32', 1, 1, NULL);
+INSERT INTO `sd_users` VALUES (3, '8666683506aacd900bbd5a74ac4edf68', 'คงนคร', 'จันทะคุณ', 'kongnakornna', '7cb98c6deb32bd25bd735da156b91bf5', 'kongnakorna@gmail.com', '2021-07-16 01:06:34', 1, 1, NULL);
 
 -- ----------------------------
 -- Table structure for users
