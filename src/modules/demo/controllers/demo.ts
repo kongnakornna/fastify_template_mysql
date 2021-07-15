@@ -24,7 +24,7 @@ export default async function demo(fastify: FastifyInstance) {
                         title: {
                                     status: false,code: 500, message: 'Results unsuccessful',message_th: 'แสดง ข้อมูลไม่สำเร็จ',cache:'no cache'
                             },  
-                                error: error.message,
+                                error: error,
                                 data: null
       })
     }
@@ -84,13 +84,6 @@ export default async function demo(fastify: FastifyInstance) {
     reply.view('/views/demo', { message: message })
 
   })
-  fastify.get('/view/layout', async (request: FastifyRequest, reply: FastifyReply) => {
-    try {
-      const rs: any = await DemoModel.read(db)
-      reply.view('/views/content', { users: rs })
-    } catch (error) {
-      reply.code(500).send({ status: false, error: error.message })
-    }
-  })
+   
 }
 /*************************************/

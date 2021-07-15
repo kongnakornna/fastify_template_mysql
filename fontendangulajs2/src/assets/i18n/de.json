@@ -1,9 +1,0 @@
-{   
-  "LOGIN": "Einloggen", 
-  "LOGOUT": "Ausloggen",
-  "ADMIN_NAV": {  
-    "DASHBOARD": "Instrumententafel", 
-    "PAGES": "Seiten",
-    "EXTERNAL_LINK": "Externer Link"
-  }
-}

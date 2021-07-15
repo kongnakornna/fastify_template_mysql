@@ -3,12 +3,9 @@
   "ignore": [
     "*.js",
     "views/*",
-    "public/*",
-    "db_sql/*",
-    "upload/*",
-    "assets/*"
+    "public/*"
   ],
-  "watch": [ 
+  "watch": [
     "src"
   ],
   "ext": "ts",

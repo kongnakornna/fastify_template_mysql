@@ -18,8 +18,6 @@ import { FastifyInstance } from 'fastify'
     /*******************Demo************************/
     import demoRouter from './modules/demo/controllers/demo'
 	/*******************Test************************/
-	import testRouter from './modules/test/controllers/test' 
-	/*******************Service************************/
     import customerRouter from './modules/customer/controllers/customer' 
 
     /***********oauth2-server start***************/
@@ -47,7 +45,6 @@ export default async function router(fastify: FastifyInstance) {
     /*******************Demo************************/
     fastify.register(demoRouter, { prefix: '/demo' })  
 	/*******************Test************************/
-	fastify.register(testRouter, { prefix: '/test' })  
 	/*******************Service************************/
     fastify.register(customerRouter, { prefix: '/customers' })  
 

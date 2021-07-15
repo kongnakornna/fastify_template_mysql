@@ -143,7 +143,7 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/ultimate', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-mongoose.connection.on('error', (error) => app.log.error(error))
+mongoose.connection.on('error', (error:any) => app.log.error(error))
 mongoose.connection.once('open', () => app.log.info('MongoDB has been connected'+ mongoose.connection.on))
 console.log('mongoose on ' + mongoose)
 /**************************/

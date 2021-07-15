@@ -1,33 +1,149 @@
 import * as knex from 'knex'
-/*  กำหนด type ให้กับระบบ */
 declare module 'fastify' {
-  interface FastifyInstance {
+interface FastifyInstance {
     knex: knex
     db: knex
     db2: knex
-    db3: knex
     jwt: any
     authenticate: any
     ws: any
     io: any
-    oauth: any
-    oauth2: any
+    next: any
+    exit: any
+	req: any
+	res: any
+	id: any
+	quantity: any
+	expiry_date: any
+	created_at: any
+	updated_at: any
+	server: any
+	options: any
+	days: any
+	status: any
+	code: any
+	msg_time_en: any
+	msg_time_th: any
+	cache: any
+	data: any
+	msg_time: any
+	expired_status: any
+	TIMEEXPIRE: any
+	time_expire_set1: any
+	time_setting: any
+	today: any
+	date: any
+	time: any
+	dateTime: any
+	issued_at: any
+	timestamp: any
+	expiration_time: any
+	startdate: any
+	time_expired: any
+	day_expired: any
+	timeconfig: any
+	err: any
+	TIMEEXPIRE: int
+	timesetting: int
+	timestamp_cul: int
+	time_settings: int
+    str: any
+    read: any
+	message: any
   }
 
-  interface FastifyRequest {
+interface FastifyRequest {
     jwtVerify: any
     file: any
     files: any[]
-    image: any[]
-    oauth: any
-    oauth2: any
+    next: any
+    exit: any
+	req: any
+	res: any
+	id: any
+	quantity: any
+	expiry_date: any
+	created_at: any
+	updated_at: any
+	server: any
+	options: any
+	days: any
+	status: any
+	code: any
+	msg_time_en: any
+	msg_time_th: any
+	cache: any
+	data: any
+	msg_time: any
+	expired_status: any
+	TIMEEXPIRE: any
+	time_expire_set1: any
+	time_setting: any
+	today: any
+	date: any
+	time: any
+	dateTime: any
+	issued_at: any
+	timestamp: any
+	expiration_time: any
+	startdate: any
+	time_expired: any
+	day_expired: any
+	timeconfig: any
+	err: any
+	TIMEEXPIRE: int
+	timesetting: int
+	timestamp_cul: int
+	time_settings: int
+	str: any
+    read: any
+	message: any
   }
 
-  interface FastifyReply {
+interface FastifyReply {
     view: any
-    css: any
-    html: any
-    oauth: any
-    oauth2: any
+	next: any
+    next: any
+    exit: any
+    req: any
+    res: any
+    id: any
+    quantity: any
+    expiry_date: any
+    created_at: any
+    updated_at: any
+    server: any
+    options: any
+    days: any
+    status: any
+    code: any
+    msg_time_en: any
+    msg_time_th: any
+    cache: any
+    data: any
+    msg_time: any
+    expired_status: any
+    TIMEEXPIRE: any
+    time_expire_set1: any
+    time_setting: any
+    today: any
+    date: any
+    time: any
+    dateTime: any
+    issued_at: any
+    timestamp: any
+    expiration_time: any
+    startdate: any
+    time_expired: any
+    day_expired: any
+    timeconfig: any
+    err: any
+    TIMEEXPIRE: int
+	timesetting: int
+	timestamp_cul: int
+	time_settings: int
+    str: any
+    read: any 
+	message: any
   }
 }

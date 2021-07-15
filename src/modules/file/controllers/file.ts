@@ -30,7 +30,7 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
            /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
             var day = 1;
             var TIMEEXPIRE =process.env.TIMEEXPIRE;
-            var time_expire_set = parseInt(TIMEEXPIRE*day);
+            var time_expire_set = 86000 || process.env.TIMEEXPIRE;
             var time_expire_set1 = 60 * 5;
             var time_setting = time_expire_set;
             var today = new Date();
@@ -56,7 +56,7 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
          /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
         const decoded = fastify.jwt.verify(token)
         // asycnhronously
-        fastify.jwt.verify(token, (err, decoded) => {
+        fastify.jwt.verify(token, (err:any, decoded:any) => {
         if (err) fastify.log.error(err)
         fastify.log.info(`Token verified. Foo is ${decoded.foo}`)
         })
@@ -82,7 +82,7 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
       }
     } catch (error) {
       console.log(error)
-      reply.code(500).send({ status: false,code: 500,message: error.message })
+      reply.code(500).send({ status: false,code: 500,message: error })
     }
   })
 /*********/

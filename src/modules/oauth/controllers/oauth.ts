@@ -20,11 +20,11 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
         if (username=='') {
             reply.code(500).send({ status: false,code: 500,message: 'username is null',message_th: 'ไม่พบข้อมูล username' })
             console.log(request.body)
-            exit()
+            //exit()
         } if (password=='') {
             reply.code(500).send({ status: false,code: 500,message: 'password is null',message_th: 'ไม่พบข้อมูล password' })
             console.log(request.body)
-            exit()
+            //exit()
         }
       const encPassword = crypto.createHash('md5').update(password).digest('hex')
       const rs: any = await userModel.login(db, username, encPassword)
@@ -34,7 +34,7 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
            /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
             var day = 1;
             var TIMEEXPIRE =process.env.TIMEEXPIRE;
-            var time_expire_set = parseInt(TIMEEXPIRE*day);
+            var time_expire_set = 86000 || process.env.TIMEEXPIRE;
             var time_expire_set1 = 60 * 5;
             var time_setting = time_expire_set;
             var today = new Date();
@@ -60,7 +60,7 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
          /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
         const decoded = fastify.jwt.verify(token)
         // asycnhronously
-        fastify.jwt.verify(token, (err, decoded) => {
+        fastify.jwt.verify(token, (err:any, decoded:any) => {
         if (err) fastify.log.error(err)
         fastify.log.info(`Token verified. Foo is ${decoded.foo}`)
         })
@@ -81,15 +81,15 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
              // data: decoded,
               token
           })
-          exit()
+          //exit()
       } else {
         reply.code(401).send({ status: false,code: 401, message: 'Login failed!',message_th: 'ไม่พบข้อมูล username หรือ password ในระบบ'  })
-        exit()
+        //exit()
       }
     } catch (error) {
       console.log(error)
-      reply.code(500).send({ status: false,code: 500,message: error.message })
-      exit()
+      reply.code(500).send({ status: false,code: 500,message: error })
+      //exit()
     }
   })
 /**************************************************/    
@@ -106,25 +106,25 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
         if(username==="") {
             reply.code(500).send({ status: false,code: 500,message: 'username is null',message_th: 'ไม่พบข้อมูล username' })
             console.log(request.body)
-            die()
+           //  die()
         }if (password==="") {
             reply.code(500).send({ status: false,code: 500,message: 'password is null',message_th: 'ไม่พบข้อมูล password' })
             console.log(request.body)
-            exit()
+            //exit()
         }
         const encPassword = crypto.createHash('md5').update(password).digest('hex')
         if (email === "") {
             reply.code(500).send({ status: false,code: 500,message: 'email is null',message_th: 'ไม่พบข้อมูล email' })
             console.log(request.body)
-            exit()
+            //exit()
         }if (first_name==="") {
             reply.code(500).send({ status: false,code: 500,message: 'first_name is null',message_th: 'ไม่พบข้อมูล first_name' })
             console.log(request.body)
-            exit()
+            //exit()
         }if (last_name==="") {
             reply.code(500).send({ status: false,code: 500,message: 'last_name is null',message_th: 'ไม่พบข้อมูล last_name' })
             console.log(request.body)
-            exit()
+            //exit()
         }if (level==="") {  const level=1 }
     const status=1
     const network_id=null
@@ -137,7 +137,7 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
                 message: 'This email is Invalid format ',
                 message_th: 'รูปแบบ email ไม่ถูกต้อง'
             }) 
-            exit()
+            //exit()
     }
   
     const rs_email: any = await userModel.validation_email(db, email)
@@ -148,7 +148,7 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
             message: 'This email is duplicate data in the database system ',
             message_th: 'email นี้เป็นข้อมูลซ้ำในระบบฐานข้อมูล'
         })
-        exit()
+        //exit()
     }const rs_username: any = await userModel.validation_username(db, username)
     if (rs_username.length > 0) {
         reply.code(500).send({
@@ -157,7 +157,7 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
             message: 'This username is duplicate data in the database system ',
             message_th: 'username นี้เป็นข้อมูลซ้ำในระบบฐานข้อมูล'
         }) 
-        exit()
+        //exit()
     }  
     /**************************************************/    
     try {
@@ -183,13 +183,13 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
             code: 500,
             message: 'singup failed!',
             message_th: ' ไม่สามาราลงทะเบียนได้',
-            error: error.message
+            error: error
         })
-        exit()
+        //exit()
     }
         
         const lastrs: any = await userModel.lastidread(db)
-           // reply.code(500).send({ da: lastrs }) exit()
+           // reply.code(500).send({ da: lastrs }) //exit()
         const luser: any = lastrs[0]
         const user_idx = luser.user_id 
         var md5 = require('md5');
@@ -198,7 +198,7 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
         data_array.profile_id = enc_user_idx
 
        // reply.code(200).send({ array: data_array })
-        //exit()
+        ////exit()
 
         await userModel.updateuid(db, user_idx, data_array)
         const rs: any = await userModel.login(db, username, encPassword)
@@ -208,13 +208,12 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
            /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
             var day = 1;
             var TIMEEXPIRE =process.env.TIMEEXPIRE;
-            var time_expire_set = parseInt(TIMEEXPIRE*day);
+            var time_expire_set = 86000 || process.env.TIMEEXPIRE;
             var time_expire_set1 = 60 * 5;
             var time_setting = time_expire_set;
             var today = new Date();
-            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
             var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-            var dateTime = date + ' ' + time;
+            var dateTime = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+ ' ' + time;
             var issued_at=Date.now();
             var timestamp = Date.now();
             var expiration_time=issued_at+time_setting; 
@@ -234,7 +233,7 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
          /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
         const decoded = fastify.jwt.verify(token)
         // asycnhronously
-        fastify.jwt.verify(token, (err, decoded) => {
+        fastify.jwt.verify(token, (err:any, decoded:any) => {
         if (err) fastify.log.error(err)
         fastify.log.info(`Token verified. Foo is ${decoded.foo}`)
         })
@@ -255,15 +254,15 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
               enc_user_idx: enc_user_idx,
               token
           })
-          exit()
+          //exit()
       } else {
           reply.code(401).send({ status: false, code: 401, message: 'Login failed!', message_th: 'ไม่พบข้อมูล username หรือ password ในระบบ' })
-          exit()
+          //exit()
       }
     } catch (error) {
       console.log(error)
-        reply.code(500).send({ status: false, code: 500, message: error.message })
-        exit()
+        reply.code(500).send({ status: false, code: 500, message: error })
+        //exit()
     }
   })
 /**************************************************/    
@@ -275,11 +274,11 @@ fastify.post('/singin', async (request: FastifyRequest, reply: FastifyReply) => 
         if (username=='') {
             reply.code(500).send({ status: false,code: 500,message: 'username is null',message_th: 'ไม่พบข้อมูล username' })
             console.log(request.body)
-            exit()
+            //exit()
         } if (password=='') {
             reply.code(500).send({ status: false,code: 500,message: 'password is null',message_th: 'ไม่พบข้อมูล password' })
             console.log(request.body)
-            exit()
+            //exit()
         }
       const encPassword = crypto.createHash('md5').update(password).digest('hex')
       const rs: any = await userModel.login(db, username, encPassword)
@@ -289,7 +288,7 @@ fastify.post('/singin', async (request: FastifyRequest, reply: FastifyReply) => 
            /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
             var day = 1;
             var TIMEEXPIRE =process.env.TIMEEXPIRE;
-            var time_expire_set = parseInt(TIMEEXPIRE*day);
+            var time_expire_set = 86000 || process.env.TIMEEXPIRE;
             var time_expire_set1 = 60 * 5;
             var time_setting = time_expire_set;
             var today = new Date();
@@ -315,7 +314,7 @@ fastify.post('/singin', async (request: FastifyRequest, reply: FastifyReply) => 
          /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
         const decoded = fastify.jwt.verify(token)
         // asycnhronously
-        fastify.jwt.verify(token, (err, decoded) => {
+        fastify.jwt.verify(token, (err:any, decoded:any) => {
         if (err) fastify.log.error(err)
         fastify.log.info(`Token verified. Foo is ${decoded.foo}`)
         })
@@ -336,15 +335,15 @@ fastify.post('/singin', async (request: FastifyRequest, reply: FastifyReply) => 
              // data: decoded,
               token
           })
-          exit()
+          //exit()
       } else {
         reply.code(401).send({ status: false,code: 401, message: 'Login failed or user is not active ! ',message_th: 'ไม่พบข้อมูล username หรือ password ในระบบ หรือ ยัง ไม่ได้ active user'  })
-        exit()
+        //exit()
       }
     } catch (error) {
       console.log(error)
-      reply.code(500).send({ status: false,code: 500,message: error.message })
-      exit()
+      reply.code(500).send({ status: false,code: 500,message: error })
+      //exit()
     }
   })
 /**************************************************/    
@@ -355,7 +354,7 @@ fastify.post('/resetpass', async (request: FastifyRequest, reply: FastifyReply) 
         if (datareset==="") {
             reply.code(500).send({ status: false,code: 500,message: 'username or email is null',message_th: 'ไม่พบข้อมูล username หรือ email' })
             console.log(request.body)
-            exit()
+            //exit()
         }   
       const rs: any = await userModel.resetPassword(db, datareset)
       if (rs.length > 0) {
@@ -368,18 +367,18 @@ fastify.post('/resetpass', async (request: FastifyRequest, reply: FastifyReply) 
 
           })
           console.log('query result :' + rs)
-          exit()
+          //exit()
       } else {
         reply.code(401).send({  status: false,
                                 code: 401, 
                                 message: 'username or email is do not have in database',
                                 message_th: 'ไม่พบข้อมูล username หรือ email ในระบบฐานข้อมูล',data: null,input: { reset_valule: datareset},  
         })
-          exit()
+          //exit()
       }
     } catch (error) {
       console.log(error)
-      reply.code(500).send({ status: false,code: 500,message: error.message })
+      reply.code(500).send({ status: false,code: 500,message: error })
     }
   })
     /**************************************************/
@@ -392,15 +391,15 @@ fastify.post('/changepassword', async (request: FastifyRequest, reply: FastifyRe
     if (username==="") {
             reply.code(500).send({ status: false,code: 500,message: 'username is null',message_th: 'ไม่พบข้อมูล username' })
             console.log(request.body)
-            exit()
+            //exit()
     }if (oldpassword==="") {
             reply.code(500).send({ status: false,code: 500,message: 'old password is null',message_th: 'ไม่พบข้อมูล old password' })
             console.log(request.body)
-            exit()
+            //exit()
     }if (newpassword==="") {
             reply.code(500).send({ status: false,code: 500,message: 'new password is null',message_th: 'ไม่พบข้อมูล new password' })
             console.log(request.body)
-            exit()
+            //exit()
     } 
     
     try {
@@ -421,7 +420,7 @@ fastify.post('/changepassword', async (request: FastifyRequest, reply: FastifyRe
           
         } else {
              reply.code(401).send({ status: false,code: 401, message: 'change password failed! ',message_th: 'เปลี่ยนรหัสผ่านไม่สำเร็จ ไม่พบข้อมูล username หรือ password ในระบบ'  })
-             exit()
+             //exit()
 
         }
 
@@ -432,7 +431,7 @@ fastify.post('/changepassword', async (request: FastifyRequest, reply: FastifyRe
            /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
             var day = 1;
             var TIMEEXPIRE =process.env.TIMEEXPIRE;
-            var time_expire_set = parseInt(TIMEEXPIRE*day);
+            var time_expire_set = 86000 || process.env.TIMEEXPIRE;
             var time_expire_set1 = 60 * 5;
             var time_setting = time_expire_set;
             var today = new Date();
@@ -458,7 +457,7 @@ fastify.post('/changepassword', async (request: FastifyRequest, reply: FastifyRe
          /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
         const decoded = fastify.jwt.verify(token)
         // asycnhronously
-        fastify.jwt.verify(token, (err, decoded) => {
+        fastify.jwt.verify(token, (err:any, decoded:any) => {
         if (err) fastify.log.error(err)
         fastify.log.info(`Token verified. Foo is ${decoded.foo}`)
         })
@@ -479,15 +478,15 @@ fastify.post('/changepassword', async (request: FastifyRequest, reply: FastifyRe
              // data: decoded,
               token
           })
-          exit()
+          //exit()
       } else {
         reply.code(401).send({ status: false,code: 401, message: 'Change password and Login failed or user is not active ! ',message_th: 'ไม่พบข้อมูล username หรือ password ในระบบ หรือ ยัง ไม่ได้ active user'  })
-        exit()
+        //exit()
       }
     } catch (error) {
       console.log(error)
-      reply.code(500).send({ status: false,code: 500,message: error.message })
-      exit()
+      reply.code(500).send({ status: false,code: 500,message: error })
+      //exit()
     }
   })
 /**************************************************/   
@@ -499,7 +498,7 @@ fastify.post('/activecode', async (request: FastifyRequest, reply: FastifyReply)
            if (code==="") {
             reply.code(500).send({ status: false,code: 500,message: 'code is null',message_th: 'ไม่พบข้อมูล code' })
             console.log(request.body)
-            exit()
+            //exit()
         } 
     try {
         /******************************ตรวจสอบ code active Token check*************************************/
@@ -520,9 +519,9 @@ fastify.post('/activecode', async (request: FastifyRequest, reply: FastifyReply)
         const timeconfig = at['timeconfig']
         
         var now = Date.now();
-        var time_settings =parseInt(time_setting)
+        var time_settings =time_setting
         var timestamp_cul = now - issued_at 
-        var timestamp_culs =parseInt(timestamp_cul)
+        var timestamp_culs =now - issued_at 
         if (timestamp_culs > time_settings) {
             const msg_time = 'Token Expired : โทเค็นหมดอายุ'
             const msg_time_th = 'โทเค็นหมดอายุ'
@@ -563,17 +562,17 @@ fastify.post('/activecode', async (request: FastifyRequest, reply: FastifyReply)
         }
         console.log('at jwt :'+at) 
         /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-       exit()
+       //exit()
     } catch (error) {
       console.log(error)
       reply.code(500).send({ // แสดงข้อมูล api
                         title: {
                                     status: false,code: 500, message: 'Results unsuccessful',message_th: 'แสดง ข้อมูลไม่สำเร็จ',cache:'no cache'
                             },  
-                                error: error.message,
+                                error: error,
                                 data: null
       })
-        exit()
+        //exit()
       }
         
   })
@@ -590,7 +589,7 @@ fastify.get('/activecode', async (request: FastifyRequest, reply: FastifyReply) 
             message_th: 'ไม่พบข้อมูล code'
         })
             console.log(request.body)
-            exit()
+            //exit()
         } 
     try {
            
@@ -611,9 +610,9 @@ fastify.get('/activecode', async (request: FastifyRequest, reply: FastifyReply) 
         const timeconfig = at['timeconfig']
         
         var now = Date.now();
-        var time_settings =parseInt(time_setting)
+        var time_settings =time_setting
         var timestamp_cul = now - issued_at 
-        var timestamp_culs =parseInt(timestamp_cul)
+        var timestamp_culs =timestamp_cul
         if (timestamp_culs > time_settings) {
             const msg_time = 'Token Expired : โทเค็นหมดอายุ'
             const msg_time_th = 'โทเค็นหมดอายุ'
@@ -654,17 +653,17 @@ fastify.get('/activecode', async (request: FastifyRequest, reply: FastifyReply) 
         }
         console.log('at jwt :'+at) 
         /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-       exit()
+       //exit()
     } catch (error) {
       console.log(error)
       reply.code(500).send({ // แสดงข้อมูล api
                         title: {
                                     status: false,code: 500, message: 'Results unsuccessful',message_th: 'แสดง ข้อมูลไม่สำเร็จ',cache:'no cache'
                             },  
-                                error: error.message,
+                                error: error,
                                 data: null
       })
-        exit()
+        //exit()
       }
         
   })
@@ -674,7 +673,7 @@ fastify.get('/verify', /*ป้องกัน การใช้งาน โ�
   },/*ป้องกัน การใช้งาน โดย Token */ async (request: FastifyRequest, reply: FastifyReply) => {
     try {
         /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-        var str = request.headers.authorization
+        var str  : any = request.headers.authorization
         var res = str.replace("Bearer ", "");  
         let ids = request.id
         const decoded = fastify.jwt.verify(res)
@@ -691,9 +690,9 @@ fastify.get('/verify', /*ป้องกัน การใช้งาน โ�
         const timeconfig = at['timeconfig']
         
         var now = Date.now();
-        var time_settings =parseInt(time_setting)
+        var time_settings =time_setting
         var timestamp_cul = now - issued_at 
-        var timestamp_culs =parseInt(timestamp_cul)
+        var timestamp_culs =timestamp_cul
         if (timestamp_culs > time_settings) {
             const msg_time = 'Token Expired : โทเค็นหมดอายุ'
             const msg_time_th = 'โทเค็นหมดอายุ'
@@ -729,17 +728,17 @@ fastify.get('/verify', /*ป้องกัน การใช้งาน โ�
         }
         console.log('at jwt :'+at) 
         /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-    exit()
+    //exit()
     } catch (error) {
       console.log(error)
       reply.code(500).send({ // แสดงข้อมูล api
                         title: {
                                     status: false,code: 500, message: 'Results unsuccessful',message_th: 'แสดง ข้อมูลไม่สำเร็จ',cache:'no cache'
                             },  
-                                error: error.message,
+                                error: error,
                                 data: null
       })
-        exit()
+        //exit()
       }
         
   })
@@ -749,7 +748,7 @@ fastify.post('/verify', /*ป้องกัน การใช้งาน โ�
   },/*ป้องกัน การใช้งาน โดย Token */ async (request: FastifyRequest, reply: FastifyReply) => {
     try {
         /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-        var str = request.headers.authorization
+        var str  : any = request.headers.authorization
         var res = str.replace("Bearer ", "");  
         let ids = request.id
         const decoded = fastify.jwt.verify(res)
@@ -766,9 +765,9 @@ fastify.post('/verify', /*ป้องกัน การใช้งาน โ�
         const timeconfig = at['timeconfig']
         
         var now = Date.now();
-        var time_settings =parseInt(time_setting)
+        var time_settings =time_setting
         var timestamp_cul = now - issued_at 
-        var timestamp_culs =parseInt(timestamp_cul)
+        var timestamp_culs =timestamp_cul
         if (timestamp_culs > time_settings) {
             const msg_time = 'Token Expired : โทเค็นหมดอายุ'
             const msg_time_th = 'โทเค็นหมดอายุ'
@@ -805,17 +804,17 @@ fastify.post('/verify', /*ป้องกัน การใช้งาน โ�
         }
         console.log('at jwt :'+at) 
         /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-      exit()
+      //exit()
     } catch (error) {
       console.log(error)
       reply.code(500).send({ // แสดงข้อมูล api
                         title: {
                                     status: false,code: 500, message: 'Results unsuccessful',message_th: 'แสดง ข้อมูลไม่สำเร็จ',cache:'no cache'
                             },  
-                                error: error.message,
+                                error: error,
                                 data: null
       })
-      exit()
+      //exit()
       }
         
   })

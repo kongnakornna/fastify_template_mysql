@@ -27,7 +27,7 @@ export default async function users(fastify: FastifyInstance) {
       reply.send({ message: 'Insert data', status: true })
     } catch (error) {
       console.log(error)
-      reply.code(500).send({ status: false, message: error.message })
+      reply.code(500).send({ status: false, message: error })
     }
   })
  /**************************************************/    
@@ -39,7 +39,7 @@ export default async function users(fastify: FastifyInstance) {
       reply.send(rs)
     } catch (error) {
       console.log(error)
-      reply.code(500).send({ status: false, error: error.message })
+      reply.code(500).send({ status: false, error: error })
     }
   })
  /**************************************************/     
@@ -54,7 +54,7 @@ export default async function users(fastify: FastifyInstance) {
       reply.send(rs)
     } catch (error) {
       console.log(error)
-      reply.code(500).send({ status: false, error: error.message })
+      reply.code(500).send({ status: false, error: error })
     }
   })
  /**************************************************/    
@@ -85,7 +85,7 @@ export default async function users(fastify: FastifyInstance) {
       reply.send({ status: true })
     } catch (error) {
       console.log(error)
-      reply.code(500).send({ status: false, message: error.message })
+      reply.code(500).send({ status: false, message: error })
     }
 
   })
@@ -101,7 +101,7 @@ export default async function users(fastify: FastifyInstance) {
       reply.send({ status: true })
     } catch (error) {
       console.log(error)
-      reply.code(500).send({ status: false, error: error.message })
+      reply.code(500).send({ status: false, error: error })
     }
   })
   /**************************************************/    
