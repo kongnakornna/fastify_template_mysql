@@ -39,6 +39,9 @@ Use Nodejs with fastify framework and knexjs framework mysql database
 |-views ( template from ejs ot html )
 |-assets ( css image template file)
 src
+|-app.ts
+|-router.ts
+|-server.ts
 └── plugins (from the Fastify ecosystem)
 └── controllers
 └── models
