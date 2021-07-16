@@ -1,0 +1,15 @@
+DB1_HOST=localhost
+DB1_PORT=3306
+DB1_NAME=test
+DB1_USER=root
+DB1_PASSWORD=xxxx
+
+DB2_HOST=localhost
+DB2_PORT=3306
+DB2_NAME=test2
+DB2_USER=root
+DB2_PASSWORD=xxxxx
+
+JWT_SECRET=xxxxxx
+
+UPLOAD_DIR=./upload
