@@ -116,6 +116,12 @@ About dev which is private url you must connect Pulse Secure before running
 
 Database as MySQL version 5.6.20 and Mongodb
 
+# Cache use
+
+-Redis
+-memcache
+-cache file
+
 # Storage
 
 On directory `public` and now is not available because this storage need server team allow to access
