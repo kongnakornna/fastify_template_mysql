@@ -160,62 +160,17 @@ Email kongnakornjantakun@gmail.com
 Mobile No. +66955088091
 โดย คงนคร จันทะคุณ
 
-## pm2 service
+# run typescript dev
 
-https://pm2.keymetrics.io
+Run `npx nodemon`
 
-npm install pm2 -S
-npm i pm2 install pm2-server-monit -S
+# build package
 
-# คำสั่งสำหรับแสดง process ทั้งหมดใน server PM2
+Run `nmp run build`
 
-pm2 list
+# Complice Type to js
 
-# คำสั่งสำหรับแสดงรายละเอียด process
-
-pm2 show <id|name|all>
-
-# คำสั่ง restart process
-
-pm2 restart <id|name|all>
-
-# คำสั่ง stop process
-
-pm2 stop <id|name|all>
-
-# คำสั่งดูรายละเอียดของเครื่อง server และ process ที่ทำงาน
-
-pm2 start dist\server.js --name "appservicev1"
-
-pm2 dash
-
-#
-
-run typescript
-
-#
-
-ren dev
-
-#
-
-npx nodemon
-
-#
-
-build package
-
-#
-
-nmp run build
-
-#
-
-Complice Type to js
-
-#
-
-npx gulp
+Run `npx gulp`
 
 ## 127.0.0.1 : 8001
 
@@ -247,10 +202,12 @@ https://futureskill.co/
 https://www.udemy.com/
 
 https://github.com/fastify/fastify-oauth2
-npm i --save fastify-oauth2 -S // ต่อ google or facebook
+
+Run `npm i --save fastify-oauth2 -S` // ต่อ google or facebook
 
 https://github.com/ToonvanStrijp/fastify-oauth-server
-npm install fastify-oauth-server -S // ทำ oauth
+
+Run `npm install fastify-oauth-server -S ` // ทำ oauth
 
 https://github.com/fastify/fastify-mongodb
 
@@ -269,3 +226,87 @@ https://oauth2-server.readthedocs.io/en/latest/misc/migrating-v2-to-v3.html
 ## client-oauth2
 
 https://www.npmjs.com/package/client-oauth2
+
+## วิธีการ run node.js บน server ด้วย pm2
+
+## pm2 service
+
+https://pm2.keymetrics.io
+
+Run `npm install pm2 -S`
+Run `npm i pm2 install pm2-server-monit -S`
+
+# คำสั่งสำหรับแสดง process ทั้งหมดใน server PM2
+
+Run `pm2 list`
+
+# คำสั่งสำหรับแสดงรายละเอียด process
+
+Run `pm2 show `<id|name|all>
+
+# คำสั่ง restart process
+
+Run `pm2 restart `<id|name|all>
+
+# คำสั่ง stop process
+
+Run `pm2 stop `<id|name|all>
+
+# คำสั่งดูรายละเอียดของเครื่อง server และ process ที่ทำงาน
+
+Run `pm2 start dist\server.js --name "appservicev1"`
+
+Run `pm2 dash`
+
+-ติดตั้ง pm2
+Run `npm install pm2 -g`  
+-สั่งให้ program ทำงาน
+Run `pm2 start index.js ` // index.js คือ ชื่อโปรแกรม
+Run `pm2 start index.js -n "Web app service `  
+ในกรณีที่ต้องการให้ run ใน mode cluster ให้เติม parameter -i แล้วตามด้วยจำนวน instance ที่ต้องการเช่น
+Run `pm2 start index.js -i 2 ` หมายถึง ทำเป็น cluster 2 ตัว
+หรือ
+Run `pm2 start index.js -i max ` หมายถึงทำเป็น cluster มากที่สุดเท่าที่ cpu รองรับ
+
+กรณีที่เรา start อยู่ใน mode cluster แล้วอยากจะปรับเปลี่ยนจำนวน instance เช่นอยากปรับจาก 2 เป็น 4
+
+Run `pm2 start index -i 2 ` run program ใน mode cluster จำนวน 2 instance
+Run `pm2 scale index 4 ` หมายถึงปรับจาก 2 เป็น 4
+ในกรณีที่ต้องการหยุดการทำงานของโปรแกรมเราใช้คำสั่งดังนี้
+Run `pm2 stop index` หยุดโปรแกรมตามชื่อที่กำหนด
+Run `pm2 stop 0` หยุดโปรแกรมตาม id ที่กำหนด
+Run `pm2 stop all ` หยุดโปรแกรมทั้งหมด
+
+เนื่องด้วยการหยุดการทำงานของโปรแกรมนั้นเป็นการหยุดชั่วคราว ข้อมูล program เรายังคงค้างอยู่ใน pm2 หากเราต้องการถอนโปรแกรมเราออก ให้ใช้คำสั่งดังนี้
+
+Run `pm2 delete index` ลบโปรแกรมตามชื่อที่กำหนด
+Run `pm2 start ` ลบโปรแกรมตาม id ที่กำหนด
+Run `pm2 delete all ` ลบโปรแกรมทั้งหมด
+
+ในกรณีที่ต้องการ restart ให้คำสั่ง ดังนี้
+
+Run `pm2 restart index ` restart โปรแกรมตามชื่อที่กำหนด
+Run `pm2 restart 0 ` restart โปรแกรมตาม id ที่กำหนด
+Run `pm2 restart all `restart โปรแกรมทั้งหมด
+
+ในกรณีที่ต้องการ reload ให้คำสั่ง ดังนี้
+
+Run `pm2 reload index` reload โปรแกรมตามชื่อที่กำหนด
+Run ` pm2 reload 0` reload โปรแกรมตาม id ที่กำหนด
+Run `pm2 reload all ` reload โปรแกรมทั้งหมด
+
+ในกรณีที่ต้องการดูข้อมูลว่า process นั่นๆ ถูก start จากไหน แล้ว log เก็บไว้ที่ไหน
+
+Run `pm2 info index ` แสดง information ของ program ตามชื่อที่กำหนด
+Run `pm2 info 0 ` แสดง information ของ program ตาม id ที่กำหนด
+
+pm2 จะแสดงข้อมูลต่างๆ เช่น status, name, uptime, และอื่นๆ สิ่งที่สำคัญและต้องใช้เสมอในการพัฒนา software ก็คือ log ซึ่งดูได้ที่ out log path, error log path โดยที่ pm2 จะเก็บ log เราไปเรื่อยๆ ในกรณีที่ต้องการ clear log ออกจาก pm2 สามารถทำได้โดยการใช้คำสั่ง ดังนี้
+
+Run `pm2 flush `
+ในกรณีที่เราต้องการให้ auto start program เราเมื่อ server เรา start ให้ใช้คำสั่งดังนี้
+
+Run ` pm2 startup` หมายถึงเมื่อมีการ start server ให้ program เรา start ด้วย
+Run `pm2 save` หมายถึงให้ pm2 เก็บข้อมูลทั้งหมดเพื่อใช้ตอน start
+
+เมื่อต้องการดูว่าตอนนี้ program เราทำงานเป็นยังไงใช้ ram กับ cpu เป็นอย่างไรบ้างแบบ real time สามารถทำได้โดยใช้คำสั่ง
+Run `pm2 monit `
