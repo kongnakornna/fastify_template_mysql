@@ -4,7 +4,7 @@ import mongooses = require('mongoose')
 import "reflect-metadata";
 const mongoose = require('mongoose');
 const multer = require('fastify-multer')
-const envPath = path.join(__dirname, '../config.conf')
+const envPath = path.join(__dirname, './config.conf')
 require('dotenv').config({ path: envPath })
 import WebSocket from 'ws'
 import routers from './router'
