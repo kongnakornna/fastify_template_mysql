@@ -291,6 +291,27 @@ pm2 stop <id|name|all>
 # คำสั่งดูรายละเอียดของเครื่อง server และ process ที่ทำงาน
 pm2 dash
 
+https://www.npmjs.com/package/pm2-gui
+https://www.npmjs.com/search?q=keywords:PM2%20dashboard
+
+PM2 Web interface.
+
+Image of web-pm2
+
+Usage
+Install: npm install -g web-pm2
+
+Run: web-pm2
+
+enter: http://localhost:3666/
+
+
+
+https://github.com/alexnzarov/pm2-web-ui
+
+
+
+
 Run service
 pm2 start dist\server.js --name "appservicev1"
 
