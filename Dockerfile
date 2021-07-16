@@ -1,6 +1,6 @@
 FROM node:14-alpine
 
-LABEL maintainer="Satit Rianpit <rianpit@gmail.com>"
+LABEL maintainer="kongnakorn jantakun <kongnakornna@gmail.com>"
 
 WORKDIR /home/api
 
@@ -18,6 +18,6 @@ COPY . .
 
 RUN npm i && npm run build:dist
 
-EXPOSE 8080
+EXPOSE 8001
 
 CMD ["node", "./dist/server.js"]
