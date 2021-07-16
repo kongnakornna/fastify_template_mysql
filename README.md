@@ -1,4 +1,4 @@
-## fastify framework : Vesion 1.0.0
+## Template fastify framework : Vesion 1.0.0
 
 Use Nodejs with fastify framework and knexjs framework mysql database
 -Nodejs
