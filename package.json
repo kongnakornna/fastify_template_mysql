@@ -53,7 +53,6 @@
     "node-red-dashboard": "^2.30.0",
     "nodemailer": "^6.4.11",
     "oauth2-server": "^3.1.1",
-    "pino-pretty": "^3.2.2",
     "pm2": "^5.1.0",
     "pm2-server-monit": "^3.0.0",
     "point-of-view": "^4.15.0",
@@ -83,7 +82,9 @@
     "gulp-uglify": "^3.0.2",
     "json-schema-to-typescript": "^10.1.4",
     "nodemon": "^2.0.4",
+    "pino-pretty": "^5.1.1",
     "readable-stream": "^3.6.0",
+    "tap": "^15.0.9",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.2"
   }
