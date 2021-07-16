@@ -1,4 +1,4 @@
-## Template fastify framework : Vesion 1.0.0
+# Template fastify framework : Vesion 1.0.0
 
 Use Nodejs with fastify framework and knexjs framework mysql database
 -Nodejs
@@ -9,11 +9,11 @@ Use Nodejs with fastify framework and knexjs framework mysql database
 -jwt && oauth2-server token Barer Header security allow access
 -es5 ,es6
 
-## Structure Code
+# Structure Code
 
 ## Nodejs Template fastify framework
 
-## file
+# file
 
 |-.env.conf
 |-.dockerignore
@@ -30,7 +30,7 @@ Use Nodejs with fastify framework and knexjs framework mysql database
 |-README
 |-Node
 
-## directory
+# Directory
 
 |-node_modules
 |-public (your file directory )
@@ -83,7 +83,7 @@ src
 │ └── subscribers (your custom code)
 │ └── vendor (your custom code)
 
-## Structure Code
+# Structure Code
 
 ## fastify_template_mysql
 
@@ -99,7 +99,7 @@ This project created by Node JS version 14.17.0. Used Fastify framework+ Express
 
 Run on port 8001 this port is fix by bible team and infrastructor team so you should not change it
 
-## Base URL
+# Base URL
 
 This project have 3 step running such as
 │ └──[localhost](localhost:8001),
@@ -109,51 +109,51 @@ This project have 3 step running such as
 
 About dev which is private url you must connect Pulse Secure before running
 
-## Database
+# Database
 
 Database as MySQL version 5.6.20 and Mongodb
 
-## Storage
+# Storage
 
 On directory `public` and now is not available because this storage need server team allow to access
 
-## Install Template Project
+# Install Template Project
 
 Run `npm i` for a local your pc
 
-## Development server
+# Development server
 
 Run `npx nodemon` for a dev server. Navigate `localhost:8001`. The app will automatically reload if you change any of the source files.
 
-## Testing
+# Testing
 
 Run `npm install fastify && npm install tap pino-pretty --save-dev`
 │ └─for a test available my code should run this commnad for sure before deploy on dev or production service
 
-## Run Dev Source Code project
+# Run Dev Source Code project
 
 Run ` npx nodemon`
 
-## Build Source Code on production
+# Build Source Code on production
 
 Run `npx gulp `
 
-## Run app on pm2
+# Run app on pm2
 
 Run `pm2 start dist\sever.js --name "yous name app" ` up to your
 
-## Deploy on Dev or production
+# Deploy on Dev or production
 
 Step Deploy you should change version in base url as GET. This project is CI/CD and Jenkins.
 So you can deploy on Dev via push code to gid branch name `dev` and build in Jenkins
 
-## Deploy on Production
+# Deploy on Production
 
 Before Deploy you should change version in base url as GET. This project is CI/CD and Jenkins. So you can deploy on Production via push code to gid branch name `main` and build in Jenkins
 
-## Developed By
+# Developed By
 
-## Contact me
+# Contact me
 
 Mr kongnakorn jantakun  
 Email kongnakornjantakun@gmail.com
@@ -174,7 +174,7 @@ Run `npx gulp`
 
 ## 127.0.0.1 : 8001
 
-## Tools app dev
+# Tools app dev
 
 https://insomnia.rest/download
 https://www.jenkins.io/
@@ -214,7 +214,7 @@ https://github.com/fastify/fastify-mongodb
 npm i --save fastify-oauth2 -S
 https://github.com/fastify/fastify-oauth2
 
-## oauth2
+# Oauth2
 
 https://www.npmjs.com/package/oauth2-server -https://github.com/14gasher/oauth-example
 
@@ -223,11 +223,11 @@ npm install oauth2-server
 npm install oauth2-server -S
 https://oauth2-server.readthedocs.io/en/latest/misc/migrating-v2-to-v3.html
 
-## client-oauth2
+# client-oauth2
 
 https://www.npmjs.com/package/client-oauth2
 
-## วิธีการ run node.js บน server ด้วย pm2
+# วิธีการ run node.js บน server ด้วย pm2
 
 ## pm2 service
 
@@ -258,9 +258,12 @@ Run `pm2 start dist\server.js --name "appservicev1"`
 
 Run `pm2 dash`
 
--ติดตั้ง pm2
-Run `npm install pm2 -g`  
--สั่งให้ program ทำงาน
+# ติดตั้ง pm2
+
+Run `npm install pm2 -g`
+
+# สั่งให้ program ทำงาน
+
 Run `pm2 start index.js ` // index.js คือ ชื่อโปรแกรม
 Run `pm2 start index.js -n "Web app service `  
 ในกรณีที่ต้องการให้ run ใน mode cluster ให้เติม parameter -i แล้วตามด้วยจำนวน instance ที่ต้องการเช่น
@@ -456,5 +459,3 @@ Run `docker-machine ssh default sudo vi /var/lib/boot2docker/profile export "HTT
 -คำสั่ง `-v` Map volume paths
 -คำสั่ง `-i` Keep STDIN open even if not attached
 -คำสั่ง `-t` Allocate a pseudo-TTY
-
-# Command พวกนี้เป็นแค่บางส่วนเท่านั้น ยังมีอีกเยอะมากๆ
