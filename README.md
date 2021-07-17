@@ -15,73 +15,73 @@ Use Nodejs with fastify framework and knexjs framework mysql database
 
 # file
 
-|-.env.conf
-|-.dockerignore
-|-.gitignore
-|-.gitlab-ci
-|-config.conf
-|-Dockerfile
-|-gulpfile
-|-nodemon
-|-ormconfig
-|-package
-|-package-lock
-|-tsconfig
-|-README
-|-Node
+- |-.env.conf
+- |-.dockerignore
+- |-.gitignore
+- |-.gitlab-ci
+- |-config.conf
+- |-Dockerfile
+- |-gulpfile
+- |-nodemon
+- |-ormconfig
+- |-package
+- |-package-lock
+- |-tsconfig
+- |-README
+- |-Node
 
 # Directory
 
-|-node_modules
-|-public (your file directory )
-|-typings (typings from Typescript)
-|-upload (your file directory )
-|-views ( template from ejs ot html )
-|-assets ( css image template file)
-src
-└── plugins (from the Fastify ecosystem)
-└── controllers
-└── models
-└── decorators
-└── schemas
-└── hooks  
-│ └── middlewares
-└── modules
-│ └── your modules1 service A
-│ | └── controllers (your main function)
-│ | └── models (your custom database function)
-│ | └── entity
-│ | └── hooks
-│ | └── libraries
-│ | └── utils
-│ └── your modules2 service B
-│ | └── controllers (your main function)
-│ | └── models (your custom database function)
-│ | └── entity
-│ | └── hooks
-│ | └── libraries
-│ | └── utils
-│ └── your modules3 service C
-│ | └── controllers (your main function)
-│ | └── models (your custom database function)
-│ | └── entity
-│ | └── hooks
-│ | └── libraries
-│ | └── utils
-│
-└── system
-│ └── core (from the Fastify ecosystem)
-│ └── database (your custom code)
-│ └── decorators (your custom code)
-│ └── entity (your custom code)
-│ └── helpers (your custom code)
-│ └── language (your custom code)
-│ └── libraries (from the Fastify ecosystem)
-│ └── middleware (from the Fastify ecosystem or your custom)
-│ └── migration (your custom plugins)
-│ └── plugins (your custom plugins)
-│ └── subscribers (your custom code)
-│ └── vendor (your custom code)
+- |-node_modules
+- |-public (your file directory )
+- |-typings (typings from Typescript)
+- |-upload (your file directory )
+- |-views ( template from ejs ot html )
+- |-assets ( css image template file)
+- src
+- └── plugins (from the Fastify ecosystem)
+- └── controllers
+- └── models
+- └── decorators
+- └── schemas
+- └── hooks
+- │ └── middlewares
+- └── modules
+- │ └── your modules1 service A
+- │ | └── controllers (your main function)
+- │ | └── models (your custom database function)
+- │ | └── entity
+- │ | └── hooks
+- │ | └── libraries
+- │ | └── utils
+- │ └── your modules2 service B
+- │ | └── controllers (your main function)
+- │ | └── models (your custom database function)
+- │ | └── entity
+- │ | └── hooks
+- │ | └── libraries
+- │ | └── utils
+- │ └── your modules3 service C
+- │ | └── controllers (your main function)
+- │ | └── models (your custom database function)
+- │ | └── entity
+- │ | └── hooks
+- │ | └── libraries
+- │ | └── utils
+- │
+- └── system
+- │ └── core (from the Fastify ecosystem)
+- │ └── database (your custom code)
+- │ └── decorators (your custom code)
+- │ └── entity (your custom code)
+- │ └── helpers (your custom code)
+- │ └── language (your custom code)
+- │ └── libraries (from the Fastify ecosystem)
+- │ └── middleware (from the Fastify ecosystem or your custom)
+- │ └── migration (your custom plugins)
+- │ └── plugins (your custom plugins)
+- │ └── subscribers (your custom code)
+- │ └── vendor (your custom code)
 
 # Structure Code
 
