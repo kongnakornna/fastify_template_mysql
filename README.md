@@ -97,7 +97,7 @@ src
 
 This project created by Node JS version 14.17.0. Used Fastify framework+ Express framework for connect to server Coding by Typescript and Testing by Jest
 
-Run on port 8001 this port is fix by bible team and infrastructor team so you should not change it
+- Run on port 8001 this port is fix by bible team and infrastructor team so you should not change it
 
 # Base URL
 
@@ -107,17 +107,17 @@ This project have 3 step running such as
 │ └──[dev](http://0.0.0.0:8001/appapi/),
 │ └──[production](https://xxx.com)
 
-About dev which is private url you must connect Pulse Secure before running
+- About dev which is private url you must connect Pulse Secure before running
 
 # Database
 
-Database as MySQL version 5.6.20 and Mongodb
+- Database as MySQL version 5.6.20 and Mongodb
 
 # Cache use
 
--Redis
--memcache
--cache file
+- Redis
+- memcache
+- cache file
 
 # Storage
 
@@ -167,10 +167,10 @@ Before Deploy you should change version in base url as GET. This project is CI/C
 
 # Contact information
 
-Mr Kongnakorn Jantakun  
-Email kongnakornjantakun@gmail.com
-Mobile No. +66955088091
-โดย คงนคร จันทะคุณ
+- Mr Kongnakorn Jantakun
+- Email kongnakornjantakun@gmail.com
+- Mobile No. +66955088091
+- คงนคร จันทะคุณ (นะ)
 
 # run typescript dev
 
@@ -188,64 +188,61 @@ Run `npx gulp`
 
 # Tools app dev
 
-https://insomnia.rest/download
-https://www.jenkins.io/
-https://www.docker.com/
+- https://insomnia.rest/download
+- https://www.jenkins.io/
+- https://www.docker.com/
 
 ## List document
 
-https://www.fastify.io/
-https://knexjs.org/
-https://nextjs.org/docs/advanced-features/custom-document
-https://typeorm.io/#/
-https://mongoosejs.com/docs/
-
-https://expressjs.com/en/starter/installing.html
-https://reactjs.org/
-https://angular.io/
-https://nodejs.org/en/docs/
-https://reactnative.dev/docs/getting-started
-https://www.typescriptlang.org/docs/
-https://dev.mysql.com/doc/
-https://docs.mongodb.com/manual/
-https://www.npmjs.com/package/jsonwebtoken
-
-https://www.bezkoder.com/react-node-express-mysql/
-
-https://futureskill.co/
-https://www.udemy.com/
-
-https://github.com/fastify/fastify-oauth2
+- https://www.fastify.io
+- https://knexjs.org
+- https://nextjs.org/docs/advanced-features/custom-document
+- https://typeorm.io/
+- https://mongoosejs.com/docs
+- https://expressjs.com/en/starter/installing.html
+- https://reactjs.org
+- https://angular.io
+- https://nodejs.org/en/docs
+- https://reactnative.dev/docs/getting-started
+- https://www.typescriptlang.org/docs
+- https://dev.mysql.com/doc
+- https://docs.mongodb.com/manual
+- https://www.npmjs.com/package/jsonwebtoken
+- https://www.bezkoder.com/react-node-express-mysql
+- https://futureskill.co
+- https://www.udemy.com
+- https://github.com/fastify/fastify-oauth2
 
 Run `npm i --save fastify-oauth2 -S` // ต่อ google or facebook
 
-https://github.com/ToonvanStrijp/fastify-oauth-server
+- https://github.com/ToonvanStrijp/fastify-oauth-server
 
 Run `npm install fastify-oauth-server -S ` // ทำ oauth
 
-https://github.com/fastify/fastify-mongodb
+- https://github.com/fastify/fastify-mongodb
 
-npm i --save fastify-oauth2 -S
-https://github.com/fastify/fastify-oauth2
+Run `npm i --save fastify-oauth2 -S`
+
+- https://github.com/fastify/fastify-oauth2
 
 # Oauth2
 
-https://www.npmjs.com/package/oauth2-server -https://github.com/14gasher/oauth-example
+- https://www.npmjs.com/package/oauth2-server -https://github.com/14gasher/oauth-example
+- https://www.npmjs.com/package/oauth2-server-typescript
 
-https://www.npmjs.com/package/oauth2-server-typescript
-npm install oauth2-server
-npm install oauth2-server -S
-https://oauth2-server.readthedocs.io/en/latest/misc/migrating-v2-to-v3.html
+Run `npm install oauth2-server -S`
+
+- https://oauth2-server.readthedocs.io/en/latest/misc/migrating-v2-to-v3.html
 
 # client-oauth2
 
-https://www.npmjs.com/package/client-oauth2
+- https://www.npmjs.com/package/client-oauth2
 
 # วิธีการ run node.js บน server ด้วย pm2
 
 ## pm2 service
 
-https://pm2.keymetrics.io
+- https://pm2.keymetrics.io
 
 Run `npm install pm2 -S`
 Run `npm i pm2 install pm2-server-monit -S`
@@ -360,18 +357,18 @@ Run `docker run -d -it --name mysql \ -h mysql \ -e MYSQL_ROOT_PASSWORD=password
 
 # ตอนเราสั่ง Run สามารถใส่ parameter ได้เยอะแยะเลย
 
--d //เหมือนเรา เวฟข้าวเซเว่น ไว้แล้วเสร็จเดี๋ยวเราค่อยมากินมัน
--h //กำหนดชื่อ Container name ถ้าไม่ระบุมันจะตั้งชื่อ เท่ๆ มาให้เราเอง
--e //กำหนด Environment ของ Container ต้องดูว่าแต่ล่ะ images มีอะไรให้เราเซ็ตบ้าง
--p //กำหนด ports ที่จะให้ Client คุยกับ Docker hosts
--v //Mount Volume จากใน Container(/var/lib/mysql) บอกว่าให้มาอ่านที่นี้นะ(your_path)
+`-d `//เหมือนเรา เวฟข้าวเซเว่น ไว้แล้วเสร็จเดี๋ยวเราค่อยมากินมัน
+`-h ` //กำหนดชื่อ Container name ถ้าไม่ระบุมันจะตั้งชื่อ เท่ๆ มาให้เราเอง
+`-e ` //กำหนด Environment ของ Container ต้องดูว่าแต่ล่ะ images มีอะไรให้เราเซ็ตบ้าง
+`-p` //กำหนด ports ที่จะให้ Client คุยกับ Docker hosts
+`-v` //Mount Volume จากใน Container(/var/lib/mysql) บอกว่าให้มาอ่านที่นี้นะ(your_path)
 
 # docker ps
 
 Run `docker ps` โชว์ container ที่กำลังทำงานในเครื่องเรา
 Run `docker ps -a -s` ชว์ container ทั้งหมดทั้งที่กำลังทำงาน และ ไม่ได้ทำงานอยู่
 Run `docker ps <CONTAINER_ID> ` โชว์ container โดยการระบุ conatiner id หรือ host name
--s // โชว์ Size Container
+`-s` // โชว์ Size Container
 
 # docker cp
 
