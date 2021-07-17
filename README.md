@@ -426,7 +426,7 @@ Run `docker start <CONTAINER_ID> ` start container ที่stop อยู่น
 # docker stop <CONTAINER_ID>
 
 Run `docker stop <CONTAINER_ID> docker stop <CONTAINER_ID> <CONTAINER_ID> <CONTAINER_ID> ` Multiple
-หยุดการทำงานของ container ไม่ใช่ remove นะลองพิมพ์ docker ps -a ดูสิ
+หยุดการทำงานของ container ไม่ใช่ remove นะลองพิมพ์ docker ps -a
 
 # docker pause <CONTAINER_ID>
 
