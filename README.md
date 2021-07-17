@@ -189,7 +189,7 @@ Run `npx gulp`
 
 ## 127.0.0.1 : 8001
 
-## Test Reat api software
+## Test restful api software
 
 - https://insomnia.rest/download
 - https://www.postman.com/downloads
