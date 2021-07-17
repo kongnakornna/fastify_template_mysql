@@ -166,9 +166,11 @@ Before Deploy you should change version in base url as GET. This project is CI/C
 
 # Developed By
 
-# Contact me
+## Kongnakorn Jantakun
 
-Mr kongnakorn jantakun  
+# Contact infomation
+
+Mr Kongnakorn Jantakun  
 Email kongnakornjantakun@gmail.com
 Mobile No. +66955088091
 โดย คงนคร จันทะคุณ
