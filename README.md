@@ -186,12 +186,21 @@ Run `npx gulp`
 
 ## 127.0.0.1 : 8001
 
-## Tools app dev
+## Tools app dev or CI/CD
 
 - https://insomnia.rest/download
 - https://www.jenkins.io
 - https://www.docker.com
 - https://kubernetes.io
+- https://code.visualstudio.com/insiders
+
+## Iot Dev
+
+- https://nodered.org
+
+## socket
+
+- https://socket.io/docs/v3/client-installation/index.html
 
 ## List document
 
