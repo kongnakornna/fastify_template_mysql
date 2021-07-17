@@ -130,6 +130,10 @@ On directory `public` and now is not available because this storage need server 
 
 Run `npm i` for a local your pc
 
+# install redis
+
+Run `npm install redis`
+
 # Development server
 
 Run `npx nodemon` for a dev server. Navigate `localhost:8001`. The app will automatically reload if you change any of the source files.
@@ -195,6 +199,8 @@ https://www.fastify.io/
 https://knexjs.org/
 https://nextjs.org/docs/advanced-features/custom-document
 https://typeorm.io/#/
+https://mongoosejs.com/docs/
+
 https://expressjs.com/en/starter/installing.html
 https://reactjs.org/
 https://angular.io/

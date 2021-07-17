@@ -19,7 +19,8 @@ import { FastifyInstance } from 'fastify'
     import demoRouter from './modules/demo/controllers/demo'
 	/*******************Test************************/
     import customerRouter from './modules/customer/controllers/customer' 
-
+	/*******************Geo************************/
+    import geoRouter from './modules/geo/controllers/geo' 
     /***********oauth2-server start***************/
 
     /***********oauth2-server end***************/
@@ -47,11 +48,15 @@ export default async function router(fastify: FastifyInstance) {
 	/*******************Test************************/
 	/*******************Service************************/
     fastify.register(customerRouter, { prefix: '/customers' })  
+    /*******************Geo************************/
+    fastify.register(geoRouter, { prefix: '/geo' })
+    
 
-  /*******************modules************************/
+    /*******************modules************************/
     /***********oauth2-server start***************/
 
     /***********oauth2-server end***************/
+    /***********redis start***************/
 
-
+    /***********redis start***************/
 }
