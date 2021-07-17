@@ -227,7 +227,8 @@ Run `npm i --save fastify-oauth2 -S`
 
 # Oauth2
 
-- https://www.npmjs.com/package/oauth2-server -https://github.com/14gasher/oauth-example
+- https://www.npmjs.com/package/oauth2-server
+- https://github.com/14gasher/oauth-example
 - https://www.npmjs.com/package/oauth2-server-typescript
 
 Run `npm install oauth2-server -S`
