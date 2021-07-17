@@ -189,6 +189,11 @@ Run `npx gulp`
 
 ## 127.0.0.1 : 8001
 
+## Test Reat api software
+
+- https://insomnia.rest/download
+- https://www.postman.com/downloads
+
 ## Tools app dev or CI/CD
 
 - CI/CD คืออะไร?
@@ -197,7 +202,7 @@ Run `npx gulp`
 
 - https://github.com
 - https://gitlab.com
-- https://insomnia.rest/download
+
 - https://www.jenkins.io
 - https://www.docker.com
 - https://kubernetes.io
