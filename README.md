@@ -165,7 +165,7 @@ Before Deploy you should change version in base url as GET. This project is CI/C
 
 ## Kongnakorn Jantakun
 
-# Contact infomation
+# Contact information
 
 Mr Kongnakorn Jantakun  
 Email kongnakornjantakun@gmail.com
