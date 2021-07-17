@@ -203,7 +203,11 @@ Run `npx gulp`
 - https://www.jenkins.io
 - https://www.docker.com
 - https://kubernetes.io
+
+## Tools Develop
+
 - https://code.visualstudio.com/insiders
+- https://www.navicat.com/en
 
 ## Project management
 
