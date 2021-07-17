@@ -20,11 +20,11 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
         if (username=='') {
             reply.code(500).send({ status: false,code: 500,message: 'username is null',message_th: 'ไม่พบข้อมูล username' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
         } if (password=='') {
             reply.code(500).send({ status: false,code: 500,message: 'password is null',message_th: 'ไม่พบข้อมูล password' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
         }
       const encPassword = crypto.createHash('md5').update(password).digest('hex')
       const rs: any = await AdminModel.login(db, username, encPassword)
@@ -81,15 +81,15 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
              // data: decoded,
               token
           })
-          reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+          return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
       } else {
         reply.code(401).send({ status: false,code: 401, message: 'Login failed!',message_th: 'ไม่พบข้อมูล username หรือ password ในระบบ'  })
-        reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
       }
     } catch (error) {
       console.log(error)
       reply.code(500).send({ status: false,code: 500,message: error })
-      reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+      return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
     }
   })
 /**************************************************/    
@@ -110,21 +110,21 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
         }if (password==="") {
             reply.code(500).send({ status: false,code: 500,message: 'password is null',message_th: 'ไม่พบข้อมูล password' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
         }
         const encPassword = crypto.createHash('md5').update(password).digest('hex')
         if (email === "") {
             reply.code(500).send({ status: false,code: 500,message: 'email is null',message_th: 'ไม่พบข้อมูล email' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
         }if (first_name==="") {
             reply.code(500).send({ status: false,code: 500,message: 'first_name is null',message_th: 'ไม่พบข้อมูล first_name' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
         }if (last_name==="") {
             reply.code(500).send({ status: false,code: 500,message: 'last_name is null',message_th: 'ไม่พบข้อมูล last_name' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
         }if (level==="") {  const level=1 }
     const status=1
     const network_id=null
@@ -137,7 +137,7 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
                 message: 'This email is Invalid format ',
                 message_th: 'รูปแบบ email ไม่ถูกต้อง'
             }) 
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
     }
   
     const rs_email: any = await AdminModel.validation_email(db, email)
@@ -148,7 +148,7 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
             message: 'This email is duplicate data in the database system ',
             message_th: 'email นี้เป็นข้อมูลซ้ำในระบบฐานข้อมูล'
         })
-        reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
     }const rs_username: any = await AdminModel.validation_username(db, username)
     if (rs_username.length > 0) {
         reply.code(500).send({
@@ -157,7 +157,7 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
             message: 'This username is duplicate data in the database system ',
             message_th: 'username นี้เป็นข้อมูลซ้ำในระบบฐานข้อมูล'
         }) 
-        reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
     }  
     /**************************************************/    
     try {
@@ -185,11 +185,11 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
             message_th: ' ไม่สามาราลงทะเบียนได้',
             error: error
         })
-        reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
     }
         
         const lastrs: any = await AdminModel.lastidread(db)
-           // reply.code(500).send({ da: lastrs }) reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+           // reply.code(500).send({ da: lastrs }) return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
         const luser: any = lastrs[0]
         const user_idx = luser.user_id 
         var md5 = require('md5');
@@ -198,7 +198,7 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
         data_array.profile_id = enc_user_idx
 
        // reply.code(200).send({ array: data_array })
-        //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        //return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
 
         await AdminModel.updateuid(db, user_idx, data_array)
         const rs: any = await AdminModel.login(db, username, encPassword)
@@ -254,15 +254,15 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
               enc_user_idx: enc_user_idx,
               token
           })
-          reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+          return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
       } else {
           reply.code(401).send({ status: false, code: 401, message: 'Login failed!', message_th: 'ไม่พบข้อมูล username หรือ password ในระบบ' })
-          reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+          return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
       }
     } catch (error) {
       console.log(error)
         reply.code(500).send({ status: false, code: 500, message: error })
-        reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
     }
   })
 /**************************************************/    
@@ -274,11 +274,11 @@ fastify.post('/singin', async (request: FastifyRequest, reply: FastifyReply) => 
         if (username=='') {
             reply.code(500).send({ status: false,code: 500,message: 'username is null',message_th: 'ไม่พบข้อมูล username' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
         } if (password=='') {
             reply.code(500).send({ status: false,code: 500,message: 'password is null',message_th: 'ไม่พบข้อมูล password' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
         }
       const encPassword = crypto.createHash('md5').update(password).digest('hex')
       const rs: any = await AdminModel.login(db, username, encPassword)
@@ -335,15 +335,15 @@ fastify.post('/singin', async (request: FastifyRequest, reply: FastifyReply) => 
              // data: decoded,
               token
           })
-          reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+          return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
       } else {
         reply.code(401).send({ status: false,code: 401, message: 'Login failed or user is not active ! ',message_th: 'ไม่พบข้อมูล username หรือ password ในระบบ หรือ ยัง ไม่ได้ active user'  })
-        reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
       }
     } catch (error) {
       console.log(error)
       reply.code(500).send({ status: false,code: 500,message: error })
-      reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+      return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
     }
   })
 /**************************************************/    
@@ -354,7 +354,7 @@ fastify.post('/resetpass', async (request: FastifyRequest, reply: FastifyReply) 
         if (datareset==="") {
             reply.code(500).send({ status: false,code: 500,message: 'username or email is null',message_th: 'ไม่พบข้อมูล username หรือ email' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
         }   
       const rs: any = await AdminModel.resetPassword(db, datareset)
       if (rs.length > 0) {
@@ -367,14 +367,14 @@ fastify.post('/resetpass', async (request: FastifyRequest, reply: FastifyReply) 
 
           })
           console.log('query result :' + rs)
-          reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+          return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
       } else {
         reply.code(401).send({  status: false,
                                 code: 401, 
                                 message: 'username or email is do not have in database',
                                 message_th: 'ไม่พบข้อมูล username หรือ email ในระบบฐานข้อมูล',data: null,input: { reset_valule: datareset},  
         })
-          reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+          return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
       }
     } catch (error) {
       console.log(error)
@@ -391,15 +391,15 @@ fastify.post('/changepassword', async (request: FastifyRequest, reply: FastifyRe
     if (username==="") {
             reply.code(500).send({ status: false,code: 500,message: 'username is null',message_th: 'ไม่พบข้อมูล username' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
     }if (oldpassword==="") {
             reply.code(500).send({ status: false,code: 500,message: 'old password is null',message_th: 'ไม่พบข้อมูล old password' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
     }if (newpassword==="") {
             reply.code(500).send({ status: false,code: 500,message: 'new password is null',message_th: 'ไม่พบข้อมูล new password' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
     } 
     
     try {
@@ -420,7 +420,7 @@ fastify.post('/changepassword', async (request: FastifyRequest, reply: FastifyRe
           
         } else {
              reply.code(401).send({ status: false,code: 401, message: 'change password failed! ',message_th: 'เปลี่ยนรหัสผ่านไม่สำเร็จ ไม่พบข้อมูล username หรือ password ในระบบ'  })
-             reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+             return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
 
         }
 
@@ -478,15 +478,15 @@ fastify.post('/changepassword', async (request: FastifyRequest, reply: FastifyRe
              // data: decoded,
               token
           })
-          reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+          return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
       } else {
         reply.code(401).send({ status: false,code: 401, message: 'Change password and Login failed or user is not active ! ',message_th: 'ไม่พบข้อมูล username หรือ password ในระบบ หรือ ยัง ไม่ได้ active user'  })
-        reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
       }
     } catch (error) {
       console.log(error)
       reply.code(500).send({ status: false,code: 500,message: error })
-      reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+      return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
     }
   })
 /**************************************************/   
@@ -498,7 +498,7 @@ fastify.post('/activecode', async (request: FastifyRequest, reply: FastifyReply)
            if (code==="") {
             reply.code(500).send({ status: false,code: 500,message: 'code is null',message_th: 'ไม่พบข้อมูล code' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
         } 
     try {
         /******************************ตรวจสอบ code active Token check*************************************/
@@ -562,7 +562,7 @@ fastify.post('/activecode', async (request: FastifyRequest, reply: FastifyReply)
         }
         console.log('at jwt :'+at) 
         /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-       reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+       return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
     } catch (error) {
       console.log(error)
       reply.code(500).send({ // แสดงข้อมูล api
@@ -572,7 +572,7 @@ fastify.post('/activecode', async (request: FastifyRequest, reply: FastifyReply)
                                 error: error,
                                 data: null
       })
-        reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
       }
         
   })
@@ -589,7 +589,7 @@ fastify.get('/activecode', async (request: FastifyRequest, reply: FastifyReply) 
             message_th: 'ไม่พบข้อมูล code'
         })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
         } 
     try {
            
@@ -653,7 +653,7 @@ fastify.get('/activecode', async (request: FastifyRequest, reply: FastifyReply) 
         }
         console.log('at jwt :'+at) 
         /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-       reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+       return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
     } catch (error) {
       console.log(error)
       reply.code(500).send({ // แสดงข้อมูล api
@@ -663,7 +663,7 @@ fastify.get('/activecode', async (request: FastifyRequest, reply: FastifyReply) 
                                 error: error,
                                 data: null
       })
-        reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
       }
         
   })
@@ -728,7 +728,7 @@ fastify.get('/verify', /*ป้องกัน การใช้งาน โ�
         }
         console.log('at jwt :'+at) 
         /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-    reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+    return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
     } catch (error) {
       console.log(error)
       reply.code(500).send({ // แสดงข้อมูล api
@@ -738,7 +738,7 @@ fastify.get('/verify', /*ป้องกัน การใช้งาน โ�
                                 error: error,
                                 data: null
       })
-        reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
       }
         
   })
@@ -804,7 +804,7 @@ fastify.post('/verify', /*ป้องกัน การใช้งาน โ�
         }
         console.log('at jwt :'+at) 
         /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-      reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+      return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
     } catch (error) {
       console.log(error)
       reply.code(500).send({ // แสดงข้อมูล api
@@ -814,7 +814,7 @@ fastify.post('/verify', /*ป้องกัน การใช้งาน โ�
                                 error: error,
                                 data: null
       })
-      reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+      return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
       }
         
   })

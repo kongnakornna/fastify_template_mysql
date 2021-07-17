@@ -1,25 +1,22 @@
 
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify'
-
+ /****************************************/
 import multer from 'fastify-multer'
 const mime = require('mime-types')
-
+/****************************************/
 import * as fse from 'fs-extra'
 import * as path from 'path'
 import * as fs from 'fs'
 import * as knex from 'knex'
-
+/****************************************/
 import { v4 as uuidv4 } from 'uuid';
 // import { FileModel } from '../models/file'
 import { FileModel } from '../../../modules/upload/models/file'
 const fileModel = new FileModel()
-
+/****************************************/
 export default async function upload(fastify: FastifyInstance) {
-
   const db: knex = fastify.db
-
   const uploadPath = process.env.UPLOAD_DIR || './upload'
-
   const storage = multer.diskStorage({
     destination: (req: any, file: any, cb: any) => {
       cb(null, uploadPath)
@@ -30,7 +27,7 @@ export default async function upload(fastify: FastifyInstance) {
       cb(null, filename)
     }
   })
-
+/****************************************/
   const upload = multer({
     storage,
     limits: {
@@ -38,13 +35,13 @@ export default async function upload(fastify: FastifyInstance) {
     },
     fileFilter: (req: any, file: any, cb: any) => {
       console.log(file.mimetype)
-      if (file.mimetype !== 'image/jpeg') {
-        return cb(new Error('Invalid mimetype!'), false)
+      if (file.mimetype !== 'image/jpeg' || file.mimetype !== 'image/png') {
+        return cb(new Error('Invalid mimetype! jpeg or png'), false)
       }
       cb(null, true)
     }
   })
-
+ /****************************************/
   fastify.post('/', {
     preHandler: upload.single('file'),preValidation: [fastify.authenticate] /*ป้องกัน การใช้งาน โดย Token */
   }, async (request: FastifyRequest, reply: FastifyReply) => {
@@ -67,9 +64,10 @@ export default async function upload(fastify: FastifyInstance) {
               message: 'upload file ' + file_name + ' successfully',
               message_th: 'upload file ' + file_name + ' สำเร็จ',
               data: fileId
-          })
+    })
+    console.log('upload file ' + file_name + ' successfully') 
   })
-
+   /****************************************/
   fastify.post('/array', {
     preHandler: upload.array('file', 10),preValidation: [fastify.authenticate] /*ป้องกัน การใช้งาน โดย Token */
   }, async (request: FastifyRequest, reply: FastifyReply) => {
@@ -90,27 +88,25 @@ export default async function upload(fastify: FastifyInstance) {
       const fileId = rs[0]
       console.log('upload file ' +fileId)
     }
-
     reply.send({
               status: true, code: 200,
               message: 'upload   file successfully',
               message_th: 'upload   file  สำเร็จ',
               data: 'upload file สำเร็จ',
           })
-  })
-
+  }) 
   fastify.get('/file/:fileId', async (request: FastifyRequest, reply: FastifyReply) => {
     const params: any = request.params
     if (params=='') {
             reply.code(500).send({ status: false,code: 500,message: 'params is null',message_th: 'ไม่พบข้อมูล params' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
         }
     const fileId = params.fileId
     if (fileId=='') {
             reply.code(500).send({ status: false,code: 500,message: 'file_id is null',message_th: 'ไม่พบข้อมูล file_id' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน 
         } 
 
     try {
@@ -124,14 +120,15 @@ export default async function upload(fastify: FastifyInstance) {
           const _mimetype = mimetype
           const fileData = fs.readFileSync(filePath)
           reply.type(_mimetype)
-          reply.send(fileData)
+            reply.send(fileData)
+            console.log('get file ' +fileData)
         } else {
           reply.code(500).send({ status: false, error: filename + ' not found!' })
         }
       } else {
         reply.code(500).send({ status: false,code: 500,message: 'file_id is null in database',message_th: 'ไม่พบข้อมูล file_id ใน database', error: 'File not found (database)' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน  
+            return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน  
       }
 
     } catch (error) {
@@ -139,4 +136,25 @@ export default async function upload(fastify: FastifyInstance) {
     }
 
   })
+    /****************************************/
+  fastify.post('/emptydir', {
+        /*ป้องกัน การใช้งาน โดย Token */
+        preValidation: [fastify.authenticate] 
+        }, async (request: FastifyRequest, reply: FastifyReply) => {
+        const body: any = request.body
+        const dir = body.dir
+        if (dir=='') {
+                reply.code(500).send({ status: false,code: 500,message: 'dir is null',message_th: 'ไม่พบข้อมูล dir' })
+                console.log(request.body)
+                return // reply.sent = true  //exit()  to stop the function execution   ออกจากลูปการทำงาน
+            } 
+  
+    }
+/****************************************/
+/****************************************/
+/****************************************/
+/****************************************/
+/****************************************/
+/****************************************/
+/****************************************/
 }
