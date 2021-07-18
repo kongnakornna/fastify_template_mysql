@@ -107,13 +107,13 @@ export default async function upload(fastify: FastifyInstance) {
     if (params=='') {
             reply.code(500).send({ status: false,code: 500,message: 'params is null',message_th: 'ไม่พบข้อมูล params' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            reply.sent = true // exit loop ออกจากลูปการทำงาน 
         }
     const fileId = params.fileId
     if (fileId=='') {
             reply.code(500).send({ status: false,code: 500,message: 'file_id is null',message_th: 'ไม่พบข้อมูล file_id' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            reply.sent = true // exit loop ออกจากลูปการทำงาน 
         } 
 
     try {
@@ -134,7 +134,7 @@ export default async function upload(fastify: FastifyInstance) {
       } else {
         reply.code(500).send({ status: false,code: 500,message: 'file_id is null in database',message_th: 'ไม่พบข้อมูล file_id ใน database', error: 'File not found (database)' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน  
+            reply.sent = true // exit loop ออกจากลูปการทำงาน  
       }
 
     } catch (error) {

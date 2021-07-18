@@ -20,11 +20,11 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
         if (username=='') {
             reply.code(500).send({ status: false,code: 500,message: 'username is null',message_th: 'ไม่พบข้อมูล username' })
             console.log(request.body)
-            return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
         } if (password=='') {
             reply.code(500).send({ status: false,code: 500,message: 'password is null',message_th: 'ไม่พบข้อมูล password' })
             console.log(request.body)
-            return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
         }
       const encPassword = crypto.createHash('md5').update(password).digest('hex')
       const rs: any = await userModel.login(db1, username, encPassword)
@@ -81,15 +81,15 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
              // data: decoded,
               token
           })
-          return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+          return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
       } else {
         reply.code(401).send({ status: false,code: 401, message: 'Login failed!',message_th: 'ไม่พบข้อมูล username หรือ password ในระบบ'  })
-        return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
       }
     } catch (error) {
       console.log(error)
       reply.code(500).send({ status: false,code: 500,message: error })
-      return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+      return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
     }
   })
 /**************************************************/      
