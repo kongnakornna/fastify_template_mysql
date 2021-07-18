@@ -7,8 +7,7 @@ const envPath = path.join(__dirname, '../config.conf')
 require('dotenv').config({ path: envPath })
 export default async function login(fastify: FastifyInstance) {
   const userModel = new UserModel()
-  const db: knex = fastify.db
-/*********/
+  const db1: knex = fastify.db1
 fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
     const body: any = request.body
     const username = body.username
@@ -22,7 +21,7 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
             console.log(request.body)
         }
       const encPassword = crypto.createHash('md5').update(password).digest('hex')
-      const rs: any = await userModel.login(db, username, encPassword)
+      const rs: any = await userModel.login(db1, username, encPassword)
       if (rs.length > 0) {
         const user: any = rs[0]
           console.log(user)
@@ -53,7 +52,7 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
                     }
           })
          /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-        const decoded = fastify.jwt.verify(token)
+         const decoded: any= fastify.jwt.verify(token)
         // asycnhronously
         fastify.jwt.verify(token, (err:any, decoded:any) => {
         if (err) fastify.log.error(err)

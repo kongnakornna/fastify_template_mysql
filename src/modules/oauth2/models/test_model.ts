@@ -1,8 +1,8 @@
 import * as knex from 'knex';
 export class TestModel {
 
-    test(db: knex) {
-        return db('sd_users as u')
+    test(db1: knex) {
+        return db1('sd_users as u')
             .join('profile as p', 'u.user_id', 'p.user_id')
             // .select('u.*')
             .select('u.user_id', 'u.first_name', 'u.last_name', 'u.email', 'u.date')

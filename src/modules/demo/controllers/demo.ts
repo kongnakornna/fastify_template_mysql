@@ -6,11 +6,13 @@ import * as knex from 'knex'
 export default async function demo(fastify: FastifyInstance) {
 /*************************************/
   const DemoModels = new DemoModel()
-  const db: knex = fastify.db
+  const db1: knex = fastify.db1
 /*************************************/
-  fastify.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
+  fastify.get('/', /*ป้องกัน การใช้งาน โดย Token */{
+    preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
+  },/*ป้องกัน การใช้งาน โดย Token */  async (request: FastifyRequest, reply: FastifyReply) => {
     try {
-      const rs: any = await DemoModels.test(db)
+      const rs: any = await DemoModels.test(db1)
         reply.send({  // แสดงข้อมูล api
             title: {
                 status: true,code: 200, message: 'Results Success',message_th: 'แสดง ข้อมูลสำเร็จ',cache:'no cache'
@@ -29,11 +31,15 @@ export default async function demo(fastify: FastifyInstance) {
       })
     }
   })
-  fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
+  fastify.post('/', /*ป้องกัน การใช้งาน โดย Token */{
+    preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
+  },/*ป้องกัน การใช้งาน โดย Token */  async (request: FastifyRequest, reply: FastifyReply) => {
     reply.send({ message: "Hello from POST method" })
   })
 /*************************************/
-  fastify.post('/params', async (request: FastifyRequest, reply: FastifyReply) => {
+  fastify.post('/params', /*ป้องกัน การใช้งาน โดย Token */{
+    preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
+  },/*ป้องกัน การใช้งาน โดย Token */  async (request: FastifyRequest, reply: FastifyReply) => {
     const body: any = request.body
     const username = body.username
     const password = body.password
@@ -41,7 +47,9 @@ export default async function demo(fastify: FastifyInstance) {
   })
 /*************************************/
   // http://localhost:8081/demo/Satit/Rianpit
-  fastify.get('/:firstName/:lastName', async (request: FastifyRequest, reply: FastifyReply) => {
+  fastify.get('/:firstName/:lastName', /*ป้องกัน การใช้งาน โดย Token */{
+    preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
+  },/*ป้องกัน การใช้งาน โดย Token */ async (request: FastifyRequest, reply: FastifyReply) => {
     const params: any = request.params
     const firstName = params.firstName
     const lastName = params.lastName
@@ -49,7 +57,9 @@ export default async function demo(fastify: FastifyInstance) {
   })
 /*************************************/
   // http://localhost:8081/demo?firstName=Satit&lastName=Rianpit
-  fastify.get('/query', async (request: FastifyRequest, reply: FastifyReply) => {
+  fastify.get('/query', /*ป้องกัน การใช้งาน โดย Token */{
+    preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
+  },/*ป้องกัน การใช้งาน โดย Token */ async (request: FastifyRequest, reply: FastifyReply) => {
     const query: any = request.query
     const firstName = query.firstName
     const lastName = query.lastName
@@ -57,11 +67,15 @@ export default async function demo(fastify: FastifyInstance) {
   })
 /*************************************/
   // U = UPDATE -> PUT
-  fastify.put('/', async (request: FastifyRequest, reply: FastifyReply) => {
+  fastify.put('/', /*ป้องกัน การใช้งาน โดย Token */{
+    preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
+  },/*ป้องกัน การใช้งาน โดย Token */ async (request: FastifyRequest, reply: FastifyReply) => {
     reply.send({ message: "Hello from PUT method" })
   })
 /*************************************/
-  fastify.put('/:userId/edit', async (request: FastifyRequest, reply: FastifyReply) => {
+  fastify.put('/:userId/edit', /*ป้องกัน การใช้งาน โดย Token */{
+    preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
+  },/*ป้องกัน การใช้งาน โดย Token */ async (request: FastifyRequest, reply: FastifyReply) => {
     const body: any = request.body
     const username = body.username
     const password = body.password
@@ -71,7 +85,9 @@ export default async function demo(fastify: FastifyInstance) {
   })
 /*************************************/
   // D = DELETE -> DELETE
-  fastify.delete('/:userId', async (request: FastifyRequest, reply: FastifyReply) => {
+  fastify.delete('/:userId', /*ป้องกัน การใช้งาน โดย Token */{
+    preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
+  },/*ป้องกัน การใช้งาน โดย Token */ async (request: FastifyRequest, reply: FastifyReply) => {
     const params: any = request.params
     const userId = params.userId
     reply.send({ status: true, userId })

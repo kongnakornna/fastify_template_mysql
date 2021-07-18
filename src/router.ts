@@ -13,7 +13,6 @@ import { FastifyInstance } from 'fastify'
 	import userRouter from './modules/user/controllers/user'
 	import loginRouter from './modules/login/controllers/login'
 	/*******file************/
-	import fileRouter from './modules/file/controllers/file'
 	import uploadRouter from './modules/upload/controllers/upload'
     /*******************Demo************************/
     import demoRouter from './modules/demo/controllers/demo'
@@ -24,6 +23,9 @@ import { FastifyInstance } from 'fastify'
     /***********oauth2-server start***************/
 
     /***********oauth2-server end***************/
+    /****testtypeorm*******/
+    import testtypeormRouter from './modules/testtypeorm/controllers/testtypeorm' 
+
 /*******************export************************/
 export default async function router(fastify: FastifyInstance) {
    // router prefix
@@ -41,7 +43,6 @@ export default async function router(fastify: FastifyInstance) {
 	fastify.register(userRouter, { prefix: '/user' })  
 	fastify.register(loginRouter, { prefix: '/login' })  
 	/*******file************/
-	fastify.register(fileRouter, { prefix: '/file' })  
 	fastify.register(uploadRouter, { prefix: '/upload' })
     /*******************Demo************************/
     fastify.register(demoRouter, { prefix: '/demo' })  
@@ -50,7 +51,8 @@ export default async function router(fastify: FastifyInstance) {
     fastify.register(customerRouter, { prefix: '/customers' })  
     /*******************Geo************************/
     fastify.register(geoRouter, { prefix: '/geo' })
-    
+    /***********testtypeormRouter***************/
+    fastify.register(testtypeormRouter, { prefix: '/testtypeorm' })
 
     /*******************modules************************/
     /***********oauth2-server start***************/

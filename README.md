@@ -1,18 +1,17 @@
-# Template fastify framework : Vesion 1.0.0
+# fastify_appsservice
+
+# Appservice Vesion 1.0.0 By fastify framework
 
 Use Nodejs with fastify framework and knexjs framework mysql database
--Nodejs
--Typescript
--Mysql database
--Mongodb as mongoose
--Redis cache
--jwt && oauth2-server token Barer Header security allow access
--es5 ,es6
 
-# Structure Code
-
-## Nodejs Template fastify framework
-
+- Nodejs
+- Typescript
+- Mysql database
+- Mysql database CRUD
+- Mongodb as mongoose
+- Redis cache
+- jwt && oauth2-server token Barer Header security allow access
+- es5 ,es6
 
 # Structure Code
 
@@ -91,7 +90,6 @@ Use Nodejs with fastify framework and knexjs framework mysql database
 - │ └── subscribers (your custom code)
 - │ └── vendor (your custom code)
 
-
 # Structure Code
 
 ## fastify_template_mysql
@@ -106,15 +104,16 @@ Use Nodejs with fastify framework and knexjs framework mysql database
 
 This project created by Node JS version 14.17.0. Used Fastify framework+ Express framework for connect to server Coding by Typescript and Testing by Jest
 
-- Run on port 8001 this port is fix by bible team and infrastructor team so you should not change it
+- Run on port 8002 this port is fix by bible team and infrastructor team so you should not change it
 
 # Base URL
 
 This project have 3 step running such as
-│ └──[localhost](localhost:8001),
-│ └──[localhost](127.0.0.1:8001),
-│ └──[dev](http://0.0.0.0:8001/appapi/),
-│ └──[production](https://xxx.com)
+
+- │ └──[localhost](localhost:8002),
+- │ └──[localhost](127.0.0.1:8002),
+- │ └──[dev](http://0.0.0.0:8002/appapi/),
+- │ └──[production](https://xxx.com)
 
 - About dev which is private url you must connect Pulse Secure before running
 
@@ -142,7 +141,7 @@ Run `npm install redis`
 
 # Development server
 
-Run `npx nodemon` for a dev server. Navigate `localhost:8001`. The app will automatically reload if you change any of the source files.
+Run `npx nodemon` for a dev server. Navigate `localhost:8002`. The app will automatically reload if you change any of the source files.
 
 # Testing
 
@@ -193,7 +192,7 @@ Run `nmp run build`
 
 Run `npx gulp`
 
-## 127.0.0.1 : 8001
+## 127.0.0.1 : 8002
 
 ## Test restful api software
 
@@ -236,6 +235,8 @@ Run `npx gulp`
 - https://www.fastify.io
 - https://knexjs.org
 - https://nextjs.org/docs/advanced-features/custom-document
+- crud -> https://developer.okta.com/blog/2019/09/09/build-crud-app-node-mysql
+- https://www.infoq.com/articles/typescript-mysql/
 - https://typeorm.io/
 - https://mongoosejs.com/docs
 - https://expressjs.com/en/starter/installing.html
@@ -251,6 +252,7 @@ Run `npx gulp`
 - https://futureskill.co
 - https://www.udemy.com
 - https://github.com/fastify/fastify-oauth2
+- https://medium.com/@shijin_nath/typescript-rest-api-with-express-js-mysql-and-typeorm-8331cea78b0c
 
 Run `npm i --save fastify-oauth2 -S` // ต่อ google or facebook
 
@@ -297,7 +299,7 @@ Run `pm2 show `<id|name|all>
 
 # คำสั่ง restart process
 
-Run `pm2 restart `<id|name|all>
+Run `pm2 restart `<id|name|all> // pm2 restart 0
 
 # คำสั่ง stop process
 

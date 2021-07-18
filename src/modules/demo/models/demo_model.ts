@@ -1,11 +1,11 @@
 import * as knex from 'knex';
 export class DemoModel {
-  create(db: knex, data: any) {
-    return db('sd_users')
+  create(db1: knex, data: any) {
+    return db1('sd_users')
       .insert(data)
   }
-  test(db: knex) {
-        return db('sd_sd_users as u')
+  test(db1: knex) {
+        return db1('sd_sd_users as u')
             .join('profile as p', 'u.user_id', 'p.user_id')
             // .select('u.*')
             .select('u.user_id', 'u.first_name', 'u.last_name', 'u.email', 'u.date')
@@ -15,15 +15,15 @@ export class DemoModel {
             .limit(3)
             .offset(5)
     }
-  login(db: knex, username: any, password: any) {
-    return db('sd_users')
+  login(db1: knex, username: any, password: any) {
+    return db1('sd_users')
       .select('user_id', 'first_name', 'last_name')
       .where('username', username)
       .where('password', password)
   }
 
-  read(db: knex) {
-    return db('sd_users')
+  read(db1: knex) {
+    return db1('sd_users')
       .select('user_id', 'first_name', 'last_name', 'email')
       .orderBy('user_id','desc')
       //.limit(3)
@@ -31,39 +31,39 @@ export class DemoModel {
       
   }
 
-  search(db: knex, query: any) {
+  search(db1: knex, query: any) {
     const _query = '%' + query + '%'
-    return db('sd_users')
+    return db1('sd_users')
       .select('user_id', 'first_name', 'last_name', 'email')
       .where('first_name', 'like', _query)
       .orderBy('user_id')
   }
 
-  update(db: knex, userId: any, data: any) {
-    return db('sd_users')
+  update(db1: knex, userId: any, data: any) {
+    return db1('sd_users')
       .where('user_id', userId)
       .update(data)
   }
 
-  remove(db: knex, userId: any) {
-    return db('sd_users')
+  remove(db1: knex, userId: any) {
+    return db1('sd_users')
       .where('user_id', userId)
       .del()
   }
 
   // Raw query
-  rawQuery(db: knex, userId: any, firstName: any) {
+  rawQuery(db1: knex, userId: any, firstName: any) {
     const sql = `
     SELECT user_id, first_name, last_name,email
     FROM users
     WHERE user_id=? AND first_name=?
     ORDER BY first_name DESC
     `
-    return db.raw(sql, [userId, firstName])
+    return db1.raw(sql, [userId, firstName])
   }
 
-  whereRawQuery(db: knex) {
-    return db('sd_users')
+  whereRawQuery(db1: knex) {
+    return db1('sd_users')
       .select('*')
       .whereRaw('group')
   }
