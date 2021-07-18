@@ -1,11 +1,17 @@
 import * as fastify from 'fastify'
-import * as path from 'path'
 import mongooses = require('mongoose')
-import "reflect-metadata";
+import "reflect-metadata"; // for TypeORM
 const mongoose = require('mongoose');
 const multer = require('fastify-multer')
+/**************************/
+import * as path from 'path'
 const envPath = path.join(__dirname, './config.conf')
 require('dotenv').config({ path: envPath })
+const env = process.env 
+const opts = {} 
+console.log("DB1_HOST: ", env.DB1_HOST)
+/**************************/
+
 import WebSocket from 'ws'
 import routers from './router'
 /**************************/
@@ -14,7 +20,7 @@ const app: fastify.FastifyInstance = fastify.fastify({
         level: 'info'
     }
 })
-
+ 
 app.setErrorHandler((error, req, res) => {
     req.log.error(error.toString())
     res.send({ error })
@@ -24,20 +30,21 @@ app.register(multer.contentParser)
 app.register(require('fastify-cors'))
 app.register(require('fastify-formbody'))
 /**************************/
-/* knex db connect  webservicedb */
+
+/* knex db1 connect  webservicedb */
 app.register(require('./system/database/mysqldb'), {
     options: {
         client: 'mysql2',
         connection: {
-            host: process.env.DB1_HOST || 'localhost',
-            port: Number(process.env.DB1_PORT) || 3306,
-            user: process.env.DB1_USER || 'root',
-            password: process.env.DB1_PASSWORD || 'root',
-            database: process.env.DB1_NAME || 'webservicedb'
+            host: env.DB1_HOST,
+            port: Number(env.DB1_PORT), 
+            user: env.DB1_USER,
+            password: env.DB1_PASSWORD,
+            database: env.DB1_NAME
         },
         debug: true
     },
-    connectionName: 'db'
+    connectionName: 'db1'
 })
 /**************************/
 // register knex db2
@@ -45,11 +52,11 @@ app.register(require('./system/database/mysqldb'), {
     options: {
         client: 'mysql2',
         connection: {
-            host: process.env.DB2_HOST || 'localhost',
-            port: Number(process.env.DB2_PORT) || 3306,
-            user: process.env.DB2_USER || 'root',
-            password: process.env.DB2_PASSWORD || 'root',
-            database: process.env.DB2_NAME || 'test'
+            host: env.DB2_HOST,
+            port: Number(env.DB2_PORT),
+            user: env.DB2_USER,
+            password: env.DB2_PASSWORD,
+            database: env.DB2_NAME
         },
         debug: true
     },
@@ -61,19 +68,49 @@ app.register(require('./system/database/mysqldb'), {
     options: {
         client: 'mysql2',
         connection: {
-            host: process.env.DB3_HOST || 'localhost',
-            port: Number(process.env.DB3_PORT) || 3306,
-            user: process.env.DB3_USER || 'root',
-            password: process.env.DB3_PASSWORD || 'root',
-            database: process.env.DB3_NAME || 'test2'
+            host: env.DB3_HOST,
+            port: Number(env.DB3_PORT),
+            user: env.DB3_USER,
+            password: env.DB3_PASSWORD,
+            database: env.DB3_NAME
         },
         debug: true
     },
     connectionName: 'db3'
 })
 /* knex db connect   */
+/**************************/
+/* typeorm db1 connect  webservice3 */
+import { createConnection } from 'typeorm';
+/* entity  */
+/* entity  */
+import {Photo} from "./modules/testtypeorm/entity/Photo";
+createConnection({
+  type: "mysql",
+	host:  env.DB3_HOST,
+	port: Number(env.DB3_PORT),
+	username: env.DB3_USER,
+	password: env.DB3_PASSWORD,
+	database: env.DB3_NAME,
+    entities: [
+      "src/system/entity/**/*.ts"  // "src/entities/*.ts"
+    ],
+    migrations: [
+        "src/system/migration/**/*.ts"
+    ],
+    subscribers: [
+        "src/system/subscriber/**/*.ts"
+    ]
+	//logging: true,
+	//synchronize: true
+}).then(connection => {
+  console.log("TypeORM is Database Connection : "+env.DB3_NAME+' :', connection.isConnected) 
+});
+/**************************/
+
+
 app.register(require('./system/plugins/jwt'), {
-    secret: process.env.JWT_SECRET || '#5371##99nau'
+    secret: env.JWT_SECRET || '#5371##99nau'
 })
 /**************************/
 // websocket
@@ -122,7 +159,7 @@ app.register(require('point-of-view'), {
 //connected fastify to mongoose
 //  https://medium.com/swlh/fullstack-crud-application-with-fastify-mongoose-and-react-admin-86d3e743dcdf
 try {
-    mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/ultimate', {
+    mongoose.connect(env.MONGO_URI, {
         useCreateIndex: true,
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -135,10 +172,10 @@ app.register(require('fastify-mongodb'), {
     // force to close the mongodb connection when app stopped
     // the default value is false
     forceClose: true,
-    url: 'mongodb://localhost/ultimate'
+    url: env.MONGO_URI
 })
 // MongoDB
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/ultimate', {
+mongoose.connect(env.MONGO_URI, {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true

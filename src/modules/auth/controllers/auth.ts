@@ -2,6 +2,7 @@ import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify'
 import * as knex from 'knex'
 import * as crypto from 'crypto'
 import { UserModel } from '../../../modules/auth/models/user_model'
+import { AuthModel } from '../../../modules/auth/models/auth_model'
 import * as path from 'path'
 const envPath = path.join(__dirname, '../config.conf')
 require('dotenv').config({ path: envPath })
@@ -10,7 +11,7 @@ import * as EmailValidator from 'email-validator';
 // function name auth
 export default async function auth(fastify: FastifyInstance) {
   const userModel = new UserModel()
-  const db: knex = fastify.db
+  const db1: knex = fastify.db1
 /**************************************************/    
 fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
     const body: any = request.body
@@ -20,14 +21,14 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
         if (username=='') {
             reply.code(500).send({ status: false,code: 500,message: 'username is null',message_th: 'ไม่พบข้อมูล username' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
         } if (password=='') {
             reply.code(500).send({ status: false,code: 500,message: 'password is null',message_th: 'ไม่พบข้อมูล password' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
         }
       const encPassword = crypto.createHash('md5').update(password).digest('hex')
-      const rs: any = await userModel.login(db, username, encPassword)
+      const rs: any = await userModel.login(db1, username, encPassword)
       if (rs.length > 0) {
         const user: any = rs[0]
           console.log(user)
@@ -58,7 +59,7 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
                     }
           })
          /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-        const decoded = fastify.jwt.verify(token)
+         const decoded: any= fastify.jwt.verify(token)
         // asycnhronously
         fastify.jwt.verify(token, (err:any, decoded:any) => {
         if (err) fastify.log.error(err)
@@ -81,15 +82,15 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
              // data: decoded,
               token
           })
-          reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+          return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
       } else {
         reply.code(401).send({ status: false,code: 401, message: 'Login failed!',message_th: 'ไม่พบข้อมูล username หรือ password ในระบบ'  })
-        reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
       }
     } catch (error) {
       console.log(error)
       reply.code(500).send({ status: false,code: 500,message: error })
-      reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+      return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
     }
   })
 /**************************************************/    
@@ -106,25 +107,25 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
         if(username==="") {
             reply.code(500).send({ status: false,code: 500,message: 'username is null',message_th: 'ไม่พบข้อมูล username' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
         }if (password==="") {
             reply.code(500).send({ status: false,code: 500,message: 'password is null',message_th: 'ไม่พบข้อมูล password' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
         }
         const encPassword = crypto.createHash('md5').update(password).digest('hex')
         if (email === "") {
             reply.code(500).send({ status: false,code: 500,message: 'email is null',message_th: 'ไม่พบข้อมูล email' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
         }if (first_name==="") {
             reply.code(500).send({ status: false,code: 500,message: 'first_name is null',message_th: 'ไม่พบข้อมูล first_name' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
         }if (last_name==="") {
             reply.code(500).send({ status: false,code: 500,message: 'last_name is null',message_th: 'ไม่พบข้อมูล last_name' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
         }if (level==="") {  const level=1 }
     const status=1
     const network_id=null
@@ -137,10 +138,10 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
                 message: 'This email is Invalid format ',
                 message_th: 'รูปแบบ email ไม่ถูกต้อง'
             }) 
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
     }
   
-    const rs_email: any = await userModel.validation_email(db, email)
+    const rs_email: any = await userModel.validation_email(db1, email)
     if (rs_email.length > 0) {
         reply.code(500).send({
             status: false,
@@ -148,8 +149,8 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
             message: 'This email is duplicate data in the database system ',
             message_th: 'email นี้เป็นข้อมูลซ้ำในระบบฐานข้อมูล'
         })
-        reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
-    }const rs_username: any = await userModel.validation_username(db, username)
+        return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+    }const rs_username: any = await userModel.validation_username(db1, username)
     if (rs_username.length > 0) {
         reply.code(500).send({
             status: false,
@@ -157,7 +158,7 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
             message: 'This username is duplicate data in the database system ',
             message_th: 'username นี้เป็นข้อมูลซ้ำในระบบฐานข้อมูล'
         }) 
-        reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
     }  
     /**************************************************/    
     try {
@@ -172,7 +173,7 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
       data.level = level
       data.status = status
       data.network_id = network_id
-      await userModel.create(db, data)
+      await userModel.create(db1, data)
      // reply.send({ message: 'Insert data', status: true })
        const status_insert = 1
     } catch (error) {
@@ -185,11 +186,11 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
             message_th: ' ไม่สามาราลงทะเบียนได้',
             error: error
         })
-        reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
     }
         
-        const lastrs: any = await userModel.lastidread(db)
-           // reply.code(500).send({ da: lastrs }) reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        const lastrs: any = await userModel.lastidread(db1)
+           // reply.code(500).send({ da: lastrs }) return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
         const luser: any = lastrs[0]
         const user_idx = luser.user_id 
         var md5 = require('md5');
@@ -198,10 +199,10 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
         data_array.profile_id = enc_user_idx
 
        // reply.code(200).send({ array: data_array })
-        //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        //return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
 
-        await userModel.updateuid(db, user_idx, data_array)
-        const rs: any = await userModel.login(db, username, encPassword)
+        await userModel.updateuid(db1, user_idx, data_array)
+        const rs: any = await userModel.login(db1, username, encPassword)
         if (rs.length > 0) {
         const user: any = rs[0]
           console.log(user)
@@ -232,7 +233,7 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
                     }
           })
          /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-        const decoded = fastify.jwt.verify(token)
+         const decoded: any= fastify.jwt.verify(token)
         // asycnhronously
         fastify.jwt.verify(token, (err:any, decoded:any) => {
         if (err) fastify.log.error(err)
@@ -255,15 +256,15 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
               enc_user_idx: enc_user_idx,
               token
           })
-          reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+          return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
       } else {
           reply.code(401).send({ status: false, code: 401, message: 'Login failed!', message_th: 'ไม่พบข้อมูล username หรือ password ในระบบ' })
-          reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+          return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
       }
     } catch (error) {
       console.log(error)
         reply.code(500).send({ status: false, code: 500, message: error })
-        reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
     }
   })
 /**************************************************/    
@@ -275,14 +276,14 @@ fastify.post('/singin', async (request: FastifyRequest, reply: FastifyReply) => 
         if (username=='') {
             reply.code(500).send({ status: false,code: 500,message: 'username is null',message_th: 'ไม่พบข้อมูล username' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
         } if (password=='') {
             reply.code(500).send({ status: false,code: 500,message: 'password is null',message_th: 'ไม่พบข้อมูล password' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
         }
       const encPassword = crypto.createHash('md5').update(password).digest('hex')
-      const rs: any = await userModel.login(db, username, encPassword)
+      const rs: any = await userModel.login(db1, username, encPassword)
       if (rs.length > 0) {
         const user: any = rs[0]
           console.log(user)
@@ -313,7 +314,7 @@ fastify.post('/singin', async (request: FastifyRequest, reply: FastifyReply) => 
                     }
           })
          /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-        const decoded = fastify.jwt.verify(token)
+         const decoded: any= fastify.jwt.verify(token)
         // asycnhronously
         fastify.jwt.verify(token, (err :any, decoded : any) => {
         if (err) fastify.log.error(err)
@@ -336,15 +337,15 @@ fastify.post('/singin', async (request: FastifyRequest, reply: FastifyReply) => 
              // data: decoded,
               token
           })
-          reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+          return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
       } else {
         reply.code(401).send({ status: false,code: 401, message: 'Login failed or user is not active ! ',message_th: 'ไม่พบข้อมูล username หรือ password ในระบบ หรือ ยัง ไม่ได้ active user'  })
-        reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
       }
     } catch (error) {
       console.log(error)
       reply.code(500).send({ status: false,code: 500,message: error })
-      reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+      return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
     }
   })
 /**************************************************/    
@@ -355,9 +356,9 @@ fastify.post('/resetpass', async (request: FastifyRequest, reply: FastifyReply) 
         if (datareset==="") {
             reply.code(500).send({ status: false,code: 500,message: 'username or email is null',message_th: 'ไม่พบข้อมูล username หรือ email' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
         }   
-      const rs: any = await userModel.resetPassword(db, datareset)
+      const rs: any = await userModel.resetPassword(db1, datareset)
       if (rs.length > 0) {
           const user: any = rs[0]
           /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
@@ -387,7 +388,7 @@ fastify.post('/resetpass', async (request: FastifyRequest, reply: FastifyReply) 
                     }
           })
          /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-        const decoded = fastify.jwt.verify(token)
+         const decoded: any= fastify.jwt.verify(token)
         // asycnhronously
           reply.send({
               status: true, code: 200,
@@ -398,14 +399,14 @@ fastify.post('/resetpass', async (request: FastifyRequest, reply: FastifyReply) 
 
           })
           console.log('query result :' + rs)
-          reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+          return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
       } else {
         reply.code(401).send({  status: false,
                                 code: 401, 
                                 message: 'username or email is do not have in database',
                                 message_th: 'ไม่พบข้อมูล username หรือ email ในระบบฐานข้อมูล',data: null,input: { reset_valule: datareset},  
         })
-          reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+          return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
       }
     } catch (error) {
       console.log(error)
@@ -424,15 +425,15 @@ fastify.post('/changepassword', /*ป้องกัน การใช้งา
     if (username==="") {
             reply.code(500).send({ status: false,code: 500,message: 'username is null',message_th: 'ไม่พบข้อมูล username' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
     }if (oldpassword==="") {
             reply.code(500).send({ status: false,code: 500,message: 'old password is null',message_th: 'ไม่พบข้อมูล old password' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
     }if (newpassword==="") {
             reply.code(500).send({ status: false,code: 500,message: 'new password is null',message_th: 'ไม่พบข้อมูล new password' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
     } 
     
     try {
@@ -444,20 +445,20 @@ fastify.post('/changepassword', /*ป้องกัน การใช้งา
       data.newpassword = newpassword
       const encoldpassword = crypto.createHash('md5').update(oldpassword).digest('hex')
       const encnewpassword = crypto.createHash('md5').update(newpassword).digest('hex')
-      const rsold: any = await userModel.login(db, username, encoldpassword)
+      const rsold: any = await userModel.login(db1, username, encoldpassword)
         if (rsold.length > 0) {
 
             const data_array: any = {}; 
             data_array.password = encnewpassword
-            await userModel.where_user_update_password(db, username, data_array)
+            await userModel.where_user_update_password(db1, username, data_array)
           
         } else {
              reply.code(401).send({ status: false,code: 401, message: 'change password failed! ',message_th: 'เปลี่ยนรหัสผ่านไม่สำเร็จ ไม่พบข้อมูล username หรือ password ในระบบ'  })
-             reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+             return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
 
         }
 
-      const rs: any = await userModel.login(db, username, encnewpassword)
+      const rs: any = await userModel.login(db1, username, encnewpassword)
       if (rs.length > 0) {
         const user: any = rs[0]
           console.log(user)
@@ -488,7 +489,7 @@ fastify.post('/changepassword', /*ป้องกัน การใช้งา
                     }
           })
          /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-        const decoded = fastify.jwt.verify(token)
+         const decoded: any= fastify.jwt.verify(token)
         // asycnhronously
         fastify.jwt.verify(token, (err :any, decoded :any) => {
         if (err) fastify.log.error(err)
@@ -511,36 +512,34 @@ fastify.post('/changepassword', /*ป้องกัน การใช้งา
              // data: decoded,
               token
           })
-          reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+          return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
       } else {
         reply.code(401).send({ status: false,code: 401, message: 'Change password and Login failed or user is not active ! ',message_th: 'ไม่พบข้อมูล username หรือ password ในระบบ หรือ ยัง ไม่ได้ active user'  })
-        reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
       }
     } catch (error) {
       console.log(error)
       reply.code(500).send({ status: false,code: 500,message: error })
-      reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+      return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
     }
   })
 /**************************************************/   
-    /**************************************************/
- 
 fastify.post('/activecode', async (request: FastifyRequest, reply: FastifyReply) => {
     const body: any = request.body
     const code = body.code
            if (code==="") {
             reply.code(500).send({ status: false,code: 500,message: 'code is null',message_th: 'ไม่พบข้อมูล code' })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+            return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
         } 
     try {
         /******************************ตรวจสอบ code active Token check*************************************/
  
         var res = code;  
         let ids = request.id
-        const decoded = fastify.jwt.verify(res)
+         const decoded: any= fastify.jwt.verify(res)
         const user_id = decoded['user_id']
-        const profile: any = await userModel.profile(db, user_id)
+        const profile: any = await userModel.profile(db1, user_id)
         const level = decoded['level']
         const username = decoded['username']
         const at = decoded['at']
@@ -578,7 +577,7 @@ fastify.post('/activecode', async (request: FastifyRequest, reply: FastifyReply)
 
             const data_array: any = {};
             data_array.status = 1
-            await userModel.updateuid(db, user_id, data_array)
+            await userModel.updateuid(db1, user_id, data_array)
 
                     reply.send({  // แสดงข้อมูล api
                         title: {
@@ -595,7 +594,7 @@ fastify.post('/activecode', async (request: FastifyRequest, reply: FastifyReply)
         }
         console.log('at jwt :'+at) 
         /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-       reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+       return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
     } catch (error) {
       console.log(error)
       reply.code(500).send({ // แสดงข้อมูล api
@@ -605,12 +604,11 @@ fastify.post('/activecode', async (request: FastifyRequest, reply: FastifyReply)
                                 error: error,
                                 data: null
       })
-        reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
       }
         
   })
-    /**************************************************/
-
+/**************************************************/
 fastify.get('/activecode', async (request: FastifyRequest, reply: FastifyReply) => {
     const body: any = request.body
     const query: any = request.query
@@ -622,16 +620,17 @@ fastify.get('/activecode', async (request: FastifyRequest, reply: FastifyReply) 
             message_th: 'ไม่พบข้อมูล code'
         })
             console.log(request.body)
-            reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+         
         } 
     try {
            
         /******************************ตรวจสอบ code active Token check*************************************/
         var res = code;  
         let ids = request.id
-        const decoded = fastify.jwt.verify(res)
+         const decoded: any= fastify.jwt.verify(res)
         const user_id = decoded['user_id']
-        const profile: any = await userModel.profile(db, user_id)
+        const profile: any = await userModel.profile(db1, user_id)
         const level = decoded['level']
         const username = decoded['username']
         const at = decoded['at']
@@ -669,7 +668,7 @@ fastify.get('/activecode', async (request: FastifyRequest, reply: FastifyReply) 
 
             const data_array: any = {};
             data_array.status = 1
-            await userModel.updateuid(db, user_id, data_array)
+            await userModel.updateuid(db1, user_id, data_array)
 
                     reply.send({  // แสดงข้อมูล api
                         title: {
@@ -686,7 +685,7 @@ fastify.get('/activecode', async (request: FastifyRequest, reply: FastifyReply) 
         }
         console.log('at jwt :'+at) 
         /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-       reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+       return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
     } catch (error) {
       console.log(error)
       reply.code(500).send({ // แสดงข้อมูล api
@@ -696,7 +695,7 @@ fastify.get('/activecode', async (request: FastifyRequest, reply: FastifyReply) 
                                 error: error,
                                 data: null
       })
-        reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
       }
         
   })
@@ -709,9 +708,9 @@ fastify.get('/verify', /*ป้องกัน การใช้งาน โ�
         var str  : any =  request.headers.authorization
         var res = str.replace("Bearer ", "");  
         let ids = request.id
-        const decoded = fastify.jwt.verify(res)
+         const decoded: any= fastify.jwt.verify(res)
         const user_id = decoded['user_id']
-        const profile: any = await userModel.profile(db, user_id)
+        const profile: any = await userModel.profile(db1, user_id)
         const level = decoded['level']
         const username = decoded['username']
         const at = decoded['at']
@@ -761,7 +760,7 @@ fastify.get('/verify', /*ป้องกัน การใช้งาน โ�
         }
         console.log('at jwt :'+at) 
         /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-    reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+    return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
     } catch (error) {
       console.log(error)
       reply.code(500).send({ // แสดงข้อมูล api
@@ -771,36 +770,36 @@ fastify.get('/verify', /*ป้องกัน การใช้งาน โ�
                                 error: error,
                                 data: null
       })
-        reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
       }
         
   })
-/**************************************************/    
+/**************************************************/
 fastify.post('/verify', /*ป้องกัน การใช้งาน โดย Token */{
     preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
   },/*ป้องกัน การใช้งาน โดย Token */ async (request: FastifyRequest, reply: FastifyReply) => {
     try {
         /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-        var str  : any = request.headers.authorization
+        var str  : any =  request.headers.authorization
         var res = str.replace("Bearer ", "");  
         let ids = request.id
-        const decoded = fastify.jwt.verify(res)
+         const decoded: any= fastify.jwt.verify(res)
         const user_id = decoded['user_id']
-        const profile: any = await userModel.profile(db, user_id)
+        const profile: any = await userModel.profile(db1, user_id)
         const level = decoded['level']
         const username = decoded['username']
         const at = decoded['at']
         const startdate = at['startdate']
         const issued_at = at['issued_at']
-        const time_setting = at['time_setting']*100
+        const time_setting  : any =  at['time_setting']*100
         const time_expired = at['time_expired']
         const day_expired = at['day_expired']
         const timeconfig = at['timeconfig']
         
         var now = Date.now();
-         var time_settings : any = time_setting
-        var timestamp_cul = now - issued_at 
-        var timestamp_culs   : any = timestamp_cul
+        var time_settings =time_setting
+        var timestamp_cul  : any = now - issued_at 
+        var timestamp_culs  : any = timestamp_cul
         if (timestamp_culs > time_settings) {
             const msg_time = 'Token Expired : โทเค็นหมดอายุ'
             const msg_time_th = 'โทเค็นหมดอายุ'
@@ -812,8 +811,7 @@ fastify.post('/verify', /*ป้องกัน การใช้งาน โ�
                         title: {
                         status: status,code: code, message: msg_time_en,msg_time_th: msg_time_th,cache:'no cache'
                         },  
-                        data: null,
-                        profile: null,
+                        data: null, profile: null
                     })
         }else {
             const msg_time = 'Token Not Expired : โทเค็นยังไม่หมดอายุ'
@@ -837,7 +835,7 @@ fastify.post('/verify', /*ป้องกัน การใช้งาน โ�
         }
         console.log('at jwt :'+at) 
         /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-      reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+    return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
     } catch (error) {
       console.log(error)
       reply.code(500).send({ // แสดงข้อมูล api
@@ -847,8 +845,23 @@ fastify.post('/verify', /*ป้องกัน การใช้งาน โ�
                                 error: error,
                                 data: null
       })
-      reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
+        return //reply.sent = true // I tried that, didn't work  ออกจากลูปการทำงาน 
       }
+        
+  })
+/**************************************************/      
+fastify.post('/verifydev', /*ป้องกัน การใช้งาน โดย Token */{
+    preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
+  },/*ป้องกัน การใช้งาน โดย Token */ async (request: FastifyRequest, reply: FastifyReply) => {
+     reply.code(200).send({ // แสดงข้อมูล api
+         title: {
+             status: false, code: 200,
+             message: 'Results  test successful',
+             message_th: 'test สำเร็จ',
+             cache: 'no cache'
+             },  
+            data: null
+      })
         
   })
 /**************************************************/    

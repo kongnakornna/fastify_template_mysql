@@ -10,9 +10,11 @@ import { UserModel } from '../../../modules/user/models/user_model'
 export default async (fastify: FastifyInstance) => {
 
   const userModel = new UserModel()
-  const db = fastify.db
+  const db1 = fastify.db1
 
-  fastify.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
+  fastify.get('/', /*ป้องกัน การใช้งาน โดย Token */{
+    preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
+  },/*ป้องกัน การใช้งาน โดย Token */ async (request: FastifyRequest, reply: FastifyReply) => {
 
     try {
 
@@ -40,7 +42,9 @@ export default async (fastify: FastifyInstance) => {
 
   })
 
-  fastify.get('/attachments', async (request: FastifyRequest, reply: FastifyReply) => {
+  fastify.get('/attachments', /*ป้องกัน การใช้งาน โดย Token */{
+    preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
+  },/*ป้องกัน การใช้งาน โดย Token */ async (request: FastifyRequest, reply: FastifyReply) => {
 
     try {
 
@@ -74,7 +78,9 @@ export default async (fastify: FastifyInstance) => {
 
   })
 
-  fastify.get('/template', async (request: FastifyRequest, reply: FastifyReply) => {
+  fastify.get('/template', /*ป้องกัน การใช้งาน โดย Token */{
+    preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
+  },/*ป้องกัน การใช้งาน โดย Token */ async (request: FastifyRequest, reply: FastifyReply) => {
 
     try {
 
@@ -88,7 +94,7 @@ export default async (fastify: FastifyInstance) => {
       });
 
 
-      const rs = await userModel.read(db)
+      const rs = await userModel.read(db1)
 
       const templateFile = path.join(__dirname, '../../../../views/mail-template.ejs')
       const html: any = ejs.render(fs.readFileSync(templateFile, 'utf8'), { users: rs })

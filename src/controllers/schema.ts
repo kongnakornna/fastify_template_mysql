@@ -1,5 +1,4 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify'
-
 import bodySchema from '../schemas/body'
 import paramsSchema from '../schemas/params'
 import queryStringSchema from '../schemas/query_string'

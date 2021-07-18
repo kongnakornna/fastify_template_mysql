@@ -1,25 +1,27 @@
 
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify'
-
 import multer from 'fastify-multer'
 const mime = require('mime-types')
-
 import * as fse from 'fs-extra'
-import * as path from 'path'
 import * as fs from 'fs'
 import * as knex from 'knex'
-
 import { v4 as uuidv4 } from 'uuid';
 // import { FileModel } from '../models/file'
-import { FileModel } from '../../../modules/upload/models/file'
+import { FileModel } from '../../../modules/upload/models/file_model'
+/**************************/
+import * as path from 'path'
+const envPath = path.join(__dirname, './config.conf')
+require('dotenv').config({ path: envPath })
+const env = process.env 
+const opts = {} 
+console.log("UPLOAD_DIR: ", env.UPLOAD_DIR)
+const uploadPath :any=  env.UPLOAD_DIR
+/**************************/
+
 const fileModel = new FileModel()
-
 export default async function upload(fastify: FastifyInstance) {
-
-  const db: knex = fastify.db
-
-  const uploadPath = process.env.UPLOAD_DIR || './upload'
-
+  const db1: knex = fastify.db1
+ 
   const storage = multer.diskStorage({
     destination: (req: any, file: any, cb: any) => {
       cb(null, uploadPath)
@@ -59,7 +61,8 @@ export default async function upload(fastify: FastifyInstance) {
     fileInfo.filesize = file.size
     fileInfo.filename = file.filename
     fileInfo.date = issued_at
-    const rs: any = await fileModel.save(db, fileInfo)
+      const rs: any = await fileModel.save(db1, fileInfo)
+      console.log('rs:=> ' + rs)
     const fileId = rs[0]
     const file_name = file.filename
     reply.send({
@@ -86,7 +89,7 @@ export default async function upload(fastify: FastifyInstance) {
       fileInfo.filename = file.filename
       fileInfo.date = issued_at
       const file_name = file.filename
-      const rs: any = await fileModel.save(db, fileInfo)
+      const rs: any = await fileModel.save(db1, fileInfo)
       const fileId = rs[0]
       console.log('upload file ' +fileId)
     }
@@ -114,7 +117,7 @@ export default async function upload(fastify: FastifyInstance) {
         } 
 
     try {
-      const rs: any = await fileModel.getInfo(db, fileId)
+      const rs: any = await fileModel.getInfo(db1, fileId)
       if (rs.length > 0) {
         const file = rs[0]
         const filename = file.filename
@@ -139,4 +142,22 @@ export default async function upload(fastify: FastifyInstance) {
     }
 
   })
+    
+   /****************************************/
+  fastify.post('/emptydir', {
+        /*ป้องกัน การใช้งาน โดย Token */
+        preValidation: [fastify.authenticate] 
+        }, async (request: FastifyRequest, reply: FastifyReply) => {
+        const body: any = request.body
+        const dir = body.dir
+        if (dir=='') {
+                reply.code(500).send({ status: false,code: 500,message: 'dir is null',message_th: 'ไม่พบข้อมูล dir' })
+                console.log(request.body)
+                return // reply.sent = true  //exit(); to stop the function execution   ออกจากลูปการทำงาน
+            } 
+  
+     })
+/****************************************/
+    
+    
 }
