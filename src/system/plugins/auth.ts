@@ -10,9 +10,9 @@ module.exports = fp(async (fastify: any, opts: any) => {
     /*********************************/
     fastify.register(require('fastify-jwt'), {
         secret: opts.secret,
-        trusted: opts.trusted,
-        private: opts.private,
-        public: opts.public,
+      //  trusted: opts.trusted,
+      //  private: opts.private,
+      //  public: opts.public,
     })
     /*********************************/
     fastify.decorate('authenticate', async (request: FastifyRequest, reply: FastifyReply) => {
@@ -28,35 +28,47 @@ module.exports = fp(async (fastify: any, opts: any) => {
                         var res = str.replace("Bearer ", "");  
                         let ids = request.id
                         const decoded: any= fastify.jwt.verify(res)
-                        const user_id = decoded['user_id']
+                        const user_id: any= decoded['user_id']
                         const profile: any = await userModel.profile(db1, user_id)
-                        const level = decoded['level']
-                        const username = decoded['username']
-                        const at = decoded['at']
+                        const level: any= decoded['level']
+                        const username: any= decoded['username']
+                        const at: any= decoded['at']
                         const startdate = at['startdate']
                         const issued_at = at['issued_at']
                         const time_setting = at['time_setting']*100
                         const time_expired = at['time_expired']
                         const day_expired = at['day_expired']
                         const timeconfig = at['timeconfig']
-                        
                         var now = Date.now();
                         var time_settings : any = time_setting
                         var timestamp_cul = now - issued_at 
                         var timestamp_culs   : any = timestamp_cul
                         if (timestamp_culs > time_settings) {
-                            const msg_time = 'Token Expired : โทเค็นหมดอายุ'
+                            const msg_time = 'Token Expired'
                             const msg_time_th = 'โทเค็นหมดอายุ'
-                            const msg_time_en = 'Token Expired '
+                            const msg_time_en = 'Token Expired'
                             const expired_status = 0
                             const status = false
                             const code = 500
                                     reply.send({  // แสดงข้อมูล api
                                         title: {
-                                        status: status,code: code, message: msg_time_en,msg_time_th: msg_time_th,cache:'no cache'
+                                            status: status,
+                                            code: code,
+                                            message: msg_time_en,
+                                            msg_time_th: msg_time_th,
+                                            cache: 'no cache'
                                         },  
-                                        data: null,
-                                        profile: null,
+                                        data: {
+                                            issued_at: issued_at,
+                                            startdate: startdate,
+                                            time_setting: time_setting,
+                                            day_expired: day_expired,
+                                            time_expired: time_expired,
+                                            timeconfig: timeconfig,
+                                            message: msg_time_en,
+                                            msg_time_th: msg_time_th,
+                                            status: status,
+                                        }
                                     })
                                reply.sent = true //exit loop  ออกจากลูปการทำงาน 
                         } else {
@@ -78,15 +90,24 @@ module.exports = fp(async (fastify: any, opts: any) => {
                                     })
                             */
                         } 
+
             /*********************************/
         } catch (error) {
             console.log('jwt error :'+error) 
             reply.send({
-                error,
-                status: false,
-                code: 500, message: 'token is null or error',
-                message_th: 'ไม่พบข้อมูล token หรือ token ไม่ถูกต้อง'
+                title: {
+                        status: false,
+                        code: 500,
+                        message: 'token is null or error',
+                        message_th: 'ไม่พบข้อมูล token หรือ token ไม่ถูกต้อง',
+                        //error: error,
+                        cache: 'no cache'
+                       },  
+                data: {
+                         error:error
+                  } 
             })
+            reply.sent = true //exit loop  ออกจากลูปการทำงาน 
         }
     })
     /*********************************/
