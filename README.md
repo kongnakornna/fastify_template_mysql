@@ -161,6 +161,78 @@ Run `npx gulp `
 
 Run `pm2 start dist\sever.js --name "yous name app" ` up to your
 
+
+Run `pm2 dash`
+
+# ติดตั้ง pm2
+
+Run `npm install pm2 -g`
+
+# สั่งให้ program ทำงาน
+
+Run `pm2 start index.js ` // index.js คือ ชื่อโปรแกรม
+Run `pm2 start index.js -n "Web app service `  
+ในกรณีที่ต้องการให้ run ใน mode cluster ให้เติม parameter -i แล้วตามด้วยจำนวน instance ที่ต้องการเช่น
+Run `pm2 start index.js -i 2 ` หมายถึง ทำเป็น cluster 2 ตัว
+หรือ
+Run `pm2 start index.js -i max ` หมายถึงทำเป็น cluster มากที่สุดเท่าที่ cpu รองรับ
+
+เมื่อต้องการดูว่าตอนนี้ program เราทำงานเป็นยังไงใช้ ram กับ cpu เป็นอย่างไรบ้างแบบ real time สามารถทำได้โดยใช้คำสั่ง
+
+Run `pm2 monit `
+
+# Docker command line พื้นฐาน
+
+## ถ้าเราจะ Push images ขึ้น Docker Registry จำเป็นต้อง login ก่อน
+
+Run `docker login` ท่านี้เดี๋ยวมันจะถ้า username, password เราทีหลัง
+Run `docker login -u saspallow -p password ` หรือสามารถกำหนดได้เลย
+Run `docker login -u` หรือเดี๋ยวค่อยใส่ password ก็ได้
+Run `docker logout ` อันนี้ก็คือการ Logout นั้นเองมันจะไปลบ Credentials ในเครื่องเรา
+สำหรับเราเข้าไปจัดการ Docker hosts ของเรา
+Run `docker-machine ssh default` default สามารถเปลี่ยนไปได้ตามชื่อ hosts นั้นๆ
+Run `docker-machine start default`
+Run `docker-machine restart default`
+
+## docker images
+
+Run `docker images` โชว์ images ในเครื่องเรามี images อะไรบ้าง
+Run `docker images --no-trunc ` ชว์ Images ID แบบเต็มๆยาวพรืด
+docker search <IMAGE>
+Run `docker search appservice` ค้นหา images จาก Docker registry
+docker pull <image name>
+เลือก Docker image ได้ที่นี่
+
+Run `docker pull appservice` ดึง images ที่เราระบุลงมาไว้ในเครื่อง
+
+## docker run
+
+Run `docker run -d -it --name mysql \ -h mysql \ -e MYSQL_ROOT_PASSWORD=password \ -p 3306:3306 \ -v /your_path/mysql:/var/lib/mysql`
+
+# docker run -p 80:80 -d --name nginx -h nginx nginx
+
+# ตอนเราสั่ง Run สามารถใส่ parameter ได้เยอะแยะเลย
+
+`-d `//เหมือนเรา เวฟข้าวเซเว่น ไว้แล้วเสร็จเดี๋ยวเราค่อยมากินมัน
+`-h ` //กำหนดชื่อ Container name ถ้าไม่ระบุมันจะตั้งชื่อ เท่ๆ มาให้เราเอง
+`-e ` //กำหนด Environment ของ Container ต้องดูว่าแต่ล่ะ images มีอะไรให้เราเซ็ตบ้าง
+`-p` //กำหนด ports ที่จะให้ Client คุยกับ Docker hosts
+`-v` //Mount Volume จากใน Container(/var/lib/mysql) บอกว่าให้มาอ่านที่นี้นะ(your_path)
+
+# docker ps
+
+Run `docker ps` โชว์ container ที่กำลังทำงานในเครื่องเรา
+Run `docker ps -a -s` ชว์ container ทั้งหมดทั้งที่กำลังทำงาน และ ไม่ได้ทำงานอยู่
+Run `docker ps <CONTAINER_ID> ` โชว์ container โดยการระบุ conatiner id หรือ host name
+`-s` // โชว์ Size Container
+
+# docker cp
+
+Run ` copy file from host to container docker cp /my_file.txt:/usr/local/`
+
+Run `copy file from container to host docker cp <containerId>:/file/path/within/container /host/path/target`
+
+
 # Deploy on Dev or production
 
 Step Deploy you should change version in base url as GET. This project is CI/CD and Jenkins.
