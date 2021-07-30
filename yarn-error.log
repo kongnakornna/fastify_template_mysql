@@ -1,0 +1,137 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\kongnakorn\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add fastify -g
+
+PATH: 
+  C:\WINDOWS\system32\WBEM;C:\Python39\Scripts\;C:\Python39\;C:\Program Files (x86)\NetSarang\Xftp 6\;C:\Program Files (x86)\NetSarang\Xshell 6\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;D:\UwAmp\bin\php\php-7.0.3;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Redis\;C:\server\bin\perl\c\bin;C:\server\bin\perl\perl\site\bin;C:\server\bin\perl\perl\bin;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files\nodejs\;?????c?????????b;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\PuTTY\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Users\kongnakorn\AppData\Local\Microsoft\WindowsApps;C:\Users\kongnakorn\AppData\Local\GitHubDesktop\bin;C:\Users\kongnakorn\AppData\Local\Microsoft\WindowsApps;C:\src\flutter\bin;C:\Program Files\Android\Android Studio\bin;C:\Program Files (x86)\SSH Communications Security\SSH Secure Shell;C:\Users\kongnakorn\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\kongnakorn\AppData\Roaming\npm;C:\Program Files\Git\cmd;C:\Users\kongnakorn\AppData\Local\Microsoft\WindowsApps;C:\Users\kongnakorn\AppData\Local\GitHubDesktop\bin;C:\Users\kongnakorn\AppData\Local\Microsoft\WindowsApps;C:\src\flutter\bin;C:\Program Files\Android\Android Studio\bin;;C:\Program Files (x86)\SSH Communications Security\SSH Secure Shell;C:\Users\kongnakorn\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\kongnakorn\AppData\Roaming\npm
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  16.1.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/date-fns/-/date-fns-2.22.1.tgz: ESOCKETTIMEDOUT
+      at ClientRequest.<anonymous> (C:\Users\kongnakorn\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141289:19)
+      at Object.onceWrapper (node:events:471:28)
+      at ClientRequest.emit (node:events:365:28)
+      at TLSSocket.emitRequestTimeout (node:_http_client:761:9)
+      at Object.onceWrapper (node:events:471:28)
+      at TLSSocket.emit (node:events:377:35)
+      at TLSSocket.Socket._onTimeout (node:net:475:8)
+      at listOnTimeout (node:internal/timers:557:17)
+      at processTimers (node:internal/timers:500:7)
+
+npm manifest: 
+  {
+    "name": "appservice",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "build": "tsc -P tsconfig.json",
+      "build:dist": "npx gulp",
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "testdev": "jest --detectOpenHandles --forceExit",
+      "start": "set NODE_ENV=local&ts-node-dev src/server.ts",
+      "start-prod": "pm2 delete $npm_package_pm2Name; pm2 flush $npm_package_pm2Name; NODE_ENV=production pm2 start ts-node --name=$npm_package_pm2Name -- -P tsconfig.json src/server.ts;",
+      "start-dev": "pm2 delete $npm_package_pm2Name; pm2 flush $npm_package_pm2Name; NODE_ENV=development pm2 start ts-node --name=$npm_package_pm2Name -- -P tsconfig.json src/server.ts;"
+    },
+    "keywords": "appservice",
+    "author": "kongbnakorn jantakun",
+    "license": "ISC",
+    "dependencies": {
+      "@fastify-resty/typeorm": "^0.3.0",
+      "admin-lte": "^3.1.0",
+      "client-oauth2": "^4.3.3",
+      "dotenv": "^8.2.0",
+      "ejs": "^3.1.5",
+      "email-validator": "^2.0.4",
+      "fastify": "^3.3.0",
+      "fastify-cli": "^2.13.0",
+      "fastify-cors": "^4.1.0",
+      "fastify-express": "^0.3.3",
+      "fastify-formbody": "^5.0.0",
+      "fastify-helmet": "^5.3.1",
+      "fastify-jwt": "^2.5.0",
+      "fastify-knexjs": "^1.0.14",
+      "fastify-memorycache": "^1.0.0",
+      "fastify-mongodb": "^2.0.1",
+      "fastify-multer": "^2.0.2",
+      "fastify-nextjs": "^6.0.0",
+      "fastify-oas": "^2.3.3",
+      "fastify-oauth-server": "^3.0.3",
+      "fastify-oauth2": "^4.2.3",
+      "fastify-redis": "^4.3.1",
+      "fastify-static": "^3.4.0",
+      "fastify-swagger": "^4.8.3",
+      "fastify-typeorm": "^2.1.2",
+      "fastify-typeorm-plugin": "^2.1.3",
+      "fs-extra": "^9.0.1",
+      "install": "^0.13.0",
+      "jsonwebtoken": "^8.5.1",
+      "knex": "^0.21.5",
+      "knex-crud": "^0.1.0",
+      "mariadb": "^2.5.4",
+      "md5": "^2.3.0",
+      "middie": "^3.2.1",
+      "mime-types": "^2.1.27",
+      "mongoose": "^5.13.2",
+      "mssql": "^5.1.0",
+      "mysql": "^2.18.1",
+      "mysql2": "^2.1.0",
+      "next": "^11.0.1",
+      "node-red-dashboard": "^2.30.0",
+      "nodemailer": "^6.4.11",
+      "oauth2-server": "^3.1.1",
+      "pm2": "^5.1.0",
+      "pm2-server-monit": "^3.0.0",
+      "point-of-view": "^4.15.0",
+      "react": "^17.0.2",
+      "react-dom": "^17.0.2",
+      "redis": "^3.1.2",
+      "reflect-metadata": "^0.1.13",
+      "sequelize": "^6.6.5",
+      "socket.io": "^2.3.0",
+      "sql.js": "^1.0.0",
+      "sqlite3": "^5.0.2",
+      "tedious": "^4.2.0",
+      "typeorm": "^0.2.34",
+      "uuid": "^8.3.0",
+      "ws": "^7.3.1"
+    },
+    "devDependencies": {
+      "@types/ejs": "^3.0.4",
+      "@types/fs-extra": "^9.0.1",
+      "@types/jsonwebtoken": "^8.5.0",
+      "@types/mongoose": "^5.10.3",
+      "@types/node": "^14.6.4",
+      "@types/nodemailer": "^6.4.0",
+      "@types/uuid": "^8.3.0",
+      "@types/ws": "^7.2.6",
+      "gulp": "^4.0.2",
+      "gulp-clean": "^0.4.0",
+      "gulp-cli": "^2.3.0",
+      "gulp-sourcemaps": "^2.6.5",
+      "gulp-typescript": "^6.0.0-alpha.1",
+      "gulp-uglify": "^3.0.2",
+      "jest": "^27.0.6",
+      "json-schema-to-typescript": "^10.1.4",
+      "nodemon": "^2.0.4",
+      "pino-pretty": "^5.1.1",
+      "readable-stream": "^3.6.0",
+      "tap": "^15.0.9",
+      "ts-node": "^9.0.0",
+      "ts-node-dev": "^1.1.8",
+      "typescript": "^4.0.2"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

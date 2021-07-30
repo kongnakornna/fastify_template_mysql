@@ -1,9 +1,14 @@
 import * as knex from 'knex'
+import internal from 'stream';
 declare module 'fastify' {
+
 interface FastifyInstance {
     knex: knex
     db: knex
+    db1: knex
     db2: knex
+    db3: knex
+    db4: typeorm
     jwt: any
     authenticate: any
     ws: any
@@ -49,9 +54,31 @@ interface FastifyInstance {
 	time_settings: int
     str: any
     read: any
-	message: any
-  }
+    message: any
+    dir: string
+    sendcmd: any
+    decoded:any
+    user_id: integer
+    done: any
+        
+    id: number
+    name: string
+    description: string
+    filename: string
+    views: number
+    isPublished: boolean
+    getstate: any
+    authen: any
+    checkexpire: any
+    setLocal: any
+    description: any
+    swagger: any
+    genint: any
+    clientsecret: any
+    codegen: any
+    await: any
 
+  }
 interface FastifyRequest {
     jwtVerify: any
     file: any
@@ -97,10 +124,45 @@ interface FastifyRequest {
 	time_settings: int
 	str: any
     read: any
-	message: any
+    message: any
+    dir: string
+    sendcmd: any
+    decoded:any
+    user_id: integer
+    done: any
+        
+    id: number
+    name: string
+    description: string
+    filename: string
+    views: number
+    isPublished: boolean
+        
+    id: number
+    name: string
+    description: string
+    filename: string
+    views: number
+    isPublished: boolean
+    getstate: any
+    authen: any
+    checkexpire: any
+    encode: any
+    verify: any
+    setLocal: any
+    description: any
+    swagger: any
+    genint: any
+    clientsecret: any
+    codegen: any
+    await: any
   }
-
 interface FastifyReply {
+    db: knex
+    db1: knex
+    db2: knex
+    db3: knex
+    db4: typeorm
     view: any
 	next: any
     next: any
@@ -144,6 +206,31 @@ interface FastifyReply {
 	time_settings: int
     str: any
     read: any 
-	message: any
-  }
+    message: any
+    dir: string
+    sendcmd: any
+    decoded: any
+    user_id: integer
+    done: any
+        
+    id: number
+    name: string
+    description: string
+    filename: string
+    views: number
+    isPublished: boolean
+    getstate:any
+    authen: any
+    checkexpire: any
+    encode: any
+    verify: any
+    setLocal: any
+    description: any
+    swagger: any
+    genint: any
+    clientsecret: any
+    codegen: any
+    await: any
+    
+ } 
 }
