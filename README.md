@@ -4,9 +4,12 @@
 
 # Use Nodejs with fastify framework and knexjs framework mysql database
 
+# fastify_appsservice
+
 - Nodejs
 - Typescript
 - Mysql database
+- Mysql database CRUD
 - Mongodb as mongoose
 - Redis cache
 - jwt && oauth2-server token Barer Header security allow access
@@ -18,76 +21,76 @@
 
 # file
 
-- |-.env.conf
-- |-.dockerignore
-- |-.gitignore
-- |-.gitlab-ci
-- |-config.conf
-- |-Dockerfile
-- |-gulpfile
-- |-nodemon
-- |-ormconfig
-- |-package
-- |-package-lock
-- |-tsconfig
-- |-README
-- |-Node
+- file
+- ├─.env.conf
+- ├─.dockerignore
+- ├─.gitignore
+- ├─.gitlab-ci
+- ├─config.conf
+- ├─Dockerfile
+- ├─gulpfile
+- ├─nodemon
+- ├─ormconfig
+- ├─package
+- ├─tsconfig
+- ├─README
+- ├─Node
 
 # Directory
 
-- |-node_modules
-- |-public (your file directory )
-- |-typings (typings from Typescript)
-- |-upload (your file directory )
-- |-views ( template from ejs ot html )
-- |-assets ( css image template file)
+- directory
+- ├─node_modules
+- ├─public (your file directory )
+- ├─typings (typings from Typescript)
+- ├─upload (your file directory )
+- ├─views (template from ejs ot html )
+- ├─assets (css image template file)
 - src
-- |-app.ts
-- |-router.ts
-- |-server.ts
-- └── plugins (from the Fastify ecosystem)
-- └── controllers
-- └── models
-- └── decorators
-- └── schemas
-- └── hooks
-- │ └── middlewares
-- └── modules
-- │ └── your modules1 service A
-- │ | └── controllers (your main function)
-- │ | └── models (your custom database function)
-- │ | └── entity
-- │ | └── hooks
-- │ | └── libraries
-- │ | └── utils
-- │ └── your modules2 service B
-- │ | └── controllers (your main function)
-- │ | └── models (your custom database function)
-- │ | └── entity
-- │ | └── hooks
-- │ | └── libraries
-- │ | └── utils
-- │ └── your modules3 service C
-- │ | └── controllers (your main function)
-- │ | └── models (your custom database function)
-- │ | └── entity
-- │ | └── hooks
-- │ | └── libraries
-- │ | └── utils
-- │
-- └── system
-- │ └── core (from the Fastify ecosystem)
-- │ └── database (your custom code)
-- │ └── decorators (your custom code)
-- │ └── entity (your custom code)
-- │ └── helpers (your custom code)
-- │ └── language (your custom code)
-- │ └── libraries (from the Fastify ecosystem)
-- │ └── middleware (from the Fastify ecosystem or your custom)
-- │ └── migration (your custom plugins)
-- │ └── plugins (your custom plugins)
-- │ └── subscribers (your custom code)
-- │ └── vendor (your custom code)
+- ├─app.ts
+- ├─router.ts
+- ├─server.ts
+- ├─plugins (from the Fastify ecosystem)
+- ├─controllers
+- ├─models
+- ├─decorators
+- ├─schemas
+- ├─hooks
+- │ └─middlewares
+- ├─modules
+- │ ├─your modules1 service A
+- │ | ├──controllers (your main function)
+- │ | ├──models (your custom database function)
+- │ | ├──entity
+- │ | ├──hooks
+- │ | ├──libraries
+- │ | └──utils
+- │ ├─your modules2 service B
+- │ | ├──controllers (your main function)
+- │ | ├──models (your custom database function)
+- │ | ├──entity
+- │ | ├──hooks
+- │ | ├──libraries
+- │ | └──utils
+- │ ├─your modules3 service C
+- │ | ├──controllers (your main function)
+- │ | ├──models (your custom database function)
+- │ | ├──entity
+- │ | ├──hooks
+- │ | ├──libraries
+- │ | └──utils
+- ├─system
+- │ ├──core (from the Fastify ecosystem)
+- │ ├──database (your custom code)
+- │ ├──decorators (your custom code)
+- │ ├──entity (your custom code)
+- │ ├──helpers (your custom code)
+- │ ├──language (your custom code)
+- │ ├──libraries (from the Fastify ecosystem)
+- │ ├──middleware (from the Fastify ecosystem or your custom)
+- │ ├──migration (your custom plugins)
+- │ ├──plugins (your custom plugins)
+- │ ├──subscribers (your custom code)
+- │ └──vendor (your custom code)
 
 # Structure Code
 
@@ -235,6 +238,7 @@ Run `npx gulp`
 - https://knexjs.org
 - https://nextjs.org/docs/advanced-features/custom-document
 - https://www.codegrepper.com/code-examples/
+- https://www.codegrepper.com/code-examples/javascript
 - https://typeorm.io/
 - https://mongoosejs.com/docs
 - https://expressjs.com/en/starter/installing.html
@@ -579,15 +583,10 @@ http://127.0.0.1:8002
 
 http://localhost:8002
 
-npx nodemon 
-npx gulp 
+npx nodemon
+npx gulp
 pm2 start dist\server.js --name "ap1"
-pm2 list   
-pm2 stop all 
-pm2 monit          
-pm2 reload all  
-
-
-
-
- 
+pm2 list  
+pm2 stop all
+pm2 monit  
+pm2 reload all
