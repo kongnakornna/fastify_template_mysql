@@ -5,15 +5,15 @@ export class DemoModel {
       .insert(data)
   }
   test(db1: knex) {
-        return db1('sd_sd_users as u')
-            .join('profile as p', 'u.user_id', 'p.user_id')
+        return db1('sd_users as u')
+            // .join('sd_users_profile as p', 'u.user_id', 'p.user_id','left')
             // .select('u.*')
             .select('u.user_id', 'u.first_name', 'u.last_name', 'u.email', 'u.date')
-            .select('p.email as mail')
+            //.select('p.email as mail')
             // .where('users.user_id!=','')
             .orderBy('u.user_id', 'desc')
-            .limit(3)
-            .offset(5)
+            .limit(10)
+            //.offset(5)
     }
   login(db1: knex, username: any, password: any) {
     return db1('sd_users')

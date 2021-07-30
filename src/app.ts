@@ -1,17 +1,21 @@
 import * as fastify from 'fastify'
+import * as path from 'path'
 import mongooses = require('mongoose')
-import "reflect-metadata"; // for TypeORM
+import "reflect-metadata";  
 const mongoose = require('mongoose');
 const multer = require('fastify-multer')
-/**************************/
-import * as path from 'path'
-const envPath = path.join(__dirname, './config.conf')
+const autoload = require('fastify-autoload')
+/************../config.conf**************/
+// const envPath = path.join(__dirname, '../config.conf') 
+/* ./config.conf */
+const envPath = path.join(__dirname, '../config.conf') 
 require('dotenv').config({ path: envPath })
 const env = process.env 
-const opts = {} 
+const opts = {}
+// console.log("envPath: ", envPath)
+// console.log("env: ", env)
 console.log("DB1_HOST: ", env.DB1_HOST)
 /**************************/
-
 import WebSocket from 'ws'
 import routers from './router'
 /**************************/
@@ -20,18 +24,29 @@ const app: fastify.FastifyInstance = fastify.fastify({
         level: 'info'
     }
 })
- 
+/**********autoload****************/
+/*
+app.register(autoload, {
+  dir_plugins: path.join(__dirname, './system/plugins'),
+  env_path : env 
+})
+*/
 app.setErrorHandler((error, req, res) => {
     req.log.error(error.toString())
     res.send({ error })
 })
 /**************************/
-app.register(multer.contentParser)
-app.register(require('fastify-cors'))
+app.register(multer.contentParser) 
+app.register(require('fastify-cors'), { 
+  // put your options here
+})
 app.register(require('fastify-formbody'))
+//doc https://www.fastify.io/docs/latest/ContentTypeParser/
+/* fastify.post('/', (req, reply) => { reply.send(req.body) })  */
 /**************************/
 
-/* knex db1 connect  webservicedb */
+/* knex db connect  webservicedb */
+// register knex db2
 app.register(require('./system/database/mysqldb'), {
     options: {
         client: 'mysql2',
@@ -63,7 +78,7 @@ app.register(require('./system/database/mysqldb'), {
     connectionName: 'db2'
 })
 /**************************/
-// register knex db2
+// register knex db3
 app.register(require('./system/database/mysqldb'), {
     options: {
         client: 'mysql2',
@@ -81,36 +96,69 @@ app.register(require('./system/database/mysqldb'), {
 /* knex db connect   */
 /**************************/
 /* typeorm db1 connect  webservice3 */
-import { createConnection } from 'typeorm';
-/* entity  */
-/* entity  */
-import {Photo} from "./modules/testtypeorm/entity/Photo";
-createConnection({
-  type: "mysql",
-	host:  env.DB3_HOST,
-	port: Number(env.DB3_PORT),
-	username: env.DB3_USER,
-	password: env.DB3_PASSWORD,
-	database: env.DB3_NAME,
-    entities: [
-      "src/system/entity/**/*.ts"  // "src/entities/*.ts"
-    ],
-    migrations: [
-        "src/system/migration/**/*.ts"
-    ],
-    subscribers: [
-        "src/system/subscriber/**/*.ts"
-    ]
-	//logging: true,
-	//synchronize: true
-}).then(connection => {
-  console.log("TypeORM is Database Connection : "+env.DB3_NAME+' :', connection.isConnected) 
-});
 /**************************/
+import {createConnections} from "typeorm";
+const connections = createConnections([{
+            name: "db1_typeorm",
+            type: "mysql",
+            host: env.DB1_HOST,
+            port: Number(env.DB21_PORT),
+            username: env.DB1_USER,
+            password: env.DB1_PASSWORD,
+            database: env.DB1_NAME,
+            entities: ["src/system/entity/**/*.ts" ],
+            migrations: ["src/system/migration/**/*.ts"],
+            subscribers: ["src/system/subscriber/**/*.ts"],
+            //logging: true,
+            synchronize: true
+        },{
+            name: "db2_typeorm",
+            type: "mysql",
+            host: env.DB2_HOST,
+            port: Number(env.DB2_PORT),
+            username: env.DB2_USER,
+            password: env.DB2_PASSWORD,
+            database: env.DB2_NAME,
+            entities: ["src/system/entity/**/*.ts" ],
+            migrations: ["src/system/migration/**/*.ts"],
+            subscribers: ["src/system/subscriber/**/*.ts"],
+            //logging: true,
+            synchronize: true
+        },{
+                name: "db3_typeorm",
+                type: "mysql",
+                host: env.DB3_HOST,
+                port: Number(env.DB3_PORT),
+                username: env.DB3_USER,
+                password: env.DB3_PASSWORD,
+                database: env.DB3_NAME,
+                entities: ["src/system/entity/**/*.ts" ],
+                migrations: ["src/system/migration/**/*.ts"],
+                subscribers: ["src/system/subscriber/**/*.ts"],
+                //logging: true,
+                synchronize: true
+        }]).then(async connection => {  
+            console.log("Connection has been established  TypeORM successfully....");
+        }).catch(err => { 
+            console.error("Unable to connect to the database TypeORM connection error :", err);
+        });
+/**************************/
+/*
+import {getConnection} from "typeorm";
+const db1_typeorm = getConnection("db1_typeorm");
+// you can work with "db1" database now...
+const db2_typeorm = getConnection("db2_typeorm");
+// you can work with "db2" database now...
+const db3_typeorm = getConnection("db3_typeorm");
+// you can work with "db2" database now...
+console.log('db1_typeorm server running....'+db1_typeorm)
+console.log('db2_typeorm server running....'+db2_typeorm)
+console.log('db3_typeorm server running....' + db3_typeorm)
+*/
 
-
+/**************************/
 app.register(require('./system/plugins/jwt'), {
-    secret: env.JWT_SECRET || '#5371##99nau'
+    secret: env.JWT_SECRET  
 })
 /**************************/
 // websocket
@@ -175,15 +223,12 @@ app.register(require('fastify-mongodb'), {
     url: env.MONGO_URI
 })
 // MongoDB
-mongoose.connect(env.MONGO_URI, {
-    useCreateIndex: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+const mongooseConnection = mongoose.connect(env.MONGO_URI, {useCreateIndex: true,useNewUrlParser: true,useUnifiedTopology: true})
 mongoose.connection.on('error', (error:any) => app.log.error(error))
 mongoose.connection.once('open', () => app.log.info('MongoDB has been connected'+ mongoose.connection.on))
 console.log('mongoose on ' + mongoose)
 /**************************/
+
 /***********oauth2-server start***************/
 var oauthserver = require('fastify-oauth-server'); // กำลัง Dev
 /*******************************************************/
@@ -191,4 +236,7 @@ var oauthserver = require('fastify-oauth-server'); // กำลัง Dev
 /***********oauth2-server end***************/
 app.register(routers)
 /**************************/
+
+
+
 export default app

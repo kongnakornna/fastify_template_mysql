@@ -32,7 +32,7 @@ export default async function schema(fastify: FastifyInstance) {
 
     if (request.validationError) {
       console.log(request.validationError)
-      reply.code(400).send({ status: false, error: 'ข้อมูลไม่ถูกต้อง', code: 1005 })
+      reply.code(400).send({ status: false, error: 'ข้อมูลไม่ถูกต้อง', statusCode : 1005 })
 
     } else {
 
