@@ -19,16 +19,16 @@ export default async (fastify: FastifyInstance) => {
     try {
 
       const transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
+        host: 'smtp.xxx.xx',
         port: 587,
         auth: {
-          user: 'tiffany.abshire@ethereal.email',
-          pass: 'F8eM7hmur1sYQU4QZV'
+          user: 'xxxxx',
+          pass: 'xxxxx'
         }
       });
 
       const sendMail = await transporter.sendMail({
-        from: '"Satit Rianpit" <tiffany.abshire@ethereal.email>',
+        from: '"Test Mail" <test.dev@test.email>',
         to: '"kongnakornna@gmail.com',
         subject: "สวัสดี",
         text: "ทดสอบการส่งเมล์",
@@ -49,11 +49,11 @@ export default async (fastify: FastifyInstance) => {
     try {
 
       const transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
+        host: 'smtp.xxx.email',
         port: 587,
         auth: {
-          user: 'tiffany.abshire@ethereal.email',
-          pass: 'F8eM7hmur1sYQU4QZV'
+          user: 'xx.xxx@ethereal.email',
+          pass: 'xxx'
         }
       });
 
@@ -61,13 +61,13 @@ export default async (fastify: FastifyInstance) => {
 
 
       const sendMail = await transporter.sendMail({
-        from: '"Satit Rianpit" <tiffany.abshire@ethereal.email>',
+        from: '"Test Mail" <test.dev@test.email>',
         to: '"kongnakornna@gmail.com',
         subject: "ทดสอบส่งไฟล์",
         text: "ส่งไฟล์",
         html: "ส่งไฟล์",
         attachments: [
-          { path: file, filename: 'เอกสารความลับ.pdf' },
+          { path: file, filename: 'sedoc.pdf' },
         ]
       })
 
@@ -85,11 +85,11 @@ export default async (fastify: FastifyInstance) => {
     try {
 
       const transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
+        host: 'smtp.xxx.email',
         port: 587,
         auth: {
-          user: 'tiffany.abshire@ethereal.email',
-          pass: 'F8eM7hmur1sYQU4QZV'
+          user: 'xx.x@ethereal.email',
+          pass: 'xxxx'
         }
       });
 
@@ -101,7 +101,7 @@ export default async (fastify: FastifyInstance) => {
 
 
       const sendMail = await transporter.sendMail({
-        from: '"Satit Rianpit" <tiffany.abshire@ethereal.email>',
+        from: '"Test Mail" <test.dev@test.email>',
         to: '"kongnakornna@gmail.com',
         subject: "สวัสดี",
         text: "ทดสอบการส่งเมล์",
