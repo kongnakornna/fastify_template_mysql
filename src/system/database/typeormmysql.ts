@@ -1,33 +1,27 @@
-import fp from 'fastify-plugin'
-import { createConnection } from 'typeorm';
-const typeorm :any= createConnection
-module.exports = fp(async (fastify: any, opts: any, done: any) => {
+import "reflect-metadata"
+import fp from "fastify-plugin"
+import { createConnection, getConnectionOptions } from "typeorm"
+//import { Inventory } from "../modules/inventory/entity"
+//import { Product } from "../modules/products/entity"
+
+export default fp(async server => {
   try {
-    const connection = await typeorm(opts.options)
-      fastify.decorate(opts.connectionName, connection)
-       done()
-      console.log('Typeorm database connection mysql node name:' + opts.connectionName+' db_Name :' + opts.options.connection.database+' host :'+ opts.options.connection.host+' port :'+ opts.options.connection.port)
+    const connectionOptions = await getConnectionOptions()
+    Object.assign(connectionOptions, {
+      //options: { encrypt: true },
+     // entities: [Inventory, Product]
+    })
+
+    console.log(`connecting to database: ${connectionOptions.type}...`)
+    const connection = await createConnection(connectionOptions)
+    console.log("database connected")
+
+    server.decorate("db", {
+     // inventory: connection.getRepository(Inventory),
+     // products: connection.getRepository(Product)
+    })
   } catch (error) {
-      done(error)
-      console.log('typeorm database connection error ' + error)
+    console.log(error)
+    console.log("make sure you have set .env variables - see .env.sample")
   }
 })
- 
-/*
-createConnection({
-  type: "mysql",
-	host: "localhost",
-	port: 3306,
-	username: "root",
-	password: "root",
-	database: "webservice1",
-	entities: [
-		"src/entities/*.ts"
-	],
-	// logging: true,
-	// synchronize: true
-}).then(connection => {
-  console.log("isConnection", connection.isConnected) 
-});
-
-*/

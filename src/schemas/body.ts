@@ -31,7 +31,7 @@ export default {
         },
        gender: {
         type: 'integer',
-        enum: ['M', 'W']
+        enum: ['1', '2'] // enum: ['M', 'W']
       },
       age: {
         type: 'integer'

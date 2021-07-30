@@ -30,30 +30,36 @@ lastidread(db1: knex) {
       .select('network_id')
       .where('network_id', network_id)
     }
-
-    where_profile_id(db1: knex, profile_id: any) {
+    where_sd_users_profile(db1: knex, sd_users_profile_id: any) {
         return db1('sd_users')
             .select('user_id', 'first_name', 'last_name', 'email')
             .select('username', 'level', 'status', 'network_id')
             .select('date')
-        .where('profile_id', profile_id)
+        .where('sd_users_profile_id', sd_users_profile_id)
+    }
+    where_sd_users_profile_id(db1: knex, sd_users_profile_id: any) {
+        return db1('sd_users')
+            .select('user_id', 'first_name', 'last_name', 'email')
+            .select('username', 'level', 'status', 'network_id')
+            .select('date')
+        .where('sd_users_profile_id', sd_users_profile_id)
     }
     where_user_update_password(db1: knex, username: any, data: any) {
         return db1('sd_users')
         .where('username', username)
         .update(data)
     }
-    where_profile_id_update(db1: knex, profile_id: any, data: any) {
+    where_sd_users_profile_id_update(db1: knex, sd_users_profile_id: any, data: any) {
         return db1('sd_users')
-        .where('profile_id', profile_id)
+        .where('sd_users_profile_id', sd_users_profile_id)
         .update(data)
     }
-    where_profile_id_remove(db1: knex, profile_id: any) {
+    where_sd_users_profile_id_remove(db1: knex, sd_users_profile_id: any) {
         return db1('sd_users')
-        .where('profile_id', profile_id)
+        .where('sd_users_profile_id', sd_users_profile_id)
         .del()
     }
-  profile(db1: knex, user_id: any) {
+  sd_users_profile(db1: knex, user_id: any) {
     return db1('sd_users')
       .select('user_id', 'first_name', 'last_name', 'email', 'username', 'level', 'status', 'network_id')
       .where('user_id', user_id)
@@ -120,7 +126,7 @@ lastidread(db1: knex) {
 
    test(db1: knex) {
         return db1('sd_users as u')
-            .join('profile as p', 'u.user_id', 'p.user_id')
+            .join('sd_users_profile as p', 'u.user_id', 'p.user_id')
             // .select('u.*')
             .select('u.user_id', 'u.first_name', 'u.last_name', 'u.email', 'u.date')
             .select('p.email as mail')

@@ -8,14 +8,12 @@ export default async function demo(fastify: FastifyInstance) {
   const DemoModels = new DemoModel()
   const db1: knex = fastify.db1
 /*************************************/
-  fastify.get('/', /*ป้องกัน การใช้งาน โดย Token */{
-    preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
-  },/*ป้องกัน การใช้งาน โดย Token */  async (request: FastifyRequest, reply: FastifyReply) => {
+  fastify.get('/'/* ,preValidation: [fastify.authenticate] */,async (request: FastifyRequest, reply: FastifyReply) => {
     try {
       const rs: any = await DemoModels.test(db1)
         reply.send({  // แสดงข้อมูล api
             title: {
-                status: true,code: 200, message: 'Results Success',message_th: 'แสดง ข้อมูลสำเร็จ',cache:'no cache'
+                status: true,statusCode : 200, message: 'Results Success',message_th: 'แสดง ข้อมูลสำเร็จ',cache:'no cache'
             }, 
                 error: null,
                 data: rs
@@ -24,7 +22,7 @@ export default async function demo(fastify: FastifyInstance) {
       console.log(error)
       reply.code(500).send({ // แสดงข้อมูล api
                         title: {
-                                    status: false,code: 500, message: 'Results unsuccessful',message_th: 'แสดง ข้อมูลไม่สำเร็จ',cache:'no cache'
+                                    status: false,statusCode : 500, message: 'Results unsuccessful',message_th: 'แสดง ข้อมูลไม่สำเร็จ',cache:'no cache'
                             },  
                                 error: error,
                                 data: null
@@ -100,6 +98,8 @@ export default async function demo(fastify: FastifyInstance) {
     reply.view('/views/demo', { message: message })
 
   })
-   
+    /*************************************/
+    
+    /*************************************/
 }
 /*************************************/
