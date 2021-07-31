@@ -8,107 +8,102 @@ create(db1: knex, data: any) {
 lastidread(db1: knex) {
     return db1('ad_administrator')
       .select('user_id')
-      .orderBy('user_id','desc')
+      .orderBy('id','desc')
   }
- updateuid(db1: knex, userId: any, data: any) {
+updateuid(db1: knex, userId: any, data: any) {
     return db1('ad_administrator')
-      .where('user_id', userId)
+      .where('id', userId)
       .update(data)
   }
- validation_email(db1: knex, email: any) {
+validation_email(db1: knex, email: any) {
     return db1('ad_administrator')
       .select('email')
       .where('email', email)
     }
- validation_username(db1: knex, username: any) {
+validation_username(db1: knex, username: any) {
     return db1('ad_administrator')
       .select('username')
       .where('username', username)
     }
- validation_network_id(db1: knex, network_id: any) {
+validation_network_id(db1: knex, network_id: any) {
     return db1('ad_administrator')
       .select('network_id')
       .where('network_id', network_id)
     }
-
-    where_ad_administrator_profile_id(db1: knex, ad_administrator_profile_id: any) {
+where_ad_administrator_profile_id(db1: knex, ad_administrator_profile_id: any) {
         return db1('ad_administrator')
-            .select('user_id', 'email')
+            .select('id', 'email')
             .select('username', 'role_id', 'status', 'network_id')
             .select('date')
         .where('ad_administrator_profile_id', ad_administrator_profile_id)
     }
-    where_user_update_password(db1: knex, username: any, data: any) {
+where_user_update_password(db1: knex, username: any, data: any) {
         return db1('ad_administrator')
         .where('username', username)
         .update(data)
     }
-    where_ad_administrator_profile_id_update(db1: knex, ad_administrator_profile_id: any, data: any) {
+where_ad_administrator_profile_id_update(db1: knex, ad_administrator_profile_id: any, data: any) {
         return db1('ad_administrator')
         .where('ad_administrator_profile_id', ad_administrator_profile_id)
         .update(data)
     }
-    where_ad_administrator_profile_id_remove(db1: knex, ad_administrator_profile_id: any) {
+where_ad_administrator_profile_id_remove(db1: knex, ad_administrator_profile_id: any) {
         return db1('ad_administrator')
         .where('ad_administrator_profile_id', ad_administrator_profile_id)
         .del()
     }
-  ad_administrator_profile(db1: knex, user_id: any) {
+ad_administrator_profile(db1: knex, user_id: any) {
     return db1('ad_administrator')
-      .select('user_id', 'email', 'username', 'role_id', 'status', 'network_id')
-      .where('user_id', user_id)
+      .select('id', 'email', 'username', 'role_id', 'status', 'network_id')
+      .where('id', user_id)
    }
-  login(db1: knex, username: any, password: any) {
+login(db1: knex, username: any, password: any) {
     return db1('ad_administrator')
-      .select('user_id', 'email', 'username', 'role_id')
+      .select('id', 'email', 'username', 'role_id')
       .where('username', username)
       .where('password', password)
       .where('status', 1)
   }
-  resetPassword(db1: knex, datareset: any) {
+resetPassword(db1: knex, datareset: any) {
     return db1('ad_administrator')
-      .select('user_id', 'first_name', 'last_name')
+      .select('id', 'first_name', 'last_name')
       .select('email', 'username', 'role_id')
       .where('username', datareset)
       .orWhere('email', datareset)
     }
-  resetpwd(db1: knex, datareset: any) {
+resetpwd(db1: knex, datareset: any) {
     return db1('ad_administrator')
-      .select('user_id', 'email', 'username', 'role_id')
+      .select('id', 'email', 'username', 'role_id')
       .where('username', datareset)
       .orWhere('email', datareset)
   }
-  read(db1: knex) {
+read(db1: knex) {
     return db1('ad_administrator')
-      .select('user_id', 'email')
-      .orderBy('user_id','desc')
+      .select('id', 'email')
+      .orderBy('id','desc')
       //.limit(3)
       // .offset(5)
       
   }
-
-  search(db1: knex, query: any) {
+search(db1: knex, query: any) {
     const _query = '%' + query + '%'
     return db1('ad_administrator')
-      .select('user_id', 'email')
+      .select('id', 'email')
       .where('first_name', 'like', _query)
       .orderBy('user_id')
   }
-
-  update(db1: knex, userId: any, data: any) {
+update(db1: knex, userId: any, data: any) {
     return db1('ad_administrator')
-      .where('user_id', userId)
+      .where('id', userId)
       .update(data)
   }
-
-  remove(db1: knex, userId: any) {
+remove(db1: knex, userId: any) {
     return db1('ad_administrator')
-      .where('user_id', userId)
+      .where('id', userId)
       .del()
   }
-
-  // Raw query
-  rawQuery(db1: knex, userId: any, firstName: any) {
+// Raw query
+rawQuery(db1: knex, userId: any, firstName: any) {
     const sql = `
     SELECT user_id, first_name, last_name,email
     FROM users
@@ -117,8 +112,7 @@ lastidread(db1: knex) {
     `
     return db1.raw(sql, [userId, firstName])
   }
-
-    test(db1: knex) {
+test(db1: knex) {
        const rt = db1('ad_administrator as u')
             .leftJoin('ad_administrator_profile as p', 'u.user_id', 'p.user_id')
             // .select('u.*')
@@ -131,7 +125,7 @@ lastidread(db1: knex) {
         
         return rt
     }
-  whereRawQuery(db1: knex) {
+whereRawQuery(db1: knex) {
     return db1('ad_administrator')
       .select('*')
       .whereRaw('group')

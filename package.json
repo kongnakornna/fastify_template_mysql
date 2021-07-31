@@ -1,7 +1,7 @@
 {
   "name": "appservice",
   "version": "1.0.0",
-  "description": "Node.js Rest Apis with  framework, knexjs Sequelize & MySQL",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "build": "tsc -P tsconfig.json",
@@ -12,22 +12,11 @@
     "start-prod": "pm2 delete $npm_package_pm2Name; pm2 flush $npm_package_pm2Name; NODE_ENV=production pm2 start ts-node --name=$npm_package_pm2Name -- -P tsconfig.json src/server.ts;",
     "start-dev": "pm2 delete $npm_package_pm2Name; pm2 flush $npm_package_pm2Name; NODE_ENV=development pm2 start ts-node --name=$npm_package_pm2Name -- -P tsconfig.json src/server.ts;"
   },
-  "keywords": [
-    "appservice",
-    "nodejs",
-    "express",
-    "fastify",
-    "jest",
-    "rest",
-    "api",
-    "sequelize",
-    "typeorm",
-    "mysql",
-    "Typeorm"
-  ],
+  "keywords": "appservice",
   "author": "kongbnakorn jantakun",
   "license": "ISC",
   "dependencies": {
+    "@autotelic/fastify-timestamp-signer": "^0.1.0",
     "@fastify-resty/typeorm": "^0.3.0",
     "admin-lte": "^3.1.0",
     "client-oauth2": "^4.3.3",
@@ -36,7 +25,9 @@
     "email-validator": "^2.0.4",
     "fastify": "^3.3.0",
     "fastify-autoload": "^3.8.0",
+    "fastify-caching": "^6.1.0",
     "fastify-cli": "^2.13.0",
+    "fastify-cookie": "^5.3.1",
     "fastify-cors": "^4.1.0",
     "fastify-express": "^0.3.3",
     "fastify-formbody": "^5.0.0",
@@ -51,6 +42,8 @@
     "fastify-oauth-server": "^3.0.3",
     "fastify-oauth2": "^4.2.3",
     "fastify-redis": "^4.3.1",
+    "fastify-server-session": "^5.0.0",
+    "fastify-session": "^5.2.1",
     "fastify-static": "^3.4.0",
     "fastify-swagger": "^4.8.3",
     "fastify-typeorm": "^2.1.2",
