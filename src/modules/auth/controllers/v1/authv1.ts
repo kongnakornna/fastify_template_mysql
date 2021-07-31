@@ -70,32 +70,32 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
       if (rs.length > 0) {
         const user: any = rs[0]
           console.log(user)
-           /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
-            const day = 1
-            const time_expire_set :any = env.TIMEEXPIRE
-            const time_expire_set1 = 300
-            const time_setting  :any = env.TIMEEXPIRE
-            const today = new Date()
-            const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
-            const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
-            const dateTime = date + ' ' + time
-            const issued_at=Date.now()
-            const timestamp = Date.now()
-            const expiration_time=issued_at+time_setting 
-            const token = fastify.jwt.sign({
-                user_id: user.user_id,level: user.level,
-                username: user.username,email: user.email,
-                // firstName: user.first_name,lastName: user.last_name,
-                at: {
-                       startdate: dateTime, 
-                       issued_at: issued_at,
-                       time_expired: expiration_time,
-                       time_setting: time_setting,
-                       day_expired: day, 
-                       timeconfig: TIMEEXPIRE,
-                       state: getRandomString(32),  
-                    },  
-          })
+            /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
+                var day = 1
+                var TIMEEXPIRE =env.TIMEEXPIRE
+                var time_expire_set :any = env.TIMEEXPIRE
+                var time_expire_set1 = 300
+                var time_setting :any = env.TIMEEXPIRE
+                var TIMEEXPIRE_TOKEN :any = env.TIMEEXPIRE_TOKEN
+                var today = new Date()
+                var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
+                var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+                var dateTime = date + ' ' + time
+                var issued_at=Date.now()
+                const token = fastify.jwt.sign({
+                    user_id: user.id,
+                    role_id: user.role_id,
+                    username: user.username,
+                    email: user.email,
+                    // firstName: user.first_name,lastName: user.last_name,
+                    at: {
+                        startdate: dateTime, 
+                        issued_at: issued_at,
+                        timeconfig: TIMEEXPIRE,
+                        TIMEEXPIRE_TOKEN: env.TIMEEXPIRE_TOKEN,
+                        state: getRandomString(32),  
+                    },                  
+            }, {expiresIn: env.TIMEEXPIRE_TOKEN }) 
          /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
          const decoded: any= fastify.jwt.verify(token)
         // asycnhronously
@@ -334,13 +334,11 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
                 username: user.username,email: user.email,
                 // firstName: user.first_name,lastName: user.last_name,
                 at: {
-                       startdate: dateTime, 
-                       issued_at: issued_at,
-                       time_expired: expiration_time,
-                       time_setting: time_setting,
-                       day_expired: day, 
-                       timeconfig: TIMEEXPIRE,
-                       state: getRandomString(32),  
+                        startdate: dateTime, 
+                        issued_at: issued_at,
+                        timeconfig: TIMEEXPIRE,
+                        TIMEEXPIRE_TOKEN: env.TIMEEXPIRE_TOKEN,
+                        state: getRandomString(32),   
                 },
                  
           })
@@ -460,13 +458,11 @@ fastify.post('/singin', async (request: FastifyRequest, reply: FastifyReply) => 
                     at: {
                         startdate: dateTime, 
                         issued_at: issued_at,
-                        time_expired: expiration_time,
-                        time_setting: time_setting,
-                        day_expired: day, 
                         timeconfig: TIMEEXPIRE,
+                        TIMEEXPIRE_TOKEN: env.TIMEEXPIRE_TOKEN,
                         state: getRandomString(32),  
-                    },                  
-            })
+                    },     
+                  }, {expiresIn: env.TIMEEXPIRE_TOKEN }) 
             /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
             const decoded: any = fastify.jwt.verify(token)
             //  fastify.setLocal('token', token)
@@ -566,13 +562,11 @@ fastify.post('/resetpass', async (request: FastifyRequest, reply: FastifyReply) 
                 username: user.username,email: user.email,
                 // firstName: user.first_name,lastName: user.last_name,
                 at: {
-                       startdate: dateTime, 
-                       issued_at: issued_at,
-                       time_expired: expiration_time,
-                       time_setting: time_setting,
-                       day_expired: day, 
-                       timeconfig: TIMEEXPIRE,
-                       state: getRandomString(32),  
+                        startdate: dateTime, 
+                        issued_at: issued_at,
+                        timeconfig: TIMEEXPIRE,
+                        TIMEEXPIRE_TOKEN: env.TIMEEXPIRE_TOKEN,
+                        state: getRandomString(32),  
                     },   
           })
          /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
@@ -720,12 +714,10 @@ fastify.post('/changepassword', /*ป้องกัน การใช้งา
                 // firstName: user.first_name,lastName: user.last_name,
                 at: {
                        startdate: dateTime, 
-                       issued_at: issued_at,
-                       time_expired: expiration_time,
-                       time_setting: timesetting,
-                       day_expired: day, 
-                       timeconfig: TIMEEXPIRE,
-                       state: getRandomString(32),  
+                        issued_at: issued_at,
+                        timeconfig: TIMEEXPIRE,
+                        TIMEEXPIRE_TOKEN: env.TIMEEXPIRE_TOKEN,
+                        state: getRandomString(32),  
                     },  
           })
          /******************************ตรวจสอบวันหมดอายุ Token check*************************************/

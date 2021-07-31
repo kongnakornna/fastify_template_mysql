@@ -30,13 +30,7 @@ lastidread(db1: knex) {
       .select('network_id')
       .where('network_id', network_id)
     }
-    where_sd_users_profile(db1: knex, sd_users_profile_id: any) {
-        return db1('sd_users')
-            .select('user_id', 'first_name', 'last_name', 'email')
-            .select('username', 'level', 'status', 'network_id')
-            .select('date')
-        .where('sd_users_profile_id', sd_users_profile_id)
-    }
+
     where_sd_users_profile_id(db1: knex, sd_users_profile_id: any) {
         return db1('sd_users')
             .select('user_id', 'first_name', 'last_name', 'email')

@@ -10,7 +10,6 @@ const opts = {}
 // TypeScript
 import * as EmailValidator from 'email-validator';
 // function name administrator
-let point :{x:number; y:number}={x:10,y:20};
 export default async function administrator(fastify: FastifyInstance) {
     const AdminModel:any = new AdministratorModel()
     const db1: knex = fastify.db1
@@ -55,7 +54,7 @@ export default async function administrator(fastify: FastifyInstance) {
             reply.header('message', 'Information Correct')
             reply.header('statusCode', 200)
             reply.header('status', true) 
-            reply.code(200).send({  
+            await reply.code(200).send({  
             title: {
                     status: false,
                     statusCode: 200,
@@ -122,7 +121,7 @@ export default async function administrator(fastify: FastifyInstance) {
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 200)
                 reply.header('status', true) 
-                reply.code(200).send({  
+                await reply.code(200).send({  
                     title: {
                             status: true, statusCode : 200,
                             message: 'Results  test successful',

@@ -19,12 +19,13 @@ export default async function geo(fastify: FastifyInstance) {
         const input: any = body.input
         const params: any = request.params
         const headers: any = request.headers
+        var str  : any =  request.headers.authorization
+        var token = str.replace("Bearer ", "")
+        const verify_token: any = fastify.jwt.verify(token)
         const query_get: any = request.query
         const method: any = request.method
         const protocol: any = request.protocol
         const ip: any = request.ip
-        
-                
         try {
             if (input=='') {
                 reply.code(500).send({
@@ -50,6 +51,8 @@ export default async function geo(fastify: FastifyInstance) {
                     method: method,
                     protocol: protocol,
                     ip: ip,
+                    token: token,
+                    verify_token:verify_token,
                 }
                        
             })

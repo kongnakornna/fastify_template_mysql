@@ -1,7 +1,6 @@
 import * as knex from 'knex'
 import internal from 'stream';
 declare module 'fastify' {
-
 interface FastifyInstance {
     knex: knex
     db: knex
@@ -17,7 +16,7 @@ interface FastifyInstance {
     exit: any
 	req: any
 	res: any
-	id: any
+	id: number
 	quantity: any
 	expiry_date: any
 	created_at: any
@@ -58,27 +57,20 @@ interface FastifyInstance {
     dir: string
     sendcmd: any
     decoded:any
-    user_id: integer
-    done: any
-        
-    id: number
+    user_id: number
+    done: any 
     name: string
     description: string
     filename: string
     views: number
     isPublished: boolean
     getstate: any
-    authen: any
-    checkexpire: any
-    setLocal: any
-    description: any
-    swagger: any
-    genint: any
-    clientsecret: any
     codegen: any
-    await: any
-
-  }
+    clientsecret: any
+    genint: any
+    host: any
+    port: any
+    }
 interface FastifyRequest {
     jwtVerify: any
     file: any
@@ -87,7 +79,7 @@ interface FastifyRequest {
     exit: any
 	req: any
 	res: any
-	id: any
+	id: number
 	quantity: any
 	expiry_date: any
 	created_at: any
@@ -128,35 +120,25 @@ interface FastifyRequest {
     dir: string
     sendcmd: any
     decoded:any
-    user_id: integer
+    user_id: number
     done: any
-        
-    id: number
     name: string
     description: string
     filename: string
     views: number
     isPublished: boolean
-        
-    id: number
     name: string
     description: string
     filename: string
     views: number
     isPublished: boolean
     getstate: any
-    authen: any
-    checkexpire: any
-    encode: any
-    verify: any
-    setLocal: any
-    description: any
-    swagger: any
-    genint: any
-    clientsecret: any
     codegen: any
-    await: any
-  }
+    clientsecret: any
+    genint: any
+    host: any
+    port: any
+    }
 interface FastifyReply {
     db: knex
     db1: knex
@@ -210,27 +192,19 @@ interface FastifyReply {
     dir: string
     sendcmd: any
     decoded: any
-    user_id: integer
-    done: any
-        
+    user_id: number
+    done: any   
     id: number
     name: string
     description: string
     filename: string
     views: number
     isPublished: boolean
-    getstate:any
-    authen: any
-    checkexpire: any
-    encode: any
-    verify: any
-    setLocal: any
-    description: any
-    swagger: any
-    genint: any
-    clientsecret: any
+    getstate: any
     codegen: any
-    await: any
-    
- } 
+    clientsecret: any
+    genint: any
+    host: any
+    port: any
+    } 
 }
