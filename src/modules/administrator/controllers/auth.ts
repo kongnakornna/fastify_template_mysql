@@ -9,6 +9,7 @@ import paramsSchema from '../../../modules/administrator/schemas/params'
 import queryStringSchema from '../../../modules/administrator/schemas/query_string'
 import headerSchema from '../../../modules/administrator/schemas/header'
 import bodyappSchema from '../../../modules/administrator/schemas/bodyapp'
+import querystringysingin from '../../../modules/administrator/schemas/querystringysingin'
 /************* validate schemas*******************/
 import * as knex from 'knex'
 import * as crypto from 'crypto'
@@ -83,6 +84,14 @@ export default async function auth(fastify: FastifyInstance) {
                 }
         return result
     }
+    fastify.get('/genint',{preValidation: [fastify.genint]}, async (request: FastifyRequest, reply: FastifyReply) => {}) 
+    fastify.post('/genint',{preValidation: [fastify.genint]}, async (request: FastifyRequest, reply: FastifyReply) => {})   
+    fastify.get('/getstate',{preValidation: [fastify.getstate]}, async (request: FastifyRequest, reply: FastifyReply) => {}) 
+    fastify.post('/getstate',{preValidation: [fastify.getstate]}, async (request: FastifyRequest, reply: FastifyReply) => {})   
+    fastify.get('/clientsecret',{preValidation: [fastify.clientsecret]}, async (request: FastifyRequest, reply: FastifyReply) => {}) 
+    fastify.post('/clientsecret',{preValidation: [fastify.clientsecret]}, async (request: FastifyRequest, reply: FastifyReply) => {})   
+    fastify.get('/codegenclientid',{preValidation: [fastify.codegen]}, async (request: FastifyRequest, reply: FastifyReply) => {}) 
+    fastify.post('/codegenclientid',{preValidation: [fastify.codegen]}, async (request: FastifyRequest, reply: FastifyReply) => {})  
     /**************************************************/    
     fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
         /*******var**************/
@@ -90,13 +99,16 @@ export default async function auth(fastify: FastifyInstance) {
         /*******var**************/
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache')
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache')
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
                 // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Working')
                 reply.header('statusCode', 200)
+                reply.header('code', 200)
                 reply.header('status', true) 
                 /*****************************************************/
                 reply.code(200).send({title:{
@@ -121,13 +133,16 @@ export default async function auth(fastify: FastifyInstance) {
         /*******var**************/
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache')
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache')
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
                 // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Working')
                 reply.header('statusCode', 200)
+                reply.header('code', 200)
                 reply.header('status', true) 
                 /*****************************************************/
                 reply.code(200).send({title:{
@@ -165,10 +180,13 @@ export default async function auth(fastify: FastifyInstance) {
             if (username === "") {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('status', false)
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -179,10 +197,13 @@ export default async function auth(fastify: FastifyInstance) {
             if (password === "") {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('status', false)
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -195,10 +216,13 @@ export default async function auth(fastify: FastifyInstance) {
             if (passwordrt == false) {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Password not secure')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('status', false)
                 reply.header('Password', false)
                 reply.header('token_expire_setting', token_expire_setting)
@@ -219,10 +243,13 @@ export default async function auth(fastify: FastifyInstance) {
             if (email === "") {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('status', false)
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -237,9 +264,12 @@ export default async function auth(fastify: FastifyInstance) {
             if (emailchk == false) {
                         reply.header('version', 1)
                         reply.header('x-cache-status', 0) // 1=yes ,0=no
-                        reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                        reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                         reply.header('Access-Control-Allow-Methods', 'POST')
                         reply.header('statusCode', 401)
+                reply.header('code', 401)
                         reply.header('status', false)  
                         reply.header('token_expire_setting', token_expire_setting)
                         reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -255,9 +285,12 @@ export default async function auth(fastify: FastifyInstance) {
             if (rs_email.length > 0) {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'POST')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('status', false)
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -271,9 +304,12 @@ export default async function auth(fastify: FastifyInstance) {
             if (rs_username.length > 0) {
                         reply.header('version', 1)
                         reply.header('x-cache-status', 0) // 1=yes ,0=no
-                        reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                        reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                         reply.header('Access-Control-Allow-Methods', 'POST')
                         reply.header('statusCode', 500)
+                reply.header('code', 500)
                         reply.header('status', false)  
                         reply.header('token_expire_setting', token_expire_setting)
                         reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -306,9 +342,12 @@ export default async function auth(fastify: FastifyInstance) {
             console.log(error)
             reply.header('version', 1)
             reply.header('x-cache-status', 0) // 1=yes ,0=no
-            reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+            reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
             reply.header('Access-Control-Allow-Methods', 'POST')
             reply.header('statusCode', 500)
+                reply.header('code', 500)
             reply.header('status', false)  
             reply.header('message', error)
             reply.header('token_expire_setting', token_expire_setting)
@@ -371,9 +410,12 @@ export default async function auth(fastify: FastifyInstance) {
                 if (validation_profile.length > 0) {
                             reply.header('version', 1)
                             reply.header('x-cache-status', 0) // 1=yes ,0=no
-                            reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                            reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                             reply.header('Access-Control-Allow-Methods', 'POST')
                             reply.header('statusCode', 500)
+                reply.header('code', 500)
                             reply.header('status', false)  
                             reply.header('token_expire_setting', token_expire_setting)
                             reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -391,9 +433,12 @@ export default async function auth(fastify: FastifyInstance) {
                 if (validation_address.length > 0) {
                             reply.header('version', 1)
                             reply.header('x-cache-status', 0) // 1=yes ,0=no
-                            reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                            reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                             reply.header('Access-Control-Allow-Methods', 'POST')
                             reply.header('statusCode', 500)
+                reply.header('code', 500)
                             reply.header('status', false)  
                             reply.header('token_expire_setting', token_expire_setting)
                             reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -471,10 +516,13 @@ export default async function auth(fastify: FastifyInstance) {
                 }
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'POST')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 200)
+                reply.header('code', 200)
                 reply.header('status', true)
                 reply.header('token', token)
                 reply.header('timeexpire', time_expire_set)
@@ -526,10 +574,13 @@ export default async function auth(fastify: FastifyInstance) {
                                 //reply.code(500).send({ status: false, message: error })
                                 reply.header('version', 1)
                                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                                 reply.header('message', 'Information Correct')
                                 reply.header('statusCode', 401)
+                reply.header('code', 401)
                                 reply.header('status', false) 
                                 reply.code(500).send({  title:{ status: false, statusCode : 500,}, 
                                                         message: 'Can not send email',
@@ -580,10 +631,13 @@ export default async function auth(fastify: FastifyInstance) {
                                 //reply.code(500).send({ status: false, message: error })
                                 reply.header('version', 1)
                                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                                 reply.header('message', 'Information Correct')
                                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                                 reply.header('status', false) 
                                 reply.code(500).send({  title:{ status: false, statusCode : 500,}, 
                                                         token: token,
@@ -605,9 +659,12 @@ export default async function auth(fastify: FastifyInstance) {
             console.log(error)
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'POST')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('status', false) 
                 reply.header('message', error) 
                 reply.header('token_expire_setting', token_expire_setting)
@@ -617,21 +674,26 @@ export default async function auth(fastify: FastifyInstance) {
         }
     })
     /**************************************************/ 
-    fastify.post('/singin', {
-        schema: bodysinginSchema // validate schemas
+    fastify.get('/singindev', {
+        schema: querystringysingin // validate schemas
         }, async (request: FastifyRequest, reply: FastifyReply) => {
-        const body: any = request.body
-        const username = body.username
-        const password = body.password
-        const state: any =getRandomString(32)
+        const query: any = request.query
+        //const q = query.q
+        //const body: any = request.body
+        const username = query.username
+        const password = query.password
+        var state: any = getRandomString(32)
         try {
             if (username == '') {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('status', false)
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -641,10 +703,13 @@ export default async function auth(fastify: FastifyInstance) {
             } if (password == '') {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('status', false)
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -728,16 +793,19 @@ export default async function auth(fastify: FastifyInstance) {
                 const MaxAge = 3600
                 const set_cookie:any='uid='+user_idx+'; Max-Age='+MaxAge+'; SameSite=None; Secure';
                 reply.header('Set-Cookie', set_cookie)
-                const set_cookie2: any = 'token=' + token + '; Max-Age=' + MaxAge + '; SameSite=None; Secure';
-            // reply.header('Set-Cookie', set_cookie2)
+                const set_cookie2: any = 'state=' + state + '; Max-Age=' + MaxAge + '; SameSite=None; Secure';
+                reply.header('Set-Cookie', set_cookie2)
                 reply.header('Access-Control-Max-Age', 600)
                 reply.header('Accept-Language', 'en')
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'POST')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 200)
+                reply.header('code', 200)
                 reply.header('status', true) 
                 reply.header('user_idx', user_idx)
                 reply.header('token', token)
@@ -752,17 +820,190 @@ export default async function auth(fastify: FastifyInstance) {
                     message_th: 'ยินดีต้อนรับ คุณ ' + full_name + ' เข้าสู่ระบบสำเร็จ',
                     expire :time_setting,
                     token,
-                    decoded: decoded,
+                   // decoded: decoded,
                     // data: datars, encoded: token,
                 })
                 return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
         }else{
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 401)
+                reply.header('code', 401)
+                reply.header('status', false) 
+                reply.header('token_expire_setting', token_expire_setting)
+                reply.header('token_expire_setting_msg', token_expire_setting_msg)
+            reply.code(401).send({ status: false,statusCode : 401, message: 'Login failed or user is not active ! ',message_th: 'ไม่พบข้อมูล username หรือ password ในระบบ หรือ ยัง ไม่ได้ active user'  })
+            return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
+        }
+        } catch (error) {
+        console.log(error)
+        reply.code(500).send({ title: {status: false, statusCode : 500,},message: error })
+        return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
+        }
+    })
+    fastify.post('/singin', {
+        schema: bodysinginSchema // validate schemas
+        }, async (request: FastifyRequest, reply: FastifyReply) => {
+        const body: any = request.body
+        const username = body.username
+        const password = body.password
+        var state: any = getRandomString(32)
+        try {
+            if (username == '') {
+                reply.header('version', 1)
+                reply.header('x-cache-status', 0) // 1=yes ,0=no
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
+                reply.header('message', 'Information Correct')
+                reply.header('statusCode', 500)
+                reply.header('code', 500)
+                reply.header('status', false)
+                reply.header('token_expire_setting', token_expire_setting)
+                reply.header('token_expire_setting_msg', token_expire_setting_msg)
+                reply.code(500).send({ title: {status: false, statusCode : 500,},message: 'username is null',message_th: 'ไม่พบข้อมูล username' })
+                console.log(request.body)
+                return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
+            } if (password == '') {
+                reply.header('version', 1)
+                reply.header('x-cache-status', 0) // 1=yes ,0=no
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
+                reply.header('message', 'Information Correct')
+                reply.header('statusCode', 500)
+                reply.header('code', 500)
+                reply.header('status', false)
+                reply.header('token_expire_setting', token_expire_setting)
+                reply.header('token_expire_setting_msg', token_expire_setting_msg)
+                reply.code(500).send({ title: {status: false, statusCode : 500,},message: 'password is null',message_th: 'ไม่พบข้อมูล password' })
+                console.log(request.body)
+                return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
+            }
+        const encPassword = crypto.createHash('md5').update(password).digest('hex')
+        const rs: any = await AuthModels.login(db1, username, encPassword)
+        if (rs.length > 0) {
+                const user: any = rs[0]
+                const userids: any = user.id
+                const userid = fastify.jwt.sign({userids})
+                console.log(user)
+                /******************************Crate Token *************************************/
+                    var day = 1
+                    var TIMEEXPIRE =env.TIMEEXPIRE
+                    var time_expire_set :any = env.TIMEEXPIRE
+                    var time_expire_set1 = 300
+                    var time_setting :any = env.TIMEEXPIRE
+                    var TIMEEXPIRE_TOKEN :any = env.TIMEEXPIRE_TOKEN
+                    var today = new Date()
+                    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
+                    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+                    var dateTime = date + ' ' + time
+                    var issued_at=Date.now()
+                    if (token_expire_setting == 1) {
+                        var token = fastify.jwt.sign({
+                                    user_id: user.id,
+                                    role_id: user.role_id,
+                                    username: user.username,
+                                    email: user.email,
+                                    token_expire_setting: token_expire_setting,
+                                    at: { 
+                                        issued_at: issued_at,
+                                        timeconfig: TIMEEXPIRE,
+                                        TIMEEXPIRE_TOKEN: env.TIMEEXPIRE_TOKEN,
+                                        state: getRandomString(32),  
+                                    },                  
+                            }, {expiresIn: env.TIMEEXPIRE_TOKEN })    
+                    } else {
+                        var token = fastify.jwt.sign({
+                                    user_id: user.id,
+                                    role_id: user.role_id,
+                                    username: user.username,
+                                    email: user.email,
+                                    token_expire_setting: token_expire_setting,
+                                    at: { 
+                                        issued_at: issued_at,
+                                        timeconfig: TIMEEXPIRE,
+                                        TIMEEXPIRE_TOKEN: env.TIMEEXPIRE_TOKEN,
+                                        state: getRandomString(32),  
+                                    },                  
+                            })    
+                    }
+            /******************************Crate Token *************************************/
+
+                /*
+                    const accessToken = jwt.sign({ ...payload }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1m' })
+                    const refreshToken = jwt.sign({ ...payload }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '90d' })
+                    res.cookie('refreshToken', `${refreshToken}`, { expired: 86400 * 90 })
+                */
+            
+                /******************************Crate Token *************************************/
+                const decoded: any = fastify.jwt.verify(token)
+                //  fastify.setLocal('token', token)
+                // asycnhronously
+                fastify.jwt.verify(token, (err :any, decoded : any) => {
+                if (err) fastify.log.error(err)
+                fastify.log.info(`Token verified. Foo is ${decoded.foo}`)
+                })
+                const user_idx = user.id
+                const datars = {
+                        uid:  user_idx,
+                        username: user.username, 
+                        email: user.email,
+                        firstName: user.first_name,
+                        lastName: user.last_name,
+                        role_id: user.role_id,
+                }
+                const MaxAge = 3600
+                const set_cookie:any='uid='+user_idx+'; Max-Age='+MaxAge+'; SameSite=None; Secure';
+                reply.header('Set-Cookie', set_cookie)
+                const set_cookie2: any = 'state=' + state + '; Max-Age=' + MaxAge + '; SameSite=None; Secure';
+                reply.header('Set-Cookie', set_cookie2)
+                reply.header('Access-Control-Max-Age', 600)
+                reply.header('Accept-Language', 'en')
+                reply.header('version', 1)
+                reply.header('x-cache-status', 0) // 1=yes ,0=no
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Access-Control-Allow-Methods', 'POST')
+                reply.header('message', 'Information Correct')
+                reply.header('statusCode', 200)
+                reply.header('code', 200)
+                reply.header('status', true) 
+                reply.header('user_idx', user_idx)
+                reply.header('token', token)
+                reply.header('timeexpire', time_expire_set)
+                reply.header('create', dateTime)
+                reply.header('token_expire_setting', token_expire_setting)
+                reply.header('token_expire_setting_msg', token_expire_setting_msg)
+                const full_name = user.username
+                await reply.code(200).send({ 
+                    title:{ status: true, statusCode : 200,},
+                    message: 'welcome ' + full_name + ' Sign in system successfully',
+                    message_th: 'ยินดีต้อนรับ คุณ ' + full_name + ' เข้าสู่ระบบสำเร็จ',
+                    expire :time_setting,
+                    token,
+                   // decoded: decoded,
+                    // data: datars, encoded: token,
+                })
+                return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
+        }else{
+                reply.header('version', 1)
+                reply.header('x-cache-status', 0) // 1=yes ,0=no
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
+                reply.header('message', 'Information Correct')
+                reply.header('statusCode', 401)
+                reply.header('code', 401)
                 reply.header('status', false) 
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -786,10 +1027,13 @@ export default async function auth(fastify: FastifyInstance) {
             if (datareset === "") {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('status', false)
                 reply.header('token_expire_setting', token_expire_setting_in)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -875,10 +1119,13 @@ export default async function auth(fastify: FastifyInstance) {
                         // asycnhronously
                         reply.header('version', 1)
                         reply.header('x-cache-status', 0) // 1=yes ,0=no
-                        reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                        reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                         reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                         reply.header('message', 'Information Correct')
                         reply.header('statusCode', 200)
+                reply.header('code', 200)
                         reply.header('status', true) 
                         reply.header('expire', time_setting)
                         reply.header('token_expire_setting', token_expire_setting)
@@ -899,10 +1146,13 @@ export default async function auth(fastify: FastifyInstance) {
                         //reply.code(500).send({ status: false, message: error })
                         reply.header('version', 1)
                         reply.header('x-cache-status', 0) // 1=yes ,0=no
-                        reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                        reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                         reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                         reply.header('message', 'Information Correct')
                         reply.header('statusCode', 401)
+                reply.header('code', 401)
                         reply.header('status', false)
                         reply.header('token_expire_setting', token_expire_setting)
                         reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -919,10 +1169,13 @@ export default async function auth(fastify: FastifyInstance) {
         } else {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 401)
+                reply.header('code', 401)
                 reply.header('status', false) 
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -947,10 +1200,13 @@ export default async function auth(fastify: FastifyInstance) {
                             if (token == '') {
                                     reply.header('version', 1)
                                     reply.header('x-cache-status', 0) // 1=yes ,0=no
-                                    reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                                    reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                                     reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                                     reply.header('message', 'Information Correct')
                                     reply.header('statusCode', 500)
+                reply.header('code', 500)
                                     reply.header('status', false) 
                                     reply.code(500).send({
                                         title: {
@@ -967,10 +1223,13 @@ export default async function auth(fastify: FastifyInstance) {
                             const decoded: any = fastify.jwt.verify(token)
                                     reply.header('version', 1)
                                     reply.header('x-cache-status', 0) // 1=yes ,0=no
-                                    reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                                    reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                                     reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                                     reply.header('message', 'Information Correct')
                                     reply.header('statusCode', 500)
+                reply.header('code', 500)
                                     reply.header('status', false) 
                                     reply.code(200).send({
                                         title: {
@@ -1012,10 +1271,13 @@ export default async function auth(fastify: FastifyInstance) {
         if (username === "") {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('status', false) 
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1028,10 +1290,13 @@ export default async function auth(fastify: FastifyInstance) {
         } if (oldpassword === "") {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('status', false) 
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1045,10 +1310,13 @@ export default async function auth(fastify: FastifyInstance) {
         if (newpassword === "") {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('status', false) 
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1080,10 +1348,13 @@ export default async function auth(fastify: FastifyInstance) {
             } else {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('status', false)
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1156,10 +1427,13 @@ export default async function auth(fastify: FastifyInstance) {
             }
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 200)
+                reply.header('code', 200)
                 reply.header('status', true) 
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1180,10 +1454,13 @@ export default async function auth(fastify: FastifyInstance) {
             console.log(error)
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('status', false) 
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1203,10 +1480,13 @@ export default async function auth(fastify: FastifyInstance) {
         if (username === "") {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('status', false) 
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1219,10 +1499,13 @@ export default async function auth(fastify: FastifyInstance) {
         } if (oldpassword === "") {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('status', false) 
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1235,10 +1518,13 @@ export default async function auth(fastify: FastifyInstance) {
         } if (newpassword === "") {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
                 reply.header('status', false) 
@@ -1270,10 +1556,13 @@ export default async function auth(fastify: FastifyInstance) {
             } else {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('status', false)
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1346,10 +1635,13 @@ export default async function auth(fastify: FastifyInstance) {
             }
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 200)
+                reply.header('code', 200)
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
                 reply.header('status', true) 
@@ -1370,10 +1662,13 @@ export default async function auth(fastify: FastifyInstance) {
             console.log(error)
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
                 reply.header('status', false) 
@@ -1388,10 +1683,13 @@ export default async function auth(fastify: FastifyInstance) {
         if (code === "") {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('status', false) 
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1447,10 +1745,13 @@ export default async function auth(fastify: FastifyInstance) {
                 await AuthModels.updateuid(db1, user_id, data_array)
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 200)
+                reply.header('code', 200)
                 reply.header('status', true)
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1491,10 +1792,13 @@ export default async function auth(fastify: FastifyInstance) {
         if (code == "") {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('status', false)
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1535,10 +1839,13 @@ export default async function auth(fastify: FastifyInstance) {
                 const code = 500
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('status', false)
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1560,10 +1867,13 @@ export default async function auth(fastify: FastifyInstance) {
                 await AuthModels.updateuid(db1, user_id, data_array)
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 200)
+                reply.header('code', 200)
                 reply.header('status', true)
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1587,10 +1897,13 @@ export default async function auth(fastify: FastifyInstance) {
             console.log(error)
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 500)
+                reply.header('code', 500)
                 reply.header('status', false) 
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1643,6 +1956,7 @@ export default async function auth(fastify: FastifyInstance) {
                     reply.header('Access-Control-Allow-Methods', 'GET')
                     reply.header('message', 'Information Correct')
                     reply.header('statusCode', 500)
+                reply.header('code', 500)
                     reply.header('status', false)
                     reply.header('token_expire_setting', token_expire_setting)
                     reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1663,6 +1977,7 @@ export default async function auth(fastify: FastifyInstance) {
                     reply.header('Access-Control-Allow-Methods', 'GET')
                     reply.header('message', 'Information Correct')
                     reply.header('statusCode', 200)
+                reply.header('code', 200)
                     reply.header('status', true)
                     reply.header('token_expire_setting', token_expire_setting)
                     reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1692,6 +2007,7 @@ export default async function auth(fastify: FastifyInstance) {
                 reply.header('Access-Control-Allow-Methods', 'GET')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 200)
+                reply.header('code', 200)
                 reply.header('status', true) 
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1716,10 +2032,13 @@ export default async function auth(fastify: FastifyInstance) {
                             console.log(request.validationError)
                             reply.header('version', 1)
                             reply.header('x-cache-status', 0) // 1=yes ,0=no
-                            reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                            reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                             reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                             reply.header('message', 'Information Correct')
                             reply.header('statusCode', 400)
+                reply.header('code', 400)
                             reply.header('status', false)
                             reply.header('token_expire_setting', token_expire_setting)
                             reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1797,10 +2116,13 @@ export default async function auth(fastify: FastifyInstance) {
                                             }
                                             reply.header('version', 1)
                                             reply.header('x-cache-status', 0) // 1=yes ,0=no
-                                            reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                                            reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                                             reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                                             reply.header('message', 'Information Correct')
                                             reply.header('statusCode', 200)
+                reply.header('code', 200)
                                             reply.header('status', true) 
                                             reply.header('token_expire_setting', token_expire_setting)
                                             reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1819,10 +2141,13 @@ export default async function auth(fastify: FastifyInstance) {
                                     } else {
                                             reply.header('version', 1)
                                             reply.header('x-cache-status', 0) // 1=yes ,0=no
-                                            reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                                            reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                                             reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                                             reply.header('message', 'Information Correct')
                                             reply.header('statusCode', 400)
+                reply.header('code', 400)
                                             reply.header('status', false) 
                                             reply.header('token_expire_setting', token_expire_setting)
                                             reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1840,10 +2165,13 @@ export default async function auth(fastify: FastifyInstance) {
                             } else {
                                     reply.header('version', 1)
                                     reply.header('x-cache-status', 0) // 1=yes ,0=no
-                                    reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                                    reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                                     reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                                     reply.header('message', 'Information Correct')
                                     reply.header('statusCode', 500)
+                reply.header('code', 500)
                                     reply.header('status', true)
                                     reply.header('token_expire_setting', token_expire_setting)
                                     reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1868,10 +2196,13 @@ export default async function auth(fastify: FastifyInstance) {
         const decoded: any = fastify.jwt.getstate()
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 200)
+                reply.header('code', 200)
                 reply.header('status', true) 
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1895,10 +2226,13 @@ export default async function auth(fastify: FastifyInstance) {
                             console.log(request.validationError)
                             reply.header('version', 1)
                             reply.header('x-cache-status', 0) // 1=yes ,0=no
-                            reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                            reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                             reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                             reply.header('message', 'Information Correct')
                             reply.header('statusCode', 400)
+                reply.header('code', 400)
                             reply.header('status', false)
                             reply.header('token_expire_setting', token_expire_setting)
                             reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1923,10 +2257,13 @@ export default async function auth(fastify: FastifyInstance) {
                             if (state1 === state) {
                                     reply.header('version', 1)
                                     reply.header('x-cache-status', 0) // 1=yes ,0=no
-                                    reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                                    reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                                     reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                                     reply.header('message', 'Information Correct')
                                     reply.header('statusCode', 200)
+                reply.header('code', 200)
                                     reply.header('status', true)
                                     reply.header('token_expire_setting', token_expire_setting)
                                     reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1941,10 +2278,13 @@ export default async function auth(fastify: FastifyInstance) {
                             } else {
                                     reply.header('version', 1)
                                     reply.header('x-cache-status', 0) // 1=yes ,0=no
-                                    reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                                    reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                                     reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                                     reply.header('message', 'Information Correct')
                                     reply.header('statusCode', 500)
+                reply.header('code', 500)
                                     reply.header('status', true)
                                     reply.header('token_expire_setting', token_expire_setting)
                                     reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -1970,10 +2310,13 @@ export default async function auth(fastify: FastifyInstance) {
                 const msg_time_en = 'Results unsuccessful'
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 204)
+                reply.header('code', 204)
                 reply.header('status', false)
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -2003,10 +2346,13 @@ export default async function auth(fastify: FastifyInstance) {
             /*******************/
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 200)
+                reply.header('code', 200)
                 reply.header('status', true) 
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -2033,10 +2379,13 @@ export default async function auth(fastify: FastifyInstance) {
                 const msg_time_en = 'Results unsuccessful'
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 204)
+                reply.header('code', 204)
                 reply.header('status', false) 
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -2066,10 +2415,13 @@ export default async function auth(fastify: FastifyInstance) {
             /*******************/
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Information Correct')
                 reply.header('statusCode', 200)
+                reply.header('code', 200)
                 reply.header('status', true) 
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
@@ -2093,13 +2445,16 @@ export default async function auth(fastify: FastifyInstance) {
         /*******var**************/
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache')
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache')
                 reply.header('token_expire_setting', token_expire_setting)
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
                 // no-cache  private  public max-age=31536000 must-revalidate
                 reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
                 reply.header('message', 'Working')
                 reply.header('statusCode', 200)
+                reply.header('code', 200)
                 reply.header('status', true) 
                 /*****************************************************/
                 reply.code(200).send({title:{

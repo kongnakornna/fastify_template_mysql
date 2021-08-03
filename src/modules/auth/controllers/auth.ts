@@ -142,6 +142,14 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
     }
 })
 /**************************************************/    
+fastify.get('/genint',{preValidation: [fastify.genint]}, async (request: FastifyRequest, reply: FastifyReply) => {}) 
+fastify.post('/genint',{preValidation: [fastify.genint]}, async (request: FastifyRequest, reply: FastifyReply) => {})   
+fastify.get('/getstate',{preValidation: [fastify.getstate]}, async (request: FastifyRequest, reply: FastifyReply) => {}) 
+fastify.post('/getstate',{preValidation: [fastify.getstate]}, async (request: FastifyRequest, reply: FastifyReply) => {})   
+fastify.get('/clientsecret',{preValidation: [fastify.clientsecret]}, async (request: FastifyRequest, reply: FastifyReply) => {}) 
+fastify.post('/clientsecret',{preValidation: [fastify.clientsecret]}, async (request: FastifyRequest, reply: FastifyReply) => {})   
+fastify.get('/codegenclientid',{preValidation: [fastify.codegen]}, async (request: FastifyRequest, reply: FastifyReply) => {}) 
+fastify.post('/codegenclientid',{preValidation: [fastify.codegen]}, async (request: FastifyRequest, reply: FastifyReply) => {})  
 fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => {
     const body: any = request.body
     const username = body.username
@@ -346,14 +354,6 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
     }
 })
 /**************************************************/
-fastify.get('/genint',{preValidation: [fastify.genint]}, async (request: FastifyRequest, reply: FastifyReply) => {}) 
-fastify.post('/genint',{preValidation: [fastify.genint]}, async (request: FastifyRequest, reply: FastifyReply) => {})   
-fastify.get('/getstate',{preValidation: [fastify.getstate]}, async (request: FastifyRequest, reply: FastifyReply) => {}) 
-fastify.post('/getstate',{preValidation: [fastify.getstate]}, async (request: FastifyRequest, reply: FastifyReply) => {})   
-fastify.get('/clientsecret',{preValidation: [fastify.clientsecret]}, async (request: FastifyRequest, reply: FastifyReply) => {}) 
-fastify.post('/clientsecret',{preValidation: [fastify.clientsecret]}, async (request: FastifyRequest, reply: FastifyReply) => {})   
-fastify.get('/codegenclientid',{preValidation: [fastify.codegen]}, async (request: FastifyRequest, reply: FastifyReply) => {}) 
-fastify.post('/codegenclientid',{preValidation: [fastify.codegen]}, async (request: FastifyRequest, reply: FastifyReply) => {})  
 fastify.post('/singin', async (request: FastifyRequest, reply: FastifyReply) => {
     const body: any = request.body
     const username = body.username
@@ -448,6 +448,7 @@ fastify.post('/singin', async (request: FastifyRequest, reply: FastifyReply) => 
             reply.header('Access-Control-Allow-Methods', 'GET')
             reply.header('message', 'Information Correct')
             reply.header('statusCode', 401)
+                reply.header('code', 401)
             reply.header('status', false) 
         reply.code(401).send({ status: false,statusCode : 401, message: 'Login failed or user is not active ! ',message_th: 'ไม่พบข้อมูล username หรือ password ในระบบ หรือ ยัง ไม่ได้ active user'  })
         return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
@@ -521,6 +522,7 @@ fastify.post('/resetpass', async (request: FastifyRequest, reply: FastifyReply) 
             reply.header('Access-Control-Allow-Methods', 'GET')
             reply.header('message', 'Information Correct')
             reply.header('statusCode', 401)
+                reply.header('code', 401)
             reply.header('status', false) 
             reply.code(401).send({  title:{ status: false, statusCode : 401,}, 
                                     message: 'username or email is do not have in database',

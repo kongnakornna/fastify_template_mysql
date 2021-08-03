@@ -9,24 +9,24 @@ const opts = {}
 const address: any = env.address || '127.0.0.1'
 const port_main :any =  env.PORT  || 8002
 /***********redis**************/
-/******************************/
-/***********redis**************/
-const redis = require('redis').createClient({ host:  env.redis_host || 'localhost', port: env.redis_port || 6379 })
+'use strict'
+var redis = require('redis').createClient({ host:  env.redis_host || 'localhost',port: env.redis_port || 6379 })
 app.register(require('fastify-redis'), {
-    host: env.redis_host || '127.0.0.1',
+    host:  env.redis_host || 'localhost',
     port: env.redis_port || 6379,
-    namespace: 'hello redis'
+    namespace: 'hello'
   })
-app.register(require('fastify-redis'), {
+  .register(require('fastify-redis'), {
     client: redis,
-    namespace: 'test redis'
-})
+    namespace: 'world'
+  })
 /***********redis**************/
-const start = async () => {
+
+var start = async () => {
   try {
     await app.listen(port_main, address)
-      console.log('App service NodeJs Fastify V.1.0.1 knex server listening on ' + address + ':' + port_main)
-       console.log(' Redis Connect :'+redis)
+      console.log(' app register :'+app.register)
+      console.log('Server listening on ' + address + ':' + port_main)
   } catch (error) {
     console.log(error)
     process.exit(0)
@@ -132,5 +132,10 @@ fastify-typeorm-plugin	Fastify plugin to work with TypeORM.
 https://github.com/i18next/i18next-http-middleware#fastify-usage
 https://github.com/charlesread/fastify-jwt-webapp
 https://github.com/Ethan-Arrowood/fastify-jwt-authz
+
+https://github.com/fastify/fastify-caching
+https://www.npmjs.com/package/fastify-ioredis
+https://github.com/Techie-Qabila/fastify-ioredis
+https://www.skypack.dev/view/@mgcrea/fastify-session-redis-store
 
 */

@@ -81,7 +81,9 @@ module.exports = fp(async (fastify: any, opts: any) => {
            // reply.header('Set-Cookie', set_cookie)
             reply.header('version', 1)
             reply.header('x-cache-status', 0) // 1=yes ,0=no
-            reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+            reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+            reply.header('Expires', '-1')
+            reply.header('Pragma', 'no-cache')  
             reply.header('state', genint)
             reply.header('statusCode', 200)
             reply.header('status', true) 
@@ -117,7 +119,9 @@ module.exports = fp(async (fastify: any, opts: any) => {
            // reply.header('Set-Cookie', set_cookie)
             reply.header('version', 1)
             reply.header('x-cache-status', 0) // 1=yes ,0=no
-            reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+            reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+            reply.header('Expires', '-1')
+            reply.header('Pragma', 'no-cache')  
             reply.header('code', codegens)
             reply.header('statusCode', 200)
             reply.header('status', true) 
@@ -127,7 +131,9 @@ module.exports = fp(async (fastify: any, opts: any) => {
         } catch (error) {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache')  
                 reply.header('code', '')
                 reply.header('statusCode', 200)
                 reply.header('status', false)
@@ -150,7 +156,9 @@ module.exports = fp(async (fastify: any, opts: any) => {
            // reply.header('Set-Cookie', set_cookie)
             reply.header('version', 1)
             reply.header('x-cache-status', 0) // 1=yes ,0=no
-            reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+            reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+            reply.header('Expires', '-1')
+            reply.header('Pragma', 'no-cache')  
             reply.header('state', state)
             reply.header('statusCode', 200)
             reply.header('status', true) 
@@ -160,7 +168,9 @@ module.exports = fp(async (fastify: any, opts: any) => {
         } catch (error) {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache')  
                 reply.header('state', '')
                 reply.header('statusCode', 200)
                 reply.header('status', false)
@@ -184,7 +194,9 @@ module.exports = fp(async (fastify: any, opts: any) => {
            // reply.header('Set-Cookie', set_cookie)
             reply.header('version', 1)
             reply.header('x-cache-status', 0) // 1=yes ,0=no
-            reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+            reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+            reply.header('Expires', '-1')
+            reply.header('Pragma', 'no-cache')  
             reply.header('clientsecret', clientsecret)
             reply.header('statusCode', 200)
             reply.header('status', true) 
@@ -194,7 +206,9 @@ module.exports = fp(async (fastify: any, opts: any) => {
         } catch (error) {
                 reply.header('version', 1)
                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                reply.header('Expires', '-1')
+                reply.header('Pragma', 'no-cache')  
                 reply.header('clientsecret', '')
                 reply.header('statusCode', 200)
                 reply.header('status', false)
@@ -283,7 +297,9 @@ module.exports = fp(async (fastify: any, opts: any) => {
                                 const code = 500
                                 reply.header('version', 1)
                                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                                reply.header('Expires', '-1')
+                                reply.header('Pragma', 'no-cache')  
                                 reply.header('Access-Control-Allow-Methods', 'POST')
                                 reply.header('message', 'Information Correct')
                                 reply.header('statusCode', code)
@@ -327,7 +343,9 @@ module.exports = fp(async (fastify: any, opts: any) => {
                                 /* */
                                 reply.header('version', 1)
                                 reply.header('x-cache-status', 0) // 1=yes ,0=no
-                                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                                reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                                reply.header('Expires', '-1')
+                                reply.header('Pragma', 'no-cache')  
                                 reply.header('Access-Control-Allow-Methods', 'POST')
                                 reply.header('message', 'Information Correct')
                                 reply.header('statusCode', code)
@@ -354,7 +372,9 @@ module.exports = fp(async (fastify: any, opts: any) => {
             console.log('jwt error :' + error)
             reply.header('version', 1)
             reply.header('x-cache-status', 0) // 1=yes ,0=no
-            reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+            reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+            reply.header('Expires', '-1')
+            reply.header('Pragma', 'no-cache')  
             reply.header('Access-Control-Allow-Methods', 'POST')
             reply.header('message', 'Information Correct')
             reply.header('statusCode', 500)
@@ -462,7 +482,9 @@ module.exports = fp(async (fastify: any, opts: any) => {
                             /*
                             reply.header('version', 1)
                             reply.header('x-cache-status', 0) // 1=yes ,0=no
-                            reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                            reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+                            reply.header('Expires', '-1')
+                            reply.header('Pragma', 'no-cache')  
                             reply.header('Access-Control-Allow-Methods', 'POST')
                             reply.header('message', 'Information Correct')
                             reply.header('statusCode', 200)
@@ -615,7 +637,9 @@ module.exports = fp(async (fastify: any, opts: any) => {
             console.log('jwt error :' + error)
             reply.header('version', 1)
             reply.header('x-cache-status', 0) // 1=yes ,0=no
-            reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+            reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+            reply.header('Expires', '-1')
+            reply.header('Pragma', 'no-cache')  
             reply.send({
                 title: {
                         status: false,
@@ -649,7 +673,9 @@ module.exports = fp(async (fastify: any, opts: any) => {
             console.log('jwt error :' + error)
             reply.header('version', 1)
             reply.header('x-cache-status', 0) // 1=yes ,0=no
-            reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+            reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+            reply.header('Expires', '-1')
+            reply.header('Pragma', 'no-cache')  
             reply.send({
                 title: {
                         status: false,
