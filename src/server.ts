@@ -22,10 +22,6 @@ app.register(require('fastify-redis'), {
     namespace: 'test redis'
 })
 /***********redis**************/
-
-/**********************/
-
-/**********************/
 const start = async () => {
   try {
     await app.listen(port_main, address)

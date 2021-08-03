@@ -138,6 +138,8 @@ interface FastifyRequest {
     genint: any
     host: any
     port: any
+    datas1: any
+    idx:any
     }
 interface FastifyReply {
     db: knex
@@ -206,5 +208,7 @@ interface FastifyReply {
     genint: any
     host: any
     port: any
+    datas1: any
+    idx:any
     } 
 }
