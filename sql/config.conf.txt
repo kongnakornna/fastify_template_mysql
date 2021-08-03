@@ -1,0 +1,26 @@
+DB1_HOST=localhost
+DB1_PORT=3306
+DB1_NAME=webservicedb
+DB1_USER=root
+DB1_PASSWORD=root
+
+DB2_HOST=localhost
+DB2_PORT=3306
+DB2_NAME=test
+DB2_USER=root
+DB2_PASSWORD=root
+
+DB3_HOST=localhost
+DB3_PORT=3306
+DB3_NAME=test2
+DB3_USER=root
+DB3_PASSWORD=root
+
+JWT_SECRET=@a#%dev$ty
+
+MONGO_URI=mongodb://localhost/ultimate
+ 
+PORT=8002
+UPLOAD_DIR=./upload
+
+TIMEEXPIRE = 86400

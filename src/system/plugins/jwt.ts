@@ -252,9 +252,9 @@ module.exports = fp(async (fastify: any, opts: any) => {
                 const db1: knex = fastify.db1
                     /******************************ตรวจสอบวันหมดอายุ Token check*************************************/ 
                         const decoded: any= verify_token 
-                        const iat: any = decoded['iat']
-                        const exp: any= decoded['exp']
-                        const user_id: any= decoded['user_id']
+                        var token_expire_setting: any= decoded['token_expire_setting']
+                        var token_expire_setting_msg: '0-not setting 1-setting'
+                        const user_id: any= decoded['user_id'] 
                         //const uid: any= decoded['id']
                         //const user_profile: any = await userModel.sd_users_profile(db1, user_id)
                         //const admin_profile: any = await adminModel.sd_users_profile(db1, user_id)
@@ -267,73 +267,100 @@ module.exports = fp(async (fastify: any, opts: any) => {
                         var now = Date.now();
                         var time_settings : any = time_setting
                         var timestamp_cul = now - issued_at 
-                        var timestamp_culs   : any = timestamp_cul
-                        var timestamp_culs2 : any = exp-iat
-                        if (timestamp_culs > exp) {
-                            const msg_time = 'Token Expired'
-                            const msg_time_th = 'โทเค็นหมดอายุ'
-                            const msg_time_en = 'Token Expired'
-                            const expired_status = 0
-                            const status = false
-                            const code = 500
-                                    reply.send({  // แสดงข้อมูล api
-                                        title: {
-                                            status: status,
-                                            statusCode : code,
-                                            message: msg_time_en,
-                                            msg_time_th: msg_time_th,
-                                            cache: 'no cache',
-                                            timestamp_culs: timestamp_culs,
-                                            timestamp_culs2: timestamp_culs2,
-                                            iat: iat,
-                                            exp: exp, 
-                                        }, error: null,
-                                        data: {
-                                            startdate: startdate,
-                                            message: msg_time_en,
-                                            msg_time_th: msg_time_th,
-                                            time_cul: timestamp_culs,
-                                            time_settings:time_settings,
-                                            protocol: protocol,
-                                            ip: ip,
-                                            query_get: query_get,
-                                        }
-                                    })
-                                return //reply.sent = true // exit loop  ออกจากลูปการทำงาน 
+                        
+                        if (token_expire_setting == 1) {
+                            var iat: any = decoded['iat']
+                            var exp: any = decoded['exp']
+                            var timestamp_culs   : any = timestamp_cul
+                            var timestamp_culs2 : any = exp-iat
+                            /************if check expire***************/
+                            if (timestamp_culs > exp) {
+                                const msg_time = 'Token Expired'
+                                var msg_time_th = 'โทเค็นหมดอายุ'
+                                var msg_time_en = 'Token Expired'
+                                var expired_status = 0
+                                var status = false
+                                const code = 500
+                                reply.header('version', 1)
+                                reply.header('x-cache-status', 0) // 1=yes ,0=no
+                                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                                reply.header('Access-Control-Allow-Methods', 'POST')
+                                reply.header('message', 'Information Correct')
+                                reply.header('statusCode', code)
+                                reply.header('status', true)
+                                reply.header('expired_status', expired_status)
+                                reply.header('message_time', msg_time)
+                                reply.header('token_expire_setting', token_expire_setting)
+                                reply.code(code).send({ // แสดงข้อมูล api
+                                            title: {
+                                                status: status,
+                                                statusCode : code,
+                                                message: msg_time_en,
+                                                msg_time_th: msg_time_th, 
+                                                timestamp_culs: timestamp_culs,
+                                                timestamp_culs2: timestamp_culs2,
+                                                iat: iat,
+                                                exp: exp, 
+                                            }, error: null,
+                                            data: {
+                                                startdate: startdate,
+                                                message: msg_time_en,
+                                                msg_time_th: msg_time_th,
+                                                time_cul: timestamp_culs,
+                                                time_settings:time_settings, 
+                                                query_get: query_get,
+                                            }
+                                        })
+                              
+                                 return //reply.sent = true // exit loop  ออกจากลูปการทำงาน 
+                            } else {
+                                /* กรณีที่ โทเค็นยังไม่หมดอายุ'  */ 
+                                const msg_time = 'Token Not Expired : โทเค็นยังไม่หมดอายุ'
+                                const msg_time_th = 'โทเค็นยังไม่หมดอายุ'
+                                const msg_time_en = 'Token Not Expired '
+                                var expired_status = 1
+                                const status = true  
+                                const decoded: any = verify_token
+                                const iat: any = decoded['iat'] // start time  encoded token
+                                const exp: any= decoded['exp']  // expired time encoded token
+                                var code = 200
+                                /* */
+                                reply.header('version', 1)
+                                reply.header('x-cache-status', 0) // 1=yes ,0=no
+                                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                                reply.header('Access-Control-Allow-Methods', 'POST')
+                                reply.header('message', 'Information Correct')
+                                reply.header('statusCode', code)
+                                reply.header('status', true)
+                                reply.header('token_expire_setting', token_expire_setting)
+                                await reply.code(code).send({
+                                    timestamp_culs: timestamp_culs,
+                                    timestamp_culs2: timestamp_culs2,
+                                    iat: iat,
+                                    exp: exp,
+                                    verify_token: decoded
+                                })
+                                return
+                                
+                            } 
+                            /************if check expire***************/
                         } else {
-                            /* กรณีที่ โทเค็นยังไม่หมดอายุ'  */ 
-                            const msg_time = 'Token Not Expired : โทเค็นยังไม่หมดอายุ'
-                            const msg_time_th = 'โทเค็นยังไม่หมดอายุ'
-                            const msg_time_en = 'Token Not Expired '
-                            const expired_status = 1
-                            const status = true  
-                            const decoded: any = verify_token
-                            const iat: any = decoded['iat'] // start time  encoded token
-                            const exp: any= decoded['exp']  // expired time encoded token
-                            const code = 200
-                            /*
-                            reply.header('version', 1)
-                            reply.header('x-cache-status', 0) // 1=yes ,0=no
-                            reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
-                            reply.header('Access-Control-Allow-Methods', 'POST')
-                            reply.header('message', 'Information Correct')
-                            reply.header('statusCode', 200)
-                            reply.header('status', true)  
-                            reply.header('x-bar', 'bar')
-                            await reply.code(200).send({
-                                timestamp_culs: timestamp_culs,
-                                timestamp_culs2: timestamp_culs2,
-                                iat: iat,
-                                exp: exp,
-                                verify_token: decoded
-                            })
-                            return
-                            */
-                        } 
+                            /************else check expire***************/
+                            /* non set */
+                            /************else check expire***************/
+                        }
             /*********************************/
         } catch (error) {
-            console.log('jwt error :'+error) 
-            reply.send({
+            console.log('jwt error :' + error)
+            reply.header('version', 1)
+            reply.header('x-cache-status', 0) // 1=yes ,0=no
+            reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+            reply.header('Access-Control-Allow-Methods', 'POST')
+            reply.header('message', 'Information Correct')
+            reply.header('statusCode', 500)
+            reply.header('status', true)
+            reply.header('token_expire_setting', token_expire_setting)
+            reply.code(500).send({
                 title: {
                         status: false,
                         statusCode : 500,

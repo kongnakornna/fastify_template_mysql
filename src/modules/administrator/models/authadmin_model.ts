@@ -158,19 +158,27 @@ tr_language_all_id(db1: knex, id: any) {
 he_header(db1: knex) {
     return db1('he_header').select('*') 
   }
-/*****************address*********************************/    
+/*****************roles*********************************/
+// ad_administrator_history
+create_history(db1: knex, data: any) { 
+    const rs = db1('ad_administrator_history').insert(data)
+    return rs
+  }
+create_roles(db1: knex, data: any) { 
+    const rs = db1('ad_administrator_roles').insert(data)
+    return rs
+  }
 create_administrator_roles(db1: knex, data: any) { 
     const rs = db1('ad_administrator_roles').insert(data)
     return rs
   }
-validation_administrator_roles(db1: knex, user_id: any,language_id: any) {
+validation_administrator_roles(db1: knex, user_id: any) {
     return db1('ad_administrator_roles')
       .select('user_id')
       .where('user_id', user_id)
       //.where('role_id', role_id)
   }
 view_administrator_roles(db1: knex, user_id: any, role_id: any) {
-  
     if (user_id !== null && role_id == null) {
       return db1('ad_administrator_roles')
         .select('user_id')
