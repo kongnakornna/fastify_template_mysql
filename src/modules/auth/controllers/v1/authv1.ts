@@ -514,6 +514,7 @@ fastify.post('/singin', async (request: FastifyRequest, reply: FastifyReply) => 
             reply.header('Access-Control-Allow-Methods', 'GET')
             reply.header('message', 'Information Correct')
             reply.header('statusCode', 401)
+                reply.header('code', 401)
             reply.header('status', false) 
         reply.code(401).send({ status: false,statusCode : 401, message: 'Login failed or user is not active ! ',message_th: 'ไม่พบข้อมูล username หรือ password ในระบบ หรือ ยัง ไม่ได้ active user'  })
         return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
@@ -597,6 +598,7 @@ fastify.post('/resetpass', async (request: FastifyRequest, reply: FastifyReply) 
             reply.header('Access-Control-Allow-Methods', 'GET')
             reply.header('message', 'Information Correct')
             reply.header('statusCode', 401)
+                reply.header('code', 401)
             reply.header('status', false) 
             reply.code(401).send({  title:{ status: false, statusCode : 401,}, 
                                     message: 'username or email is do not have in database',

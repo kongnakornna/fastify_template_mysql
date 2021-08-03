@@ -1,14 +1,16 @@
 import * as fastify from 'fastify'
 import * as path from 'path'
+/* */
 import mongooses = require('mongoose')
 import "reflect-metadata";  
-const mongoose = require('mongoose');
+var mongoose = require('mongoose');
 const multer = require('fastify-multer')
 const autoload = require('fastify-autoload')
 /************../config.conf**************/
+ 
 // const envPath = path.join(__dirname, '../config.conf') 
 /* ./config.conf */
-const envPath = path.join(__dirname, '../config.conf') 
+var envPath = path.join(__dirname, '../config.conf') 
 require('dotenv').config({ path: envPath })
 const env = process.env 
 const opts = {}
@@ -24,6 +26,7 @@ const app: fastify.FastifyInstance = fastify.fastify({
         level: 'info'
     }
 })
+
 /**********autoload****************/
 /*
 app.register(autoload, {
@@ -44,7 +47,17 @@ app.register(require('fastify-formbody'))
 //doc https://www.fastify.io/docs/latest/ContentTypeParser/
 /* fastify.post('/', (req, reply) => { reply.send(req.body) })  */
 /**************************/
-
+ 
+/*
+    npm install knex --save
+    //Then add one of the following (adding a --save) flag:
+    npm install pg -S
+    npm install sqlite3 -S
+    npm install mysql -S
+    npm install mysql2 -S
+    npm install oracledb -S
+    npm install tedious -S
+*/
 /* knex db connect  webservicedb */
 // register knex db2
 app.register(require('./system/database/mysqldb'), {
@@ -134,20 +147,42 @@ app.register(require('fastify-mongodb'), {
     url: env.MONGO_URI
 })
 // MongoDB
-const mongooseConnection = mongoose.connect(env.MONGO_URI, {useCreateIndex: true,useNewUrlParser: true,useUnifiedTopology: true})
+var mongooseConnection = mongoose.connect(env.MONGO_URI, {useCreateIndex: true,useNewUrlParser: true,useUnifiedTopology: true})
 mongoose.connection.on('error', (error:any) => app.log.error(error))
 mongoose.connection.once('open', () => app.log.info('MongoDB has been connected'+ mongoose.connection.on))
-console.log('mongoose on ' + mongoose)
-/**************************/
-
+console.log('mongoose on ' + mongooseConnection)
 /***********oauth2-server start***************/
 var oauthserver = require('fastify-oauth-server'); // กำลัง Dev
 /*******************************************************/
+    // websocket
+    app.register(require('./system/plugins/ws'))
+    // socket.io
+    app.register(require('./system/plugins/io'), {})
+    app.ready((error: any) => {
+        if (error) throw error
+        console.log('WebSocket server running....')
+        app.io.on('connection', (socket: any) => {
+            console.log('user socket connected!')
+            socket.on('welcome', (message: any) => {
+                socket.emit('welcome', 'Hello from server socket')
+            })
+            socket.on('chat message', (message: any) => {
+                socket.broadcast.emit('chat message', message)
+            })
+        })
+        app.ws.on('connection', (ws: any) => {
+            console.log('Client connected websocket!')
+            ws.on('message', (message: any) => {
+                const clients: any[] = app.ws.clients
+                clients.forEach((client: any) => {
+                    if (client.readyState === WebSocket.OPEN) {
+                        client.send(message)
+                    }
+                })
+            })
+        })
+    })
 
-/***********oauth2-server end***************/
 app.register(routers)
 /**************************/
-
-
-
 export default app

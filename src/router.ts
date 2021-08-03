@@ -27,8 +27,6 @@ import { FastifyInstance } from 'fastify'
     /***********administrator***************/
     import administratorRouter from './modules/administrator/controllers/administrator' 
     import adminauthRouter from './modules/administrator/controllers/auth' 
- /****testtypeorm*******/
-// import testtypeormRouter from './modules/testtypeorm/controllers/testtypeorm' 
 /*******************export************************/
 export default async function router(fastify: FastifyInstance) {
    // router prefix
@@ -56,14 +54,12 @@ export default async function router(fastify: FastifyInstance) {
     fastify.register(customerRouter, { prefix: '/customer' })  
     /*******************Geo************************/
     fastify.register(geoRouter, { prefix: '/geo' })
-    /***********testtypeormRouter***************/
-    // fastify.register(testtypeormRouter, { prefix: '/testtypeorm' })
     // administratorRouter
     fastify.register(administratorRouter, { prefix: '/administrator' })
     fastify.register(adminauthRouter, { prefix: '/administrator/auth' })
     /*******************modules************************/
     /**documentation */
-     fastify.register(documentationRouter, { prefix: '/documentation' })
+    fastify.register(documentationRouter, { prefix: '/documentation' })
     /***********oauth2-server start***************/
     /***********oauth2-server end***************/
     /***********redis start***************/

@@ -32,6 +32,7 @@
     "fastify-express": "^0.3.3",
     "fastify-formbody": "^5.0.0",
     "fastify-helmet": "^5.3.1",
+    "fastify-ioredis": "^0.1.1",
     "fastify-jwt": "^2.5.0",
     "fastify-knexjs": "^1.0.14",
     "fastify-memorycache": "^1.0.0",
