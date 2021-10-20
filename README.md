@@ -5,7 +5,7 @@
 # Use Nodejs with fastify framework and knexjs framework mysql database
 
 # fastify_appsservice
-
+- https://www.npmjs.com/package/fastify-typeorm
 - Nodejs
 - Typescript
 - Mysql database
@@ -142,7 +142,7 @@ Run `npm i` for a local your pc
 Run `npm install redis`
 
 # Development server
-
+`npm install -g nodemon`
 Run `npx nodemon` for a dev server. Navigate `localhost:8002`. The app will automatically reload if you change any of the source files.
 
 # Testing

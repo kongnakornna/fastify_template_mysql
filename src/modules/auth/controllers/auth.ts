@@ -1,6 +1,9 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify'
 import * as knex from 'knex'
 import * as crypto from 'crypto'
+/************* nodemailer*******************/ 
+import { AuthadminModel } from '../../../modules/administrator/models/authadmin_model' 
+/**************Models************************************/
 import { UserModel } from '../../../modules/auth/models/user_model'
 import { AuthModel } from '../../../modules/auth/models/auth_model'
 /************* validate schemas*******************/
@@ -10,6 +13,7 @@ import paramsSchema from '../../../modules/auth/schemas/params'
 import queryStringSchema from '../../../modules/auth/schemas/query_string'
 import headerSchema from '../../../modules/auth/schemas/header'
 /************* validate schemas*******************/
+import changepasswordSchema from '../../../modules/auth/schemas/changepasswordSchema' 
 import * as path from 'path'
 const envPath = path.join(__dirname, '../../../config.conf')
 require('dotenv').config({ path: envPath })
@@ -22,8 +26,35 @@ import * as EmailValidator from 'email-validator'
 // function name auth
 export default async function auth(fastify: FastifyInstance) {
 const userModel = new UserModel()
+const AuthModels = new AuthadminModel()
 const db1: knex = fastify.db1
 /**************************************************/  
+function passwordValidator(inputtxt: any){ 
+        var paswd :any=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
+        if(inputtxt.match(paswd)){  
+            console.log('validate password  Correct, try another...:'+inputtxt);
+            return true;
+        }else{  
+                console.log('validate password Wrong...:'+inputtxt);
+            return false;
+        }
+}  
+// use  lang: getlanguage(1),  
+function getlanguage(id: any) {
+    const language: any =AuthModels.tr_language_all_id(db1,id)
+    //var rs: any = {}
+    let result: any = {}
+        for (const [key, value] of Object.entries(language)) {
+            const keys: any = key
+            const rs: any = value
+            const code: any = rs.code
+            const lang_id: any = rs.language_id
+            const name: any = rs.name
+            const language_data: any = { code: code, language_id: lang_id, name: name }
+            result=language_data 
+            }
+    return result
+}
 function getRandomString(length: any) {
         var randomChars: any = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+';
         var randomChars2: any =  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -537,7 +568,8 @@ fastify.post('/resetpass', async (request: FastifyRequest, reply: FastifyReply) 
 })
 /**************************************************/
 fastify.post('/changepassword',{
-    preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
+    preValidation: [fastify.authenticate],schema: changepasswordSchema
+    // ป้องกัน การใช้งาน โดย Token // validate schemas
   }, async (request: FastifyRequest, reply: FastifyReply) => {
     const body: any = request.body
     const username = body.username
@@ -548,6 +580,7 @@ fastify.post('/changepassword',{
             reply.header('Access-Control-Allow-Methods', 'GET')
             reply.header('message', 'Information Correct')
             reply.header('statusCode', 500)
+            reply.header('code', 500)
             reply.header('status', false) 
             reply.code(500).send({
                 title: { status: false, statusCode : 500, },
@@ -559,6 +592,7 @@ fastify.post('/changepassword',{
             reply.header('Access-Control-Allow-Methods', 'GET')
             reply.header('message', 'Information Correct')
             reply.header('statusCode', 500)
+            reply.header('code', 500)
             reply.header('status', false) 
             reply.code(500).send({
                 title: { status: false, statusCode : 500, },
@@ -570,6 +604,7 @@ fastify.post('/changepassword',{
             reply.header('Access-Control-Allow-Methods', 'GET')
             reply.header('message', 'Information Correct')
             reply.header('statusCode', 500)
+            reply.header('code', 500)
             reply.header('status', false) 
             reply.code(500).send({
                 title: { status: false, statusCode : 500, },
@@ -578,6 +613,32 @@ fastify.post('/changepassword',{
             console.log(request.body)
             return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
     } 
+    /* Password Validator */
+    const passwordrt: any = passwordValidator(newpassword)
+    if (passwordrt == false) {
+        reply.header('version', 1)
+        reply.header('x-cache-status', 0) // 1=yes ,0=no
+        reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+        reply.header('Expires', '-1')
+        reply.header('Pragma', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+        reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
+        reply.header('message', 'Password not secure')
+        reply.header('statusCode', 500)
+        reply.header('code', 500)
+        reply.header('status', false)
+        reply.header('Password', false)
+        reply.code(500).send({
+            title: {
+                status: false,
+                statusCode: 500,
+                cache: 'no cache'
+            },
+            message: 'Password not secure ,Please set a new password, English only, with uppercase, lowercase, numbers and special characters.,mix together',
+            message_th: ' รหัสผ่าน ไม่ปลอดภัย กรุณาตั้งรหัสผ่านใหม่ เป็นภาษาอังกฤษเท่านั้น ตัวพิมพ์ใหญ่ ตัวพิมพ์เล็ก ตัวเลข และอักขระพิเศษ ผสมกัน'
+        })
+        console.log(' passwordrt :'+passwordrt)
+        return
+    }
     
     try {
         /******************************ตรวจสอบ code active Token check*************************************/
@@ -585,7 +646,7 @@ fastify.post('/changepassword',{
       data.username = username
       data.user_id = user_id
       data.oldpassword = oldpassword
-      data.newpassword = newpassword
+      data.newpassword = newpassword 
       const encoldpassword = crypto.createHash('md5').update(oldpassword).digest('hex')
       const encnewpassword = crypto.createHash('md5').update(newpassword).digest('hex')
       const rsold: any = await userModel.login(db1, username, encoldpassword)
@@ -593,12 +654,15 @@ fastify.post('/changepassword',{
 
             const data_array: any = {} 
             data_array.password = encnewpassword
+            data_array.password_temp = newpassword
+            
             await userModel.where_user_update_password(db1, username, data_array)
           
         } else {
             reply.header('Access-Control-Allow-Methods', 'GET')
             reply.header('message', 'Information Correct')
-            reply.header('statusCode', 500)
+            reply.header('statusCode', 401)
+            reply.header('code', 401)
             reply.header('status', false) 
              reply.code(401).send({ status: false,statusCode : 401, message: 'change password failed! ',message_th: 'เปลี่ยนรหัสผ่านไม่สำเร็จ ไม่พบข้อมูล username หรือ password ในระบบ'  })
              return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
@@ -653,6 +717,7 @@ fastify.post('/changepassword',{
             reply.header('Access-Control-Allow-Methods', 'GET')
             reply.header('message', 'Information Correct')
             reply.header('statusCode', 200)
+            reply.header('code', 200)
             reply.header('status', true) 
             reply.send({
                 title: {status: true, statusCode : 200,cache:'no cache'},
@@ -672,6 +737,7 @@ fastify.post('/changepassword',{
             reply.header('Access-Control-Allow-Methods', 'GET')
             reply.header('message', 'Information Correct')
             reply.header('statusCode', 500)
+            reply.header('code', 500)
             reply.header('status', false) 
             reply.code(500).send({ title: {status: false, statusCode : 500,},message: error })
             return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
@@ -685,6 +751,7 @@ fastify.post('/activecode', async (request: FastifyRequest, reply: FastifyReply)
             reply.header('Access-Control-Allow-Methods', 'GET')
             reply.header('message', 'Information Correct')
             reply.header('statusCode', 500)
+            reply.header('code', 500)
             reply.header('status', false) 
             reply.code(500).send({ title: {status: false, statusCode : 500,},message: 'code is null',message_th: 'ไม่พบข้อมูล code' })
             console.log(request.body)
@@ -736,9 +803,10 @@ fastify.post('/activecode', async (request: FastifyRequest, reply: FastifyReply)
             const data_array: any = {}
             data_array.status = 1
             await userModel.updateuid(db1, user_id, data_array)
-            reply.header('Access-Control-Allow-Methods', 'GET')
+            reply.header('Access-Control-Allow-Methods', 'POST')
             reply.header('message', 'Information Correct')
             reply.header('statusCode', 200)
+            reply.header('code', 200)
             reply.header('status', true) 
                     reply.send({  // แสดงข้อมูล api
                         title: {
@@ -758,6 +826,9 @@ fastify.post('/activecode', async (request: FastifyRequest, reply: FastifyReply)
        return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
     } catch (error) {
       console.log(error)
+      reply.header('Access-Control-Allow-Methods', 'POST')
+      reply.header('message', 'Information Correct')
+      reply.header('code', 500)
       reply.code(500).send({ // แสดงข้อมูล api
                         title: {
                                     title: {status: false, statusCode : 500,}, message: 'Results unsuccessful',message_th: 'แสดง ข้อมูลไม่สำเร็จ',cache:'no cache'

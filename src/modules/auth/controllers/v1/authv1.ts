@@ -984,7 +984,8 @@ fastify.get('/activecode', async (request: FastifyRequest, reply: FastifyReply) 
       }
         
 })
-/**************************************************/     
+/**************************************************/  
+// authentication   
 fastify.get('/verify', /*ป้องกัน การใช้งาน โดย Token */{
     preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
   },/*ป้องกัน การใช้งาน โดย Token */ async (request: FastifyRequest, reply: FastifyReply) => {
@@ -1295,7 +1296,230 @@ fastify.get('/test_handler_schema', {
             }
         }
 })
-/**************************************************/      
+/**************************************************/
+fastify.post('/authentication', /*ป้องกัน การใช้งาน โดย Token */{
+    preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
+  },/*ป้องกัน การใช้งาน โดย Token */ async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+        /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
+        var str  : any =  request.headers.authorization
+        var res = str.replace("Bearer ", "")  
+        let ids = request.id
+        const decoded: any = fastify.jwt.verify(res)
+        const userid = decoded['userid']
+        const user_id = decoded['user_id']
+        const sd_users_profile: any = await userModel.sd_users_profile(db1, user_id)
+        const level = decoded['level']
+        const username = decoded['username']
+        const at = decoded['at']
+        const startdate = at['startdate']
+        const issued_at = at['issued_at']
+        const time_setting  : any =  at['time_setting']*100
+        const time_expired = at['time_expired']
+        const day_expired = at['day_expired']
+        const timeconfig = at['timeconfig']
+        const state = at['state'] 
+        var now = Date.now()
+        var time_settings =time_setting
+        var timestamp_cul  : any = now - issued_at 
+        var timestamp_culs  : any = timestamp_cul
+        if (timestamp_culs > time_settings) {
+            const msg_time = 'Token Expired : โทเค็นหมดอายุ'
+            const msg_time_th = 'โทเค็นหมดอายุ'
+            const msg_time_en = 'Token Expired '
+            const expired_status = 0
+            const status = false
+            const code = 500
+            reply.header('version', 1)
+            reply.header('x-cache-status', 0) // 1=yes ,0=no
+            reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+            reply.header('Access-Control-Allow-Methods', 'GET')
+            reply.header('message', 'Information Correct')
+            reply.header('statusCode', 500)
+            reply.header('status', false) 
+                    reply.send({  // แสดงข้อมูล api
+                        title: {
+                        status: status,statusCode : code, message: msg_time_en,msg_time_th: msg_time_th,cache:'no cache'
+                        },  
+                        data: null, sd_users_profile: null
+                    })
+        }else {
+
+            // ใช้สำหรับ ประมวลผลที่ต้องการ ใช้งาน
+
+            const msg_time = 'Token Not Expired : โทเค็นยังไม่หมดอายุ'
+            const msg_time_th = 'โทเค็นยังไม่หมดอายุ'
+            const msg_time_en = 'Token Not Expired '
+            const expired_status = 1
+            const status = true
+            // const userid_decode: any = fastify.jwt.verify(userid)
+            // const token = fastify.jwt.sign({ foo: 'bar' })
+            // const decoded = fastify.jwt.decode(token)
+            const userid_decode = fastify.jwt.decode(userid)
+            const userids = userid_decode['userids']
+            const iat = userid_decode['iat']
+            const code = 200
+                reply.header('version', 1)
+                reply.header('x-cache-status', 0) // 1=yes ,0=no
+                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Access-Control-Allow-Methods', 'POST')
+                reply.header('message', 'Information Correct')
+                reply.header('statusCode', 200)
+                reply.header('code', 200)
+                reply.header('status', true)  
+                reply.header('x-bar', 'bar')  
+                reply.header('user_id', userids)  
+                    reply.send({  // แสดงข้อมูล api
+                        title: {
+                        status: status,statusCode : code, message: msg_time_en,msg_time_th: msg_time_th,cache:'no cache'
+                        },  
+                        data: {
+                            error: null, timeconfig: timeconfig,time: timestamp_cul,living_time:time_settings,expired_status: expired_status,state:state,
+                           // msg_time: msg_time, 
+                           // user_id: user_id, level: level, username: username,
+                           // startdate: startdate, time_expired: time_expired, time_setting: time_setting, issued_at: issued_at, now: now, time_cul: timestamp_cul,
+                        },
+                        profile: sd_users_profile,
+                        userid: userid,
+                        userid_decode: userid_decode,
+                        user_id: userids,
+                        state:state,
+                    })
+        }
+        console.log('at jwt :'+at) 
+        /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
+    return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
+    } catch (error) {
+        console.log(error)
+            reply.header('version', 1)
+            reply.header('x-cache-status', 0) // 1=yes ,0=no
+            reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+            reply.header('Access-Control-Allow-Methods', 'GET')
+            reply.header('message', 'Information Correct')
+            reply.header('statusCode', 500)
+            reply.header('code', 500)
+            reply.header('status', false) 
+            reply.code(500).send({ // แสดงข้อมูล api
+                                title: {
+                                            status: false,statusCode : 500, message: 'Results unsuccessful',message_th: 'แสดง ข้อมูลไม่สำเร็จ',cache:'no cache'
+                                    },  
+                                        error: error,
+                                        data: null
+            })
+        return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
+      }
+        
+})
+/**************************************************/   
+fastify.get('/authentication', /*ป้องกัน การใช้งาน โดย Token */{
+    preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
+  },/*ป้องกัน การใช้งาน โดย Token */ async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+        /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
+        var str  : any =  request.headers.authorization
+        var res = str.replace("Bearer ", "")  
+        let ids = request.id
+        const decoded: any = fastify.jwt.verify(res)
+        const userid = decoded['userid']
+        const user_id = decoded['user_id']
+        const sd_users_profile: any = await userModel.sd_users_profile(db1, user_id)
+        const level = decoded['level']
+        const username = decoded['username']
+        const at = decoded['at']
+        const startdate = at['startdate']
+        const issued_at = at['issued_at']
+        const time_setting  : any =  at['time_setting']*100
+        const time_expired = at['time_expired']
+        const day_expired = at['day_expired']
+        const timeconfig = at['timeconfig']
+        const state = at['state'] 
+        var now = Date.now()
+        var time_settings =time_setting
+        var timestamp_cul  : any = now - issued_at 
+        var timestamp_culs  : any = timestamp_cul
+        if (timestamp_culs > time_settings) {
+            const msg_time = 'Token Expired : โทเค็นหมดอายุ'
+            const msg_time_th = 'โทเค็นหมดอายุ'
+            const msg_time_en = 'Token Expired '
+            const expired_status = 0
+            const status = false
+            const code = 500
+            reply.header('version', 1)
+            reply.header('x-cache-status', 0) // 1=yes ,0=no
+            reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+            reply.header('Access-Control-Allow-Methods', 'GET')
+            reply.header('message', 'Information Correct')
+            reply.header('statusCode', 500)
+            reply.header('status', false) 
+                    reply.send({  // แสดงข้อมูล api
+                        title: {
+                        status: status,statusCode : code, message: msg_time_en,msg_time_th: msg_time_th,cache:'no cache'
+                        },  
+                        data: null, sd_users_profile: null
+                    })
+        }else {
+            const msg_time = 'Token Not Expired : โทเค็นยังไม่หมดอายุ'
+            const msg_time_th = 'โทเค็นยังไม่หมดอายุ'
+            const msg_time_en = 'Token Not Expired '
+            const expired_status = 1
+            const status = true
+            // const userid_decode: any = fastify.jwt.verify(userid)
+            // const token = fastify.jwt.sign({ foo: 'bar' })
+            // const decoded = fastify.jwt.decode(token)
+            const userid_decode = fastify.jwt.decode(userid)
+            const userids = userid_decode['userids']
+            const iat = userid_decode['iat']
+            const code = 200
+                reply.header('version', 1)
+                reply.header('x-cache-status', 0) // 1=yes ,0=no
+                reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+                reply.header('Access-Control-Allow-Methods', 'POST')
+                reply.header('message', 'Information Correct')
+                reply.header('statusCode', 200)
+                reply.header('status', true)  
+                reply.header('x-bar', 'bar')  
+                 reply.header('user_id', userids)  
+                    reply.send({  // แสดงข้อมูล api
+                        title: {
+                        status: status,statusCode : code, message: msg_time_en,msg_time_th: msg_time_th,cache:'no cache'
+                        },  
+                        data: {
+                            error: null, timeconfig: timeconfig,time: timestamp_cul,living_time:time_settings,expired_status: expired_status,state:state,
+                           // msg_time: msg_time, 
+                           // user_id: user_id, level: level, username: username,
+                           // startdate: startdate, time_expired: time_expired, time_setting: time_setting, issued_at: issued_at, now: now, time_cul: timestamp_cul,
+                        },
+                        sd_users_profile: sd_users_profile,
+                        userid: userid,
+                        userid_decode: userid_decode,
+                        userids: userids,
+                        state:state,
+                    })
+        }
+        console.log('at jwt :'+at) 
+        /******************************ตรวจสอบวันหมดอายุ Token check*************************************/
+    return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
+    } catch (error) {
+        console.log(error)
+            reply.header('version', 1)
+            reply.header('x-cache-status', 0) // 1=yes ,0=no
+            reply.header('cache-control', 'no-cache') // no-cache  private  public max-age=31536000 must-revalidate
+            reply.header('Access-Control-Allow-Methods', 'GET')
+            reply.header('message', 'Information Correct')
+            reply.header('statusCode', 500)
+            reply.header('status', false) 
+            reply.code(500).send({ // แสดงข้อมูล api
+                                title: {
+                                            status: false,statusCode : 500, message: 'Results unsuccessful',message_th: 'แสดง ข้อมูลไม่สำเร็จ',cache:'no cache'
+                                    },  
+                                        error: error,
+                                        data: null
+            })
+        return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
+      }
+        
+})
+/**************************************************/   
 }
 /*
 └── plugins (from the Fastify ecosystem)

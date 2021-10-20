@@ -61,7 +61,7 @@ export default async function router(fastify: FastifyInstance) {
     /**documentation */
     fastify.register(documentationRouter, { prefix: '/documentation' })
     /***********oauth2-server start***************/
-    /***********oauth2-server end***************/
-    /***********redis start***************/
-    /***********redis start***************/
+    /***********oauth2-server end*****************/
+    /***********redis start***********************/
+    /***********redis start**********************/
 }
