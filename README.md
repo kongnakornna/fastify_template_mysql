@@ -590,3 +590,7 @@ pm2 list
 pm2 stop all
 pm2 monit  
 pm2 reload all
+
+ 
+- มี Unit test coverage ในทุกจุดที่สำคัญ
+- ใช้ ORM ในการ map database object

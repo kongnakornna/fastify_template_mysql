@@ -30,6 +30,7 @@ export default async function users(fastify: FastifyInstance) {
       reply.code(500).send({ status: false, message: error })
     }
   })
+  
  /**************************************************/    
   fastify.get('/', /*ป้องกัน การใช้งาน โดย Token */{
     preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
