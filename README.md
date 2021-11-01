@@ -8,6 +8,8 @@
 - https://www.npmjs.com/package/fastify-typeorm
 - Nodejs
 - Typescript
+- TypeORM 
+- CRUD Next.js
 - Mysql database
 - Mysql database CRUD
 - Mongodb as mongoose
