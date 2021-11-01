@@ -1,5 +1,73 @@
 # fastify_template_mysql
 
+# Fastify vs TypeORM: อะไรคือความแตกต่าง?
+
+- Fastify: กรอบเว็บที่รวดเร็วและมีค่าใช้จ่ายต่ำสำหรับ Node.js Fastify เป็นเว็บเฟรมเวิร์กที่เน้นความเร็วและค่าใช้จ่ายต่ำ มันได้รับแรงบันดาลใจจาก Hapi และ Express และเท่าที่เรารู้ มันเป็นหนึ่งในเฟรมเวิร์กเว็บที่เร็วที่สุดในเมือง ใช้ Fastify สามารถเพิ่มปริมาณงานของคุณได้มากถึง 100%; TypeORM: ออมที่สามารถทำงานใน NodeJS และอื่น ๆ รองรับทั้งรูปแบบ Active Record และ Data Mapper ซึ่งแตกต่างจาก JavaScript ORM อื่น ๆ ที่มีอยู่ในปัจจุบัน ซึ่งหมายความว่าคุณสามารถเขียนแอปพลิเคชันคุณภาพสูง ควบคู่กันอย่างหลวม ๆ ปรับขนาดได้ และรักษาได้ด้วยวิธีที่มีประสิทธิผลมากที่สุด
+
+- Fastify และ TypeORM อยู่ในหมวด"Microframeworks (Backend)"ของ Tech stack
+
+- คุณสมบัติบางอย่างที่ Fastify คือ:
+
+- อะซิงโครนัส 100%: คอร์ทั้งหมดถูกนำไปใช้กับโค้ดแบบอะซิงโครนัส ด้วยวิธีนี้จะไม่สูญเปล่าแม้แต่เสี้ยววินาที
+มีประสิทธิภาพสูง: เท่าที่เราทราบ Fastify เป็นหนึ่งในเฟรมเวิร์กเว็บที่เร็วที่สุด แต่ ขึ้นอยู่กับความซับซ้อนของโค้ดของเรา
+ให้ ตอบสนองกลับ 20000 คำขอ ต่อวินาที  (we can serve up to 20000 request per second.)
+ขยายได้: Fastify ขยายได้อย่างเต็มที่โดยใช้  ปลั๊กอิน และเครื่องตกแต่ง
+- ในทางกลับกัน TypeORM มีคุณสมบัติหลักดังต่อไปนี้:
+# TypeORM มีคุณสมบัติหลัก
+
+- automatically create the database table schemes based on your models
+- transparently insert / update / delete to the database your objects
+- map your selections from tables to JavaScript objects and map table columns to object properties
+- สร้างโครงร่างตารางฐานข้อมูลโดยอัตโนมัติตามโมเดล insert / update / delete ไปยังฐานข้อมูล 
+แมปการเลือกของคุณจากตารางไปยังออบเจ็กต์ JavaScript และแมปคอลัมน์ตารางกับคุณสมบัติของออบเจ็กต์
+- Fastify และ TypeORM เป็นทั้งเครื่องมือโอเพ่นซอร์ส ดูเหมือนว่ามีการ TypeORM 14.4K GitHub ดาวและ1.85Kส้อมบน GitHub มีการยอมรับมากกว่า 
+
+- Fastify vs TypeORM: What are the differences?
+
+Fastify: Fast and low overhead web framework, for Node.js. Fastify is a web framework highly focused on speed and low overhead. It is inspired from Hapi and Express and as far as we know, it is one of the fastest web frameworks in town. Use Fastify can increase your throughput up to 100%; TypeORM: An ORM that can run in NodeJS and others. It supports both Active Record and Data Mapper patterns, unlike all other JavaScript ORMs currently in existence, which means you can write high quality, loosely coupled, scalable, maintainable applications the most productive way.
+
+Fastify and TypeORM belong to "Microframeworks (Backend)" category of the tech stack.
+
+Some of the features offered by Fastify are:
+
+100% asynchronous: all the core is implemented with asynchronous code, in this way not even a millisecond is wasted.
+Highly performant: as far as we know, Fastify is one of the fastest web frameworks in town, depending on the code complexity we can serve up to 20000 request per second.
+Extendible: Fastify is fully extensible via its hooks, plugins and decorators.
+On the other hand, TypeORM provides the following key features:
+
+automatically create the database table schemes based on your models
+transparently insert / update / delete to the database your objects
+map your selections from tables to JavaScript objects and map table columns to object properties
+Fastify and TypeORM are both open source tools. It seems that TypeORM with 14.4K GitHub stars and 1.85K forks on GitHub has more adoption than Fastify with 11.5K GitHub stars and 708 GitHub forks.
+
+According to the StackShare community, Fastify has a broader approval, being mentioned in 9 company stacks & 25 developers stacks; compared to TypeORM, which is listed in 9 company stacks and 22 developer stacks.
+
+# Pros of Fastify Performance
+- Easy to use
+- Middleware
+- Lightweight
+- Open source
+- Highly customizable (ปรับแต่งได้)
+- Built-in Typescript support 
+- Mature (-)
+- Schema based (-)
+- Decorators ( สถาปัตยากรรมม ดี)
+- Developer friendly ( ป็นมิตร กับ นักพัฒนา )
+- Plugins
+- Low overhead ,Low overload
+
+# Pros of TypeORM Performance
+- Typescript
+- Supports MySQL, PostgreSQL, MariaDB, SQLite, MS SQL Ser
+- Easy setup
+- Support MySQL & MariaDB, PostgreSQL, MSSQL, Sqlite
+- Works in NodeJS, Browser, Ionic, Cordova and Electron p
+- Promise Based
+- ข้อเสียของ TypeORM (Cons of TypeORM)
+  - Completely abandoned by its creator ( ไม่ยืดหยุ่น )
+  - Doesn't really support native javascript (ไม่รองรับจาวาสคริปต์ดั้งเดิม)
+  - Cannot use query on any relation (ทำ query relation ยากมาก )
+
 # template for dev backend Vesion 1.0.0 By fastify framework
 
 # Use Nodejs with fastify framework and knexjs framework mysql database
@@ -595,6 +663,118 @@ pm2 reload all
 - มี Unit test coverage ในทุกจุดที่สำคัญ
 - ใช้ ORM ในการ map database object
 
-- npm install fastify-typeorm -S
 
-- https://github.com/kongnakornna/fastify_template_mysql
+/*
+└── plugins (from the Fastify ecosystem)
+└── your plugins (your custom plugins)
+└── decorators
+└── hooks
+└── modules 
+    │
+    └──  service A
+    │     └── plugins (from the Fastify ecosystem)
+    │     └── your plugins (your custom plugins)
+    │     └── decorators
+    │     └── hooks
+    │     └── controllers your services
+    │
+    └──  service B
+          └── plugins (from the Fastify ecosystem)
+          └── your plugins (your custom plugins)
+          └── decorators
+          └── hooks
+          └── controllers your services
+
+        var statusCode = error.statusCode
+        if (statusCode >= 500) {
+        log.error(error)
+        } else if (statusCode >= 400) {
+        log.info(error)
+        } else {
+        log.error(error)
+        }
+
+const token = fastify.jwt.sign({ foo: 'bar' })
+const decoded = fastify.jwt.decode(token)
+*/
+
+# new update 
+- typeorm
+- https://typeorm.io
+- https://knexjs.org
+- https://www.codegrepper.com/search.php?q=typeorm
+- https://www.codegrepper.com/search.php?q=knexjs
+- https://www.stackshare.io/stackups/fastify-vs-typeorm
+
+#  Promise คืออะไร
+   - Promise เป็นออบเจ็คที่ส่งค่ากลับเป็นผลสำเร็จ (Resolve) หรือผลล้มเหลว (Reject) ของการทำงานแบบ Asynchronous มันสามารถช่วยลดความซับซ้อนและทำให้การเขียนโปรแกรมในรูปแบบ Asynchronous ทำได้ง่ายขึ้น และ Promise เป็นรูปแบบใหม่สำหรับการเขียนโปรแกรมที่ทำงานแบบ Asynchronous ในภาษา JavaScript
+
+    ในภาษา JavaScript ฟังก์ชันที่ทำงานแบบ Asynchronous จะต้องการฟังก์ชัน Callback เมื่อการทำงานเสร็จสิ้น การใช้งาน Promise การใช้งาน Promise สามารถช่วยลดการใช้ฟังก์ชัน Callback เพื่อทำให้มันเรียบง่ายขึ้นได้ และมันสามารถใช้ร่วมกับคำสั่ง Async/Await เพื่อทำให้การทำงานเป็นแบบ Synchronous
+
+    - ในการทำงานของ Promise มันสามารถให้ผลลัพธ์การทำงานได้สองรูปแบบนั่นคือ
+
+    - การทำงานที่สำเร็จ (Resolve)
+    - การทำงานที่ล้มเหลว (Reject)
+    - และเมื่อต้องการทราบผลลัพธ์การทำงานของ Promise เราสามารถตรวจสอบผลลัพธ์จากออบเจ็คของ Promise ได้โดยการใช้ Consumer เมธอดอย่าง then และ catch
+        promise_resolve.js
+        let promise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+                resolve('Hello');
+        }, 1000); 
+        });
+
+        promise.then(value => {
+            console.log(`Resolved: ${value}`);
+        });
+
+        console.log('Main program');
+        นี่เป็นผลลัพธ์การทำงานของโปรแกรม
+
+        Main program
+        Resolved: Hello
+
+        นั่นหมายความว่าเมื่อเราต้องการให้ Promise ทำงานสำเร็จ เราเรียกใช้ฟังก์ชัน resolve พร้อมกับค่าที่ต้องการส่งค่ากลับ ในกรณีนี้คือข้อความ 'Hello' และในตัวอย่างนี้ ยังไม่ได้มีการใช้งานฟังก์ชัน reject ซึ่งเราจะทำมันในภายหลัง
+
+    promise.then(value => {
+        console.log(`Resolved: ${value}`);
+    });
+    เพื่อตรวจสอบการทำงานของ Promise เราเรียกใช้เมธอด then บนออบเจ็คของ Promise และมันจะถูกเรียกใช้งานเมื่อ Promise ทำงานเสร็จสิ้นหรือเมธอด resolve ถูกเรียกใช้งาน เรากำหนดฟังก์ชัน Callback ที่รับหนึ่งพารามิเตอร์ value ที่เป็นค่าส่งกลับของ Promise
+
+    นั่นหมายความว่าเมื่อเวลาผ่านไป 1 วินาที ฟังก์ชัน Callback ที่กำหนดให้กับเมธอด then จะถูกเรียกใช้งานโดยได้รับข้อความ Hello ที่ส่งมาจากการทำงานสำเร็จของ Promise และผลลัพธ์ที่ได้ถูกนำมาแสดงออกทางหน้าจอ
+
+    Promise rejection
+    อย่างที่บอกไปแล้วว่า Promise สามารถทำงานสำเร็จหรือล้มเหลวได้ ในกรณีที่สำเร็จ ฟังก์ชัน resolve จะถูกเรียกใช้งานพร้อมกับส่งค่ากลับมา ส่วนในกรณีที่ Promise ทำงานล้มเหลวนั้นสามารถเกิดขึ้นได้สองกรณีดังต่อไปนี้
+
+    เกิดจากเรียกใช้ฟังก์ชัน reject เราสามารถเรียกใช้ฟังก์ชันนี้โดยตรงเพื่อทำให้ Promise ทำงานล้มเหลวได้
+    เกิดจากโปรแกรมที่ทำงานผิดพลาดที่เกิดการ throw error ขึ้น ซึ่งนี่เป็นการเกิดข้อผิดพลาดปกติในภาษา JavaScript และเมื่อเกิดใน Promise มันทำให้เกิดจาก Reject
+    โดยทั้งสองกรณีคือการทำงานล้มเหลวของ Promise หรือ Promise rejection และเราสามารถใช้เมธอด catchเพื่อรับมือกับการทำงานที่ล้มเหลวของ Promise ได้ ในตัวอย่างนี้ แสดงการทำงานของ Promise ที่สามารถทำงานสำเร็จ (Resolve) และล้มเหลว (Reject)
+
+    rejecting_promise.js
+    function evenPromise(number) {
+        return new Promise((resolve, reject) => {
+            if (number % 2 == 0) {
+                resolve(`${number} is an even number`);
+            } else {
+                reject(new Error(`${number} is not an even number`))
+            }
+        });
+    }
+
+    evenPromise(2).then((value) => {
+        console.log(value);
+    }).catch(err => {
+        console.log(err.toString());
+    });
+
+    evenPromise(3).then((value) => {
+        console.log(value);
+    }).catch(err => {
+        console.log(err.toString());
+    });
+
+#  Promise โดยใช้ async / await ช่วยดังนี้
+    อธิบาย code คือ เราจะใช้ await เพื่อบอกว่า function นั้นมีการทำงานแบบ async ให้รอผลลัพธ์ก่อนแล้วค่อยไปทำ function ถัดไป หากเราจะใช้ await เราจำเป็นต้องประกาศ function เราให้เป็น async เสียก่อนนะครับ ในกรณีที่เราไม่ต้องการเขียนแบบ Promise เราก็สามารถ ประกาศ function เราให้อยู่ในรูปแบบ async ได้
+
+ 
+
+
