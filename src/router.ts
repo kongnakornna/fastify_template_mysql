@@ -27,6 +27,10 @@ import { FastifyInstance } from 'fastify'
     /***********administrator***************/
     import administratorRouter from './modules/administrator/controllers/administrator' 
     import adminauthRouter from './modules/administrator/controllers/auth' 
+    
+    /*******************user type orm************************/
+    import userormRouter from './controllers/userorm'
+    
 /*******************export************************/
 export default async function router(fastify: FastifyInstance) {
    // router prefix
@@ -58,6 +62,9 @@ export default async function router(fastify: FastifyInstance) {
     fastify.register(administratorRouter, { prefix: '/administrator' })
     fastify.register(adminauthRouter, { prefix: '/administrator/auth' })
     /*******************modules************************/
+    /**documentation */
+    fastify.register(userormRouter, { prefix: '/userorm' })
+
     /**documentation */
     fastify.register(documentationRouter, { prefix: '/documentation' })
     /***********oauth2-server start***************/

@@ -594,3 +594,5 @@ pm2 reload all
  
 - มี Unit test coverage ในทุกจุดที่สำคัญ
 - ใช้ ORM ในการ map database object
+
+- npm install fastify-typeorm -S
