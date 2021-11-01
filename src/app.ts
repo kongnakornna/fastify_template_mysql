@@ -63,16 +63,16 @@ app.register(require('fastify-formbody'))
 import {getConnectionManager, ConnectionManager, Connection} from "typeorm";
 const connectionManager = getConnectionManager();
 const connection = connectionManager.create({
-    type: "mysql",
-    host: env.DB1_HOST,
-    port: Number(env.DB1_PORT), 
-    username: env.DB1_USER,
-    password: env.DB1_PASSWORD,
-    database:  env.DB1_NAME
-});
+                                            type: "mysql",
+                                            host: env.DB1_HOST,
+                                            port: Number(env.DB1_PORT), 
+                                            username: env.DB1_USER,
+                                            password: env.DB1_PASSWORD,
+                                            database:  env.DB1_NAME
+                                        });
 
 connection.connect(); //typeorm  performs connection
-console.log('typeorm git config --global user.email "you@example.com" on ' + getConnectionManager + ':' + connection)
+console.log('typeorm ConnectionManager ' + connectionManager + ':' + connection)
 //   console.log("database connected")
 
 
