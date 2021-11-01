@@ -58,6 +58,56 @@ app.register(require('fastify-formbody'))
     npm install oracledb -S
     npm install tedious -S
 */
+
+/************ config typeorm start**************/
+import {getConnectionManager, ConnectionManager, Connection} from "typeorm";
+const connectionManager = getConnectionManager();
+const connection = connectionManager.create({
+    type: "mysql",
+    host: env.DB1_HOST,
+    port: Number(env.DB1_PORT), 
+    username: env.DB1_USER,
+    password: env.DB1_PASSWORD,
+    database:  env.DB1_NAME
+});
+
+connection.connect(); //typeorm  performs connection
+console.log('typeorm git config --global user.email "you@example.com" on ' + getConnectionManager + ':' + connection)
+//   console.log("database connected")
+
+
+/*
+    const connections =  await createConnections([{
+        name: "default",
+        type: "mysql", 
+        host: env.DB1_HOST,
+        port: Number(env.DB1_PORT), 
+        username: env.DB1_USER,
+        password: env.DB1_PASSWORD,
+        database:  env.DB1_NAME
+    }, {
+        name: "db2_orm",
+        type: "mysql", 
+        host: env.DB2_HOST,
+        port: Number(env.DB2_PORT), 
+        username: env.DB2_USER,
+        password: env.DB2_PASSWORD,
+        database:  env.DB2_NAME
+    }, {
+        name: "db3_orm",
+        type: "mysql", 
+        host: env.DB3_HOST,
+        port: Number(env.DB3_PORT), 
+        username: env.DB3_USER,
+        password: env.DB3_PASSWORD,
+        database:  env.DB3_NAME
+        }]);
+ 
+*/
+ 
+
+/************ config typeorm end**************/
+
 /* knex db connect  webservicedb */
 // register knex db2
 app.register(require('./system/database/mysqldb'), {
