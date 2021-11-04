@@ -162,7 +162,10 @@ Run `npx gulp `
 
 # Run app on pm2
 
-Run `pm2 start dist\sever.js --name "yous name app" ` up to your
+Run `npm i g pm2` 
+
+Run  ` pm2 start dist\sever.js --name "yous name app" ` up to your
+- Test Demo `pm2 start dist\sever.js --name "myapi" `
 
 # Deploy on Dev or production
 
@@ -585,13 +588,13 @@ http://127.0.0.1:8002
 
 http://localhost:8002
 
-npx nodemon
-npx gulp
-pm2 start dist\server.js --name "ap1"
-pm2 list  
-pm2 stop all
-pm2 monit  
-pm2 reload all
+- npx nodemon
+- npx gulp
+- pm2 start dist\server.js --name "ap1"
+- pm2 list  
+- pm2 stop all
+- pm2 monit  
+- pm2 reload all
 
  
 - มี Unit test coverage ในทุกจุดที่สำคัญ
@@ -600,3 +603,5 @@ pm2 reload all
 - npm install fastify-typeorm -S
 
 - https://github.com/kongnakornna/fastify_template_mysql
+
+- Run `npm audit` for details.

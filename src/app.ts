@@ -61,6 +61,7 @@ app.register(require('fastify-formbody'))
     npm install tedious -S
 */
 /************ config typeorm start**************/
+
 import {getConnectionManager, ConnectionManager, Connection} from "typeorm";
 const connectionManager = getConnectionManager();
 const connection = connectionManager.create({
@@ -71,17 +72,58 @@ const connection = connectionManager.create({
                                             username: env.DB1_USER,
                                             password: env.DB1_PASSWORD,
                                             database: env.DB1_NAME,
-                                            entities: [
-                                                "src/entity/*{.ts,.js}"
-                                            ],
+                                            entities: ["src/entity/*{.ts,.js}"],
+                                            migrations: ["src/migration/*.js" ],
                                             logging: true,  
                                             synchronize: true  
-                                        });
-
+                                            }
+                                        );
 connection.connect(); //typeorm  performs connection
 console.log('typeorm connectionManager ')
 console.log(util.inspect(connectionManager, {showHidden: true, depth: null, colors: true}))
- 
+
+/* */
+    import {createConnections} from "typeorm";
+    const connections = createConnections([{
+            name: "webservice1",
+            type: "mysql",
+            host: env.DB1_HOST,
+            port: Number(env.DB1_PORT), 
+            username: env.DB1_USER,
+            password: env.DB1_PASSWORD,
+            database: env.DB1_NAME, 
+            entities: [
+                         "src/entity/*{.ts,.js}"
+                    ], 
+            logging: true,  
+            synchronize: true 
+        }, {
+            name: "webservice2",
+            type: "mysql",
+            host: env.DB2_HOST,
+            port: Number(env.DB2_PORT), 
+            username: env.DB2_USER,
+            password: env.DB2_PASSWORD,
+            database: env.DB2_NAME, 
+            entities: [
+                         "src/entity/*{.ts,.js}"
+                    ], 
+            logging: true,  
+           // synchronize: true 
+        }]); 
+
+    import {getConnection} from "typeorm";
+    const webservice1 = getConnection("webservice1");
+    // you can work with "db1"  
+    console.log('typeorm webservice1 ')
+    console.log(util.inspect(webservice1, {showHidden: true, depth: null, colors: true}))
+    // webservice2
+    const webservice2 = getConnection("webservice2");
+    // you can work with "db2"  
+     console.log('typeorm webservice2 ')
+    console.log(util.inspect(webservice2, { showHidden: true, depth: null, colors: true }))
+    
+
 /************ config typeorm end**************/
 /* knex db connect  webservicedb */
 // register knex db2

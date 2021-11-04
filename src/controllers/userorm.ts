@@ -6,7 +6,8 @@ import bodyormSchema from '../schemas/bodyuserorm'
 import { getManager, getRepository } from 'typeorm'
 // import { UserModel } from '../interfaces/user'
 import { User } from '../entity/User'
-
+import { Admin } from '../entity/Admin'
+import { Ad_administrator } from '../entity/Ad_administrator'
 /*
   const getAllUser = async (): Promise<User[]> => {
     return await getManager().find(User)
@@ -41,7 +42,61 @@ import { User } from '../entity/User'
 /*************typeorm****************/
 /**************************************************/    
 export default async function userorm(fastify: FastifyInstance) { 
- /**************************************************/    
+ /**************************************************/ 
+ //    
+    
+ fastify.get('/administrator', /*ป้องกัน การใช้งาน โดย Token */{
+   // preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
+  },/*ป้องกัน การใช้งาน โดย Token */ async (request: FastifyRequest, reply: FastifyReply) => {
+    try { 
+      /*************typeorm****************/
+      const rs: any = await getManager().find(Ad_administrator)  // ตรง 
+      /*******var**************/
+      reply.header('version', 1)
+      reply.header('x-cache-status', 0) // 1=yes ,0=no
+      reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+      reply.header('Expires', '-1')
+      reply.header('Pragma', 'no-cache') 
+      // no-cache  private  public max-age=31536000 must-revalidate
+      reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
+      reply.header('message', 'Working')
+      reply.header('statusCode', 200)
+      reply.header('code', 200)
+      reply.header('status', true) 
+      /*****************************************************/
+      reply.send(rs)
+    } catch (error) {
+      console.log(error)
+      reply.code(500).send({ status: false, error: error })
+    }
+  }) 
+  /**************************************************/  
+ fastify.get('/admin', /*ป้องกัน การใช้งาน โดย Token */{
+   // preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
+  },/*ป้องกัน การใช้งาน โดย Token */ async (request: FastifyRequest, reply: FastifyReply) => {
+    try { 
+      /*************typeorm****************/
+      const rs: any = await getManager().find(Admin)  // ตรง 
+      /*******var**************/
+      reply.header('version', 1)
+      reply.header('x-cache-status', 0) // 1=yes ,0=no
+      reply.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+      reply.header('Expires', '-1')
+      reply.header('Pragma', 'no-cache') 
+      // no-cache  private  public max-age=31536000 must-revalidate
+      reply.header('Access-Control-Allow-Methods', 'GET,POST,PUT')
+      reply.header('message', 'Working')
+      reply.header('statusCode', 200)
+      reply.header('code', 200)
+      reply.header('status', true) 
+      /*****************************************************/
+      reply.send(rs)
+    } catch (error) {
+      console.log(error)
+      reply.code(500).send({ status: false, error: error })
+    }
+  }) 
+  /**************************************************/  
   fastify.get('/', /*ป้องกัน การใช้งาน โดย Token */{
    // preValidation: [fastify.authenticate] // ป้องกัน การใช้งาน โดย Token
   },/*ป้องกัน การใช้งาน โดย Token */ async (request: FastifyRequest, reply: FastifyReply) => {
@@ -132,7 +187,7 @@ export default async function userorm(fastify: FastifyInstance) {
               return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
           }
       /*************typeorm****************/ 
-      const rs: any = await getRepository(User).findOne(uid) // ตรง  
+      const rs: any = await getRepository(User).findOne(uid)  
       /*******var**************/
       reply.header('version', 1)
       reply.header('x-cache-status', 0) // 1=yes ,0=no
