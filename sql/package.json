@@ -6,7 +6,11 @@
   "scripts": {
     "build": "tsc -P tsconfig.json",
     "build:dist": "npx gulp",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "testdev": "jest --detectOpenHandles --forceExit",
+    "start": "set NODE_ENV=local&ts-node-dev src/server.ts",
+    "start-prod": "pm2 delete $npm_package_pm2Name; pm2 flush $npm_package_pm2Name; NODE_ENV=production pm2 start ts-node --name=$npm_package_pm2Name -- -P tsconfig.json src/server.ts;",
+    "start-dev": "pm2 delete $npm_package_pm2Name; pm2 flush $npm_package_pm2Name; NODE_ENV=development pm2 start ts-node --name=$npm_package_pm2Name -- -P tsconfig.json src/server.ts;"
   },
   "keywords": "appservice",
   "author": "kongbnakorn jantakun",
