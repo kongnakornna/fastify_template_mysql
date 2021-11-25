@@ -480,11 +480,20 @@ fastify.post('/singin', async (request: FastifyRequest, reply: FastifyReply) => 
                     lastName: user.last_name,
                     level: user.level,
             }
-            const MaxAge = 3600
-            const set_cookie:any='uid='+user_idx+'; Max-Age='+MaxAge+'; SameSite=None; Secure';
-           // reply.header('Set-Cookie', set_cookie)
-            const set_cookie2: any = 'token=' + token + '; Max-Age=' + MaxAge + '; SameSite=None; Secure';
-           // reply.header('Set-Cookie', set_cookie2)
+            const uid: any = user_idx
+            const username: any = user.username
+            const email: any = user.email
+            const level: any = user.level
+            let tokens: any = token
+            /*****************/
+            const MaxAge = 84000
+            const set_cookie:any='uid='+uid+'; Max-Age='+MaxAge+'; SameSite=None; Secure';
+            const set_cookie1:any='username='+username+'; Max-Age='+MaxAge+'; SameSite=None; Secure';
+            const set_cookie2:any='email='+email+'; Max-Age='+MaxAge+'; SameSite=None; Secure'; 
+            const set_cookie3:any='level='+level+'; Max-Age='+MaxAge+'; SameSite=None; Secure'; 
+            const set_cookie4:any='token='+tokens+'; Max-Age='+MaxAge+'; SameSite=None; Secure'; 
+          
+            reply.header('Set-Cookie', set_cookie)
             reply.header('Access-Control-Max-Age', 600)
             reply.header('Accept-Language', 'en')
             reply.header('version', 1)
