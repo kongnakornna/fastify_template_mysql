@@ -7,19 +7,19 @@ export class OauthModel {
 
   login(db1: knex, username: any, password: any) {
     return db1('sd_users')
-      .select('user_id', 'first_name', 'last_name', 'email', 'username', 'level')
+      .select('user_id', 'firstname', 'last_name', 'email', 'username', 'level')
       .where('username', username)
       .where('password', password)
   }
   resetPassword(db1: knex, datareset: any) {
     return db1('sd_users')
-      .select('user_id', 'first_name', 'last_name', 'email', 'username', 'level')
+      .select('user_id', 'firstname', 'last_name', 'email', 'username', 'level')
       .where('username', datareset)
       .orWhere('email', datareset)
   }
   read(db1: knex) {
     return db1('sd_users')
-      .select('user_id', 'first_name', 'last_name', 'email')
+      .select('user_id', 'firstname', 'last_name', 'email')
       .orderBy('user_id','desc')
       //.limit(3)
       // .offset(5)
@@ -29,8 +29,8 @@ export class OauthModel {
   search(db1: knex, query: any) {
     const _query = '%' + query + '%'
     return db1('sd_users')
-      .select('user_id', 'first_name', 'last_name', 'email')
-      .where('first_name', 'like', _query)
+      .select('user_id', 'firstname', 'last_name', 'email')
+      .where('firstname', 'like', _query)
       .orderBy('user_id')
   }
 
@@ -49,10 +49,10 @@ export class OauthModel {
   // Raw query
   rawQuery(db1: knex, userId: any, firstName: any) {
     const sql = `
-    SELECT user_id, first_name, last_name,email
+    SELECT user_id, firstname, last_name,email
     FROM users
-    WHERE user_id=? AND first_name=?
-    ORDER BY first_name DESC
+    WHERE user_id=? AND firstname=?
+    ORDER BY firstname DESC
     `
     return db1.raw(sql, [userId, firstName])
   }

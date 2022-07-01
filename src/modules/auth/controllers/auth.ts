@@ -112,7 +112,7 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
             const token = fastify.jwt.sign({
                 user_id: user.user_id,level: user.level,
                 username: user.username,email: user.email,
-                // firstName: user.first_name,lastName: user.last_name,
+                // firstName: user.firstname,lastName: user.lastname,
                 at: {
                        startdate: dateTime, 
                        issued_at: issued_at,
@@ -135,8 +135,8 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
                 uid:  user_idx,
                 username: user.username, 
                 email: user.email,
-                firstName: user.first_name,
-                lastName: user.last_name,
+                firstName: user.firstname,
+                lastName: user.lastname,
                 level: user.level,
           }
             reply.header('Access-Control-Allow-Methods', 'GET')
@@ -145,8 +145,8 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
             reply.header('status', true) 
             reply.send({
                 title: { status: true, statusCode : 200,cache: 'no cache' },
-                message: 'welcome ' + user.first_name + ' ' + user.last_name + ' Sign in system successfully',
-                message_th: 'ยินดีต้อนรับ คุณ ' + user.first_name + ' ' + user.last_name + ' เข้าสู่ระบบสำเร็จ',
+                message: 'welcome ' + user.firstname + ' ' + user.lastname + ' Sign in system successfully',
+                message_th: 'ยินดีต้อนรับ คุณ ' + user.firstname + ' ' + user.lastname + ' เข้าสู่ระบบสำเร็จ',
                 // data: datars, encoded: token,
                 TIMEEXPIRE: env.TIMEEXPIRE,
                 token
@@ -186,8 +186,8 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
     const username = body.username
     const password = body.password
     const email = body.email
-    const first_name = body.firstname
-    const last_name = body.lastname
+    const firstname = body.firstname
+    const lastname = body.lastname
     const level = body.level
     const network_id = body.network_id
     try {
@@ -217,16 +217,16 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
             reply.code(500).send({ title: { status: false, statusCode : 500,cache: 'no cache' },message: 'email is null',message_th: 'ไม่พบข้อมูล email' })
             console.log(request.body)
             return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
-        } if (first_name === "") {
+        } if (firstname === "") {
             reply.header('Access-Control-Allow-Methods', 'GET')
             reply.header('message', 'Information Correct')
             reply.header('statusCode', 500)
             reply.header('status', false) 
-            reply.code(500).send({ title: { status: false, statusCode : 500,cache: 'no cache' },message: 'first_name is null',message_th: 'ไม่พบข้อมูล first_name' })
+            reply.code(500).send({ title: { status: false, statusCode : 500,cache: 'no cache' },message: 'firstname is null',message_th: 'ไม่พบข้อมูล firstname' })
             console.log(request.body)
             return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
-        }if (last_name==="") {
-            reply.code(500).send({ title: { status: false, statusCode : 500,cache: 'no cache' },message: 'last_name is null',message_th: 'ไม่พบข้อมูล last_name' })
+        }if (lastname==="") {
+            reply.code(500).send({ title: { status: false, statusCode : 500,cache: 'no cache' },message: 'lastname is null',message_th: 'ไม่พบข้อมูล lastname' })
             console.log(request.body)
             return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
         }if (level==="") {  const level=1 }
@@ -276,8 +276,8 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
       const data: any = {}
       data.username = username
       data.password = encPassword
-      data.first_name = first_name
-      data.last_name = last_name
+      data.firstname = firstname
+      data.lastname = lastname
       data.email = email
       data.date = date
       data.level = level
@@ -333,7 +333,7 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
                     role_id: luser.role_id,
                     username: luser.username,
                     email: luser.email,
-                    // firstName: user.first_name,lastName: user.last_name,
+                    // firstName: user.firstname,lastName: user.lastname,
                     at: { 
                         issued_at: issued_at,
                         timeconfig: TIMEEXPIRE,
@@ -353,8 +353,8 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
                 uid:  user_idx,
                 username: user.username, 
                 email: user.email,
-                firstName: user.first_name,
-                lastName: user.last_name,
+                firstName: user.firstname,
+                lastName: user.lastname,
                 level: user.level,
             }
             reply.header('Access-Control-Allow-Methods', 'POST')
@@ -363,8 +363,8 @@ fastify.post('/singup', async (request: FastifyRequest, reply: FastifyReply) => 
             reply.header('status', true) 
             reply.send({
               title: { status: true, statusCode : 200,},
-              message: 'welcome ' + user.first_name + ' ' + user.last_name + ' Sign in system successfully',
-              message_th: 'ยินดีต้อนรับ คุณ ' + user.first_name + ' ' + user.last_name + ' เข้าสู่ระบบสำเร็จ',
+              message: 'welcome ' + user.firstname + ' ' + user.lastname + ' Sign in system successfully',
+              message_th: 'ยินดีต้อนรับ คุณ ' + user.firstname + ' ' + user.lastname + ' เข้าสู่ระบบสำเร็จ',
              // data: datars, encoded: token,
               enc_user_idx: enc_user_idx,
               token
@@ -432,7 +432,7 @@ fastify.post('/singin', async (request: FastifyRequest, reply: FastifyReply) => 
                     role_id: user.role_id,
                     username: user.username,
                     email: user.email,
-                    // firstName: user.first_name,lastName: user.last_name,
+                    // firstName: user.firstname,lastName: user.lastname,
                     at: {
                         startdate: dateTime, 
                         issued_at: issued_at,
@@ -454,8 +454,8 @@ fastify.post('/singin', async (request: FastifyRequest, reply: FastifyReply) => 
                     uid:  user_idx,
                     username: user.username, 
                     email: user.email,
-                    firstName: user.first_name,
-                    lastName: user.last_name,
+                    firstName: user.firstname,
+                    lastName: user.lastname,
                     level: user.level,
             }
             reply.header('Access-Control-Allow-Methods', 'POST')
@@ -468,11 +468,11 @@ fastify.post('/singin', async (request: FastifyRequest, reply: FastifyReply) => 
             
             reply.send({
                 title:{ status: true, statusCode : 200,},
-                message: 'welcome ' + user.first_name + ' ' + user.last_name + ' Sign in system successfully',
-                message_th: 'ยินดีต้อนรับ คุณ ' + user.first_name + ' ' + user.last_name + ' เข้าสู่ระบบสำเร็จ',
-                // data: datars, encoded: token,
+                message: 'welcome ' + user.firstname + ' ' + user.lastname + ' Sign in system successfully',
+                message_th: 'ยินดีต้อนรับ คุณ ' + user.firstname + ' ' + user.lastname + ' เข้าสู่ระบบสำเร็จ',
+                data: datars, encoded: token,
                 TIMEEXPIRE : time_setting,
-                // token
+                token
             })
             return //reply.sent = true // exit loop ออกจากลูปการทำงาน 
       } else {
@@ -523,7 +523,7 @@ fastify.post('/resetpass', async (request: FastifyRequest, reply: FastifyReply) 
             const token = fastify.jwt.sign({
                 user_id: user.user_id,level: user.level,
                 username: user.username,email: user.email,
-                // firstName: user.first_name,lastName: user.last_name,
+                // firstName: user.firstname,lastName: user.lastname,
                 at: {
                         startdate: dateTime, 
                         issued_at: issued_at,
@@ -689,7 +689,7 @@ fastify.post('/changepassword',{
             const token = fastify.jwt.sign({
                 user_id: user.user_id,level: user.level,
                 username: user.username,email: user.email,
-                // firstName: user.first_name,lastName: user.last_name,
+                // firstName: user.firstname,lastName: user.lastname,
                  at: {
                        startdate: dateTime, 
                         issued_at: issued_at,
@@ -710,8 +710,8 @@ fastify.post('/changepassword',{
                 uid:  user_idx,
                 username: user.username, 
                 email: user.email,
-                firstName: user.first_name,
-                lastName: user.last_name,
+                firstName: user.firstname,
+                lastName: user.lastname,
                 level: user.level,
           }
             reply.header('Access-Control-Allow-Methods', 'GET')
@@ -721,8 +721,8 @@ fastify.post('/changepassword',{
             reply.header('status', true) 
             reply.send({
                 title: {status: true, statusCode : 200,cache:'no cache'},
-                message: 'Change password done welcome ' + user.first_name + ' ' + user.last_name + ' Sign in system successfully',
-                message_th: ' เปลี่ยนรหัสผ่าน สำเร็จ ยินดีต้อนรับ คุณ ' + user.first_name + ' ' + user.last_name + ' เข้าสู่ระบบสำเร็จ',
+                message: 'Change password done welcome ' + user.firstname + ' ' + user.lastname + ' Sign in system successfully',
+                message_th: ' เปลี่ยนรหัสผ่าน สำเร็จ ยินดีต้อนรับ คุณ ' + user.firstname + ' ' + user.lastname + ' เข้าสู่ระบบสำเร็จ',
                 // data: datars, encoded: token,
                 // data: decoded,
                 token

@@ -400,7 +400,7 @@ export default async function auth(fastify: FastifyInstance) {
                 const language_data: any = { code: code, language_id: lang_id, name: name }
                 const datas1: any = {}
                 datas1.user_id =user_idx
-                datas1.first_name = username
+                datas1.firstname = username
                 datas1.language_id = lang_id
                 datas1.fullname = fullname
                 datas1.email = email
@@ -786,7 +786,7 @@ export default async function auth(fastify: FastifyInstance) {
                         uid:  user_idx,
                         username: user.username, 
                         email: user.email,
-                        firstName: user.first_name,
+                        firstName: user.firstname,
                         lastName: user.last_name,
                         role_id: user.role_id,
                 }
@@ -956,7 +956,7 @@ export default async function auth(fastify: FastifyInstance) {
                         uid:  user_idx,
                         username: user.username, 
                         email: user.email,
-                        firstName: user.first_name,
+                        firstName: user.firstname,
                         lastName: user.last_name,
                         role_id: user.role_id,
                 }
@@ -1421,7 +1421,7 @@ export default async function auth(fastify: FastifyInstance) {
                     uid:  user_idx,
                     username: user.username, 
                     email: user.email,
-                    firstName: user.first_name,
+                    firstName: user.firstname,
                     lastName: user.last_name,
                     role_id: user.role_id,
             }
@@ -1439,8 +1439,8 @@ export default async function auth(fastify: FastifyInstance) {
                 reply.header('token_expire_setting_msg', token_expire_setting_msg)
                 await reply.code(200).send({ 
                     title: {status: true, statusCode : 200,cache:'no cache'},
-                    message: 'Change password done welcome ' + user.first_name + ' ' + user.last_name + ' Sign in system successfully',
-                    message_th: ' เปลี่ยนรหัสผ่าน สำเร็จ ยินดีต้อนรับ คุณ ' + user.first_name + ' ' + user.last_name + ' เข้าสู่ระบบสำเร็จ',
+                    message: 'Change password done welcome ' + user.firstname + ' ' + user.last_name + ' Sign in system successfully',
+                    message_th: ' เปลี่ยนรหัสผ่าน สำเร็จ ยินดีต้อนรับ คุณ ' + user.firstname + ' ' + user.last_name + ' เข้าสู่ระบบสำเร็จ',
                     // data: datars, encoded: token,
                     // data: decoded,
                     token
@@ -1629,7 +1629,7 @@ export default async function auth(fastify: FastifyInstance) {
                     uid:  user_idx,
                     username: user.username, 
                     email: user.email,
-                    firstName: user.first_name,
+                    firstName: user.firstname,
                     lastName: user.last_name,
                     role_id: user.role_id,
             }
@@ -1647,8 +1647,8 @@ export default async function auth(fastify: FastifyInstance) {
                 reply.header('status', true) 
                 await reply.code(200).send({ 
                     title: {status: true, statusCode : 200,cache:'no cache'},
-                    message: 'Change password done welcome ' + user.first_name + ' ' + user.last_name + ' Sign in system successfully',
-                    message_th: ' เปลี่ยนรหัสผ่าน สำเร็จ ยินดีต้อนรับ คุณ ' + user.first_name + ' ' + user.last_name + ' เข้าสู่ระบบสำเร็จ',
+                    message: 'Change password done welcome ' + user.firstname + ' ' + user.last_name + ' Sign in system successfully',
+                    message_th: ' เปลี่ยนรหัสผ่าน สำเร็จ ยินดีต้อนรับ คุณ ' + user.firstname + ' ' + user.last_name + ' เข้าสู่ระบบสำเร็จ',
                     // data: datars, encoded: token,
                     // data: decoded,
                     token

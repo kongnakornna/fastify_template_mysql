@@ -56,7 +56,7 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
             var expiration_time=issued_at+time_setting 
             const token = fastify.jwt.sign({
                 user_id: user.user_id,userid:userid,level: user.level,username: user.username,email: user.email,
-                // firstName: user.first_name,lastName: user.last_name,
+                // firstName: user.firstname,lastName: user.last_name,
                 at: {
                        startdate: dateTime, 
                        issued_at: issued_at,
@@ -78,7 +78,7 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
                 uid:  user_idx,
                 username: user.username, 
                 email: user.email,
-                firstName: user.first_name,
+                firstName: user.firstname,
                 lastName: user.last_name,
                 level: user.level,
           }
@@ -91,8 +91,8 @@ fastify.post('/', async (request: FastifyRequest, reply: FastifyReply) => {
           reply.header('time_expire', time_expire_set)
           reply.send({
               title:{ status: true, statusCode : 200,},
-              message: 'welcome ' + user.first_name + ' ' + user.last_name + ' Sign in system successfully',
-              message_th: 'ยินดีต้อนรับ คุณ ' + user.first_name + ' ' + user.last_name + ' เข้าสู่ระบบสำเร็จ',
+              message: 'welcome ' + user.firstname + ' ' + user.last_name + ' Sign in system successfully',
+              message_th: 'ยินดีต้อนรับ คุณ ' + user.firstname + ' ' + user.last_name + ' เข้าสู่ระบบสำเร็จ',
              // data: datars, encoded: token,
               TIMEEXPIRE : time_setting,
              // token

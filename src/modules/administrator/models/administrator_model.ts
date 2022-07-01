@@ -66,7 +66,7 @@ login(db1: knex, username: any, password: any) {
   }
 resetPassword(db1: knex, datareset: any) {
     return db1('ad_administrator')
-      .select('id', 'first_name', 'last_name')
+      .select('id', 'firstname', 'last_name')
       .select('email', 'username', 'role_id')
       .where('username', datareset)
       .orWhere('email', datareset)
@@ -89,7 +89,7 @@ search(db1: knex, query: any) {
     const _query = '%' + query + '%'
     return db1('ad_administrator')
       .select('id', 'email')
-      .where('first_name', 'like', _query)
+      .where('firstname', 'like', _query)
       .orderBy('user_id')
   }
 update(db1: knex, userId: any, data: any) {
@@ -105,10 +105,10 @@ remove(db1: knex, userId: any) {
 // Raw query
 rawQuery(db1: knex, userId: any, firstName: any) {
     const sql = `
-    SELECT user_id, first_name, last_name,email
+    SELECT user_id, firstname, last_name,email
     FROM users
-    WHERE user_id=? AND first_name=?
-    ORDER BY first_name DESC
+    WHERE user_id=? AND firstname=?
+    ORDER BY firstname DESC
     `
     return db1.raw(sql, [userId, firstName])
   }
@@ -116,7 +116,7 @@ test(db1: knex) {
        const rt = db1('ad_administrator as u')
             .leftJoin('ad_administrator_profile as p', 'u.user_id', 'p.user_id')
             // .select('u.*')
-            .select('u.user_id', 'u.first_name', 'u.last_name', 'u.email', 'u.date')
+            .select('u.user_id', 'u.firstname', 'u.last_name', 'u.email', 'u.date')
             .select('p.*')
             // .where('users.user_id!=','')
             .orderBy('u.user_id', 'desc')

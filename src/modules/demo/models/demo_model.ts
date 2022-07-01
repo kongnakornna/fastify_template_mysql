@@ -8,7 +8,7 @@ export class DemoModel {
         return db1('sd_users as u')
             // .join('sd_users_profile as p', 'u.user_id', 'p.user_id','left')
             // .select('u.*')
-            .select('u.user_id', 'u.first_name', 'u.last_name', 'u.email', 'u.date')
+            .select('u.user_id', 'u.firstname', 'u.last_name', 'u.email', 'u.date')
             //.select('p.email as mail')
             // .where('users.user_id!=','')
             .orderBy('u.user_id', 'desc')
@@ -17,14 +17,14 @@ export class DemoModel {
     }
   login(db1: knex, username: any, password: any) {
     return db1('sd_users')
-      .select('user_id', 'first_name', 'last_name')
+      .select('user_id', 'firstname', 'last_name')
       .where('username', username)
       .where('password', password)
   }
 
   read(db1: knex) {
     return db1('sd_users')
-      .select('user_id', 'first_name', 'last_name', 'email')
+      .select('user_id', 'firstname', 'last_name', 'email')
       .orderBy('user_id','desc')
       //.limit(3)
       // .offset(5)
@@ -34,8 +34,8 @@ export class DemoModel {
   search(db1: knex, query: any) {
     const _query = '%' + query + '%'
     return db1('sd_users')
-      .select('user_id', 'first_name', 'last_name', 'email')
-      .where('first_name', 'like', _query)
+      .select('user_id', 'firstname', 'last_name', 'email')
+      .where('firstname', 'like', _query)
       .orderBy('user_id')
   }
 
@@ -54,10 +54,10 @@ export class DemoModel {
   // Raw query
   rawQuery(db1: knex, userId: any, firstName: any) {
     const sql = `
-    SELECT user_id, first_name, last_name,email
+    SELECT user_id, firstname, last_name,email
     FROM users
-    WHERE user_id=? AND first_name=?
-    ORDER BY first_name DESC
+    WHERE user_id=? AND firstname=?
+    ORDER BY firstname DESC
     `
     return db1.raw(sql, [userId, firstName])
   }

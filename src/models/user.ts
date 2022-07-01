@@ -9,23 +9,23 @@ export class UserModel {
 
   login(db1: knex, username: any, password: any) {
     return db1('users')
-      .select('user_id', 'first_name', 'last_name')
+      .select('user_id', 'firstname', 'last_name')
       .where('username', username)
       .where('password', password)
   }
 
   read(db1: knex) {
     return db1('users')
-      .select('user_id', 'first_name', 'last_name')
-      .orderBy('first_name')
+      .select('user_id', 'firstname', 'last_name')
+      .orderBy('firstname')
   }
 
   search(db1: knex, query: any) {
     const _query = '%' + query + '%'
     return db1('users')
-      .select('user_id', 'first_name', 'last_name')
-      .where('first_name', 'like', _query)
-      .orderBy('first_name')
+      .select('user_id', 'firstname', 'last_name')
+      .where('firstname', 'like', _query)
+      .orderBy('firstname')
   }
 
   update(db1: knex, userId: any, data: any) {
@@ -43,10 +43,10 @@ export class UserModel {
   // Raw query
   rawQuery(db1: knex, userId: any, firstName: any) {
     const sql = `
-    SELECT user_id, first_name, last_name
+    SELECT user_id, firstname, last_name
     FROM users
-    WHERE user_id=? AND first_name=?
-    ORDER BY first_name DESC
+    WHERE user_id=? AND firstname=?
+    ORDER BY firstname DESC
     `
     return db1.raw(sql, [userId, firstName])
   }

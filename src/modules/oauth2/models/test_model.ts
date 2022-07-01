@@ -5,7 +5,7 @@ export class TestModel {
         return db1('sd_users as u')
             .join('sd_users_profile as p', 'u.user_id', 'p.user_id')
             // .select('u.*')
-            .select('u.user_id', 'u.first_name', 'u.last_name', 'u.email', 'u.date')
+            .select('u.user_id', 'u.firstname', 'u.last_name', 'u.email', 'u.date')
             .select('p.email as mail')
             // .where('users.user_id!=','')
             .orderBy('u.user_id', 'desc')

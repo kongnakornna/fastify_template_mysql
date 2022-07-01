@@ -25,7 +25,7 @@ export default async function users(fastify: FastifyInstance) {
       const data: any = {};
       data.username = username
       data.password = encPassword
-      data.first_name = firstName
+      data.firstname = firstName
       data.last_name = lastName
 
       await userModel.create(db, data)
@@ -79,7 +79,7 @@ export default async function users(fastify: FastifyInstance) {
 
     try {
       const data: any = {};
-      data.first_name = firstName
+      data.firstname = firstName
       data.last_name = lastName
 
       if (password) {

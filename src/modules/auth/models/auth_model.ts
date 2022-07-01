@@ -37,7 +37,7 @@ validation_network_id(db1: knex, network_id: any) {
     }
 where_sd_users_profile_id(db1: knex, sd_users_profile_id: any) {
         return db1('sd_users')
-            .select('user_id', 'first_name', 'last_name', 'email')
+            .select('user_id', 'firstname', 'last_name', 'email')
             .select('username', 'level', 'status', 'network_id')
             .select('date')
         .where('sd_users_profile_id', sd_users_profile_id)
@@ -59,32 +59,32 @@ where_sd_users_profile_id_remove(db1: knex, sd_users_profile_id: any) {
     }
 sd_users_profile(db1: knex, user_id: any) {
     return db1('sd_users')
-      .select('user_id', 'first_name', 'last_name', 'email', 'username', 'level', 'status', 'network_id')
+      .select('user_id', 'firstname', 'last_name', 'email', 'username', 'level', 'status', 'network_id')
       .where('user_id', user_id)
    }
 login(db1: knex, username: any, password: any) {
     return db1('sd_users')
-      .select('user_id', 'first_name', 'last_name', 'email', 'username', 'level')
+      .select('user_id', 'firstname', 'last_name', 'email', 'username', 'level')
       .where('username', username)
       .where('password', password)
       .where('status', 1)
   }
 resetPassword(db1: knex, datareset: any) {
     return db1('sd_users')
-      .select('user_id', 'first_name', 'last_name')
+      .select('user_id', 'firstname', 'last_name')
       .select('email', 'username', 'level')
       .where('username', datareset)
       .orWhere('email', datareset)
     }
 resetpwd(db1: knex, datareset: any) {
     return db1('sd_users')
-      .select('user_id', 'first_name', 'last_name', 'email', 'username', 'level')
+      .select('user_id', 'firstname', 'last_name', 'email', 'username', 'level')
       .where('username', datareset)
       .orWhere('email', datareset)
   }
 read(db1: knex) {
     return db1('sd_users')
-      .select('user_id', 'first_name', 'last_name', 'email')
+      .select('user_id', 'firstname', 'last_name', 'email')
       .orderBy('user_id','desc')
       //.limit(3)
       // .offset(5)
@@ -93,8 +93,8 @@ read(db1: knex) {
 search(db1: knex, query: any) {
     const _query = '%' + query + '%'
     return db1('sd_users')
-      .select('user_id', 'first_name', 'last_name', 'email')
-      .where('first_name', 'like', _query)
+      .select('user_id', 'firstname', 'last_name', 'email')
+      .where('firstname', 'like', _query)
       .orderBy('user_id')
   }
 update(db1: knex, userId: any, data: any) {
@@ -110,10 +110,10 @@ remove(db1: knex, userId: any) {
 // Raw query
 rawQuery(db1: knex, userId: any, firstName: any) {
     const sql = `
-    SELECT user_id, first_name, last_name,email
+    SELECT user_id, firstname, last_name,email
     FROM users
-    WHERE user_id=? AND first_name=?
-    ORDER BY first_name DESC
+    WHERE user_id=? AND firstname=?
+    ORDER BY firstname DESC
     `
     return db1.raw(sql, [userId, firstName])
   }
@@ -121,7 +121,7 @@ test(db1: knex) {
         return db1('sd_users as u')
             .join('sd_users_profile as p', 'u.user_id', 'p.user_id')
             // .select('u.*')
-            .select('u.user_id', 'u.first_name', 'u.last_name', 'u.email', 'u.date')
+            .select('u.user_id', 'u.firstname', 'u.last_name', 'u.email', 'u.date')
             .select('p.email as mail')
             // .where('users.user_id!=','')
             .orderBy('u.user_id', 'desc')

@@ -25,7 +25,7 @@ export default async function login(fastify: FastifyInstance) {
         console.log(user)
 
         const token = fastify.jwt.sign({
-          firstName: user.first_name,
+          firstName: user.firstname,
           lastName: user.last_name
         })
 

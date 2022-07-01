@@ -7,7 +7,7 @@ const envPath = path.join(__dirname, '../config.conf')
 const env = process.env 
 const opts = {}
 const address: any = env.address || '127.0.0.1'
-const port_main :any =  env.PORT  || 8002
+const port_main :any =  env.PORT  || 8003
 /***********redis**************/
 'use strict'
 var redis = require('redis').createClient({ host:  env.redis_host || 'localhost',port: env.redis_port || 6379 })
