@@ -1,0 +1,27 @@
+<%- include('header'); %>
+
+
+<div class="container">
+  <h4>Members</h4>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>USER ID</th>
+        <th>FIRST NAME</th>
+        <th>LAST NAME</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach((user) => { %>
+      <tr>
+        <td><%=user.user_id%></td>
+        <td><%=user.first_name%></td>
+        <td><%=user.last_name%></td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('footer'); %>

@@ -1,0 +1,12 @@
+version: "3"
+services: 
+  fastify-demo:
+    image: "registry.gitlab.com/siteslave/fastify-restful-demo"
+    container_name: "fastify-demo"
+    ports: 
+      - 8080:8080
+
+    volumes: 
+      - config.conf:/home/api/config.conf
+
+      
