@@ -1,7 +1,7 @@
 {
   "name": "demo",
-  "description": "API for tppy-tcas",
-  "endPoint": "/tppy-tcas",
+  "description": "demo",
+  "endPoint": "/demo",
   "pm2Name": "8001/demo",
   "main": "server.ts",
   "scripts": {
