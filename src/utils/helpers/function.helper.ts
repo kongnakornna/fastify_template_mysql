@@ -12,6 +12,7 @@ export class _publicfunction {
     return Return_Data;
   } 
   getRandomint(inputData: any) { 
+    if (inputData == null) {let inputData:number = 6; }
       let Return_Data:any= getRandomint(inputData);
     return Return_Data;
   } 

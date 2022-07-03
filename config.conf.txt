@@ -1,0 +1,88 @@
+# Application Port - express server listens on this port (default 8002).
+PORT=8002
+PORTDB=3306
+
+DB1_HOST=localhost
+DB1_PORT=3306
+DB1_USER=xxxxx
+DB1=demodb
+DB1_PASSWORD=xxxxx
+
+DB2_HOST=localhost
+DB2_PORT=3306
+DB2=demodb
+DB2_USER=xxxxx
+DB2_PASSWORD=xxxxx
+
+JWT_SECRET=xxxxx
+UPLOAD_DIR=./upload
+
+# Database Config Dev
+HOST_DEV=localhost
+USERS_DEV=xxxxx
+PASSWORD_DEV=xxxxx
+DATABASE_DEV=demodb
+
+# Database Config Prod
+HOST_PROD=localhost
+USERS_PROD=xxxxx
+PASSWORD_PROD=xxxxx
+DATABASE_PROD=demodb
+
+TYPEORM_CONNECTION=mysql
+TYPEORM_HOST=localhost
+TYPEORM_USERNAME=xxxxx
+TYPEORM_PASSWORD=xxxxx
+TYPEORM_DATABASE=demodb
+TYPEORM_SYNCHRONIZE=true
+TYPEORM_LOGGING=true
+
+
+# AUTHORIZATION SECRET
+API_KEYS=xxxxxxxxxxxxxxx
+SECRET_KEY=xxxxxxxxxxxxxxxxxxx
+TOKEN_SECRET=xxxxxxxxxxxxxxx
+
+# 1 =redis  2=cluster 3= db
+REDIS_TYPE=3
+
+REDIS_HOST_SERVER1=127.0.0.1x
+REDIS_HOST_SERVER2=127.0.0.2x
+REDIS_HOST_SERVER3=127.0.0.3x
+REDIS_HOST_PORT1=7000x 
+REDIS_HOST_PORT2=7000x 
+REDIS_HOST_PORT3=7000x 
+REDIS_HOST_PASSWORD=xxxxx
+
+REDIS_HOST=127.0.0.1
+REDIS_PORT=6379 
+REDIS_USERNAME=""
+REDIS_PASSWORD=""
+REDIS_OPTION=1
+REDIS_KEY_FILE=""
+REDIS_CERT=""
+REDIS_CA=""
+ 
+UPLOAD_DIR=./upload
+TIMEEXPIRE = 1d
+TIMEEXPIRE_TOKEN =1h
+TIMEEXPIRE_TOKEN_resetPassword1 =1d
+TIMEEXPIRE_TOKEN_resetPassword =1h
+TIMEEXPIRE_TOKEN_activecode =1y
+TIMEEXPIRE_DAY =1d
+TIMEEXPIRE_SEC =120s
+TIMEEXPIRE_HOUR =1h
+TIMEEXPIRE_MONTH=1m
+TIMEEXPIRE_YEAR=1y
+ 
+
+# สารามรถ นำตัวแปร ใช้ config ของ github  secrets ได้  ที่ /settings/secrets/actions 
+# exp  https://github.com/xxxx/xxxxxx/settings/secrets/actions 
+# exp  https://github.com/Azure/actions-workflow-samples/blob/master/assets/create-secrets-for-GitHub-workflows.md
+# https://docs.github.com/en/actions/security-guides/encrypted-secrets
+# https://docs.github.com/en/rest/actions/secrets
+# https://github.com/Platane/github-secret-dotenv
+# https://www.npmjs.com/package/github-secret-dotenv
+# npm i -S github-secret-dotenv
+# https://www.npmjs.com/package/github-secret-dotenv?activeTab=readme
+# npx github-secret-dotenv -e ./.env

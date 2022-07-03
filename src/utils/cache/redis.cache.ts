@@ -1,5 +1,4 @@
 import * as path from 'path'
-import { createConnection } from 'typeorm';
 const envPath = path.join(__dirname, '../config.conf')
 require('dotenv').config({ path: envPath })
 const redis_option: any = process.env.REDIS_OPTION || '1';

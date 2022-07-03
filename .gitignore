@@ -1,8 +1,6 @@
 node_modules/*
 dist/*
-
 upload/*
-
 package-lock.json
-
 config.conf
+.env

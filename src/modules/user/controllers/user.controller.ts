@@ -1,13 +1,18 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify'
-import { EntityRepository, Repository, getConnection, getRepository, getCustomRepository, getManager, Any } from "typeorm";
+// import { EntityRepository, Repository, getConnection, getRepository, getCustomRepository, getManager, Any } from "typeorm";
+import { getCustomRepository } from "typeorm";
 /********repository***********/
+
+// plugins/typeormdb
+// ../modules/user/entities/*{.ts,.js}
+
 import { SdUsers } from "../entities/SdUsers.entity";
 import { SdUsersPdpaAllow } from "../entities/SdUsersPdpaAllow.entity";
 import { SdUserRoles } from "../entities/SdUserRoles.entity";
 import { SdUsersRepository } from "../repositories/SdUsers.repository"; 
-import { ok, serverError, created,Accepted,noContent,badRequest,Unauthorized,Forbidden,NotFound,serviceunavailable } from "../../../utils/helpers/response.helper";
+import { ok, serverError,Forbidden,NotFound } from "../../../utils/helpers/response.helper";
 // form class from file
-import * as crypto from 'crypto'
+var CryptoJS = require("crypto-js");
 import * as Md5 from "md5-typescript";
 var md5 = require('md5');
 //console.log(md5('message'));
@@ -20,38 +25,12 @@ var Cache = new CacheDataOne();
 const { promisify } = require('util');
 import { Validator } from '../../../utils/helpers/validator.helper';  
 const Validators = new Validator()
-function generatePassword(passwordLength: any) {
-    var numberChars = "0123456789";
-    var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var lowerChars = "abcdefghijklmnopqrstuvwxyz";
-    var vaChars = "!@#$%^&*";
-    var allChars = numberChars + upperChars + lowerChars+ vaChars;
-    var randPasswordArray = Array(passwordLength);
-    randPasswordArray[0] = numberChars;
-    randPasswordArray[1] = upperChars;
-    randPasswordArray[2] = lowerChars;
-    randPasswordArray = randPasswordArray.fill(allChars, 3);
-    return shuffleArray(randPasswordArray.map(function(x) { return x[Math.floor(Math.random() * x.length)] })).join('');
+export default async function userrounter(app: FastifyInstance) {
+    
+
 }
 
-function shuffleArray(array: any) {
-    for (var i = array.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var temp = array[i];
-      array[i] = array[j];
-      array[j] = temp;
-    }
-    return array;
-}
 
-function getRandomString(length: any) { 
-    var randomChars: any =  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#';
-    var result: any =  ''
-    for ( var i = 0; i < length; i++ ) {
-        result += randomChars.charAt(Math.floor(Math.random() * randomChars.length))
-    }
-    return result
-} 
 export const getSdUserList = async (req: FastifyRequest, res: FastifyReply, next: FastifyInstance) => {
     const headers: any = req.headers  
     const body: any = req.body  
@@ -137,9 +116,8 @@ export const getSdUserList = async (req: FastifyRequest, res: FastifyReply, next
                                 },
                                 filter: filter1,
                                 data: rows,
-                            };
-                            NotFound(res, rss);  
-                    return // exit loop ออกจากลูปการทำงาน 
+                            }; 
+                    return rss
                 } 
                 console.warn(`ResultArray `,setDatarows);           
                 const filter: any = {} 
@@ -192,11 +170,10 @@ export const getSdUserList = async (req: FastifyRequest, res: FastifyReply, next
                         const online_status:number= value.online_status || 0;
                         const mesage:string= value.mesage || null; 
                         const network_type:string= value.network_type || null; 
-                        const date_en: string = toEnDate(date);                 
-                        const date_th: string = toThaiDate(date);   
-                        const last_sign_in_en: string = toEnDate(last_sign_in); 
-                        const last_sign_in_th : string = toThaiDate(last_sign_in); 
-                        // functionApp.toThaiDate(); 
+                        const date_en: string = Validators.toEnDate(date);                 
+                        const date_th: string = Validators.toThaiDate(date);   
+                        const last_sign_in_en: string = Validators.toEnDate(last_sign_in); 
+                        const last_sign_in_th : string = Validators.toThaiDate(last_sign_in);  
                         const data = { 
                                     user_id: user_id,
                                     profile_id: profile_id,
@@ -246,9 +223,8 @@ export const getSdUserList = async (req: FastifyRequest, res: FastifyReply, next
                                 total: row, 
                                 page: page,
                                 perpage: size,
-                            };
-                ok(res, DataRS); 
-                return // exit loop ออกจากลูปการทำงาน  
+                            }; 
+                return  DataRS
                 // next()            
                 /*****************************************/    
     } catch (error: any) {
@@ -291,9 +267,8 @@ export const RegisterSdUser= async (req: FastifyRequest, res: FastifyReply, next
                         time_ms: null
                     },
                     data: null,
-                };
-                NotFound(res, rss);    
-                return // exit loop ออกจากลูปการทำงาน 
+                };   
+                return rss
         }
         if (email != null) {
             const filter: any = {} 
@@ -314,9 +289,8 @@ export const RegisterSdUser= async (req: FastifyRequest, res: FastifyReply, next
                         filter: filter,
                         data: chkEmail,
                         Tasktotal: Tasktotal,
-                    };
-                    Forbidden(res, rssEmail);    
-                    return // exit loop ออกจากลูปการทำงาน 
+                    }; 
+                return rssEmail
             }
         } 
         const level: any = body.level || query.level || params.level
@@ -349,11 +323,11 @@ export const RegisterSdUser= async (req: FastifyRequest, res: FastifyReply, next
                             time_ms: null
                         },
                         data: null,
-                    };
-                    NotFound(res, rss);    
-                    return // exit loop ออกจากลูปการทำงาน 
+                    };  
+              return rss 
         } 
-        const encPassword = crypto.createHash('md5').update(password).digest('hex') 
+        const encPassword =  CryptoJS.MD5(password);
+        // const encPassword = CryptoJS.createHash('md5').update(password).digest('hex') 
         const insert: any = {} 
         insert.profile_id = profile_id || 0;
         insert.first_name = first_name || '-';
@@ -404,9 +378,8 @@ export const RegisterSdUser= async (req: FastifyRequest, res: FastifyReply, next
             data: insertDB,
             insert_id: insert_id, 
            // profile_id: profile_id2,
-        };
-        ok(res, rssD);    
-        return // exit loop ออกจากลูปการทำงาน 
+        }; 
+        return rssD
      
     } catch (error: any) {
         res.send(serverError(error?.message));
@@ -448,9 +421,8 @@ export const UpdateUserInfo= async (req: FastifyRequest, res: FastifyReply, next
                         time_ms: null
                     },
                     data: null,
-                };
-                NotFound(res, rss);    
-                return // exit loop ออกจากลูปการทำงาน 
+                };     
+            return rss
         }
         if (email != null) {
             const filter: any = {} 
@@ -471,9 +443,8 @@ export const UpdateUserInfo= async (req: FastifyRequest, res: FastifyReply, next
                         filter: filter,
                         data: chkEmail,
                         Tasktotal: Tasktotal,
-                    };
-                    Forbidden(res, rssEmail);    
-                    return // exit loop ออกจากลูปการทำงาน 
+                    };  
+                    return rssEmail
             }
         } 
        
@@ -507,11 +478,11 @@ export const UpdateUserInfo= async (req: FastifyRequest, res: FastifyReply, next
                             time_ms: null
                         },
                         data: null,
-                    };
-                    NotFound(res, rss);    
-                    return // exit loop ออกจากลูปการทำงาน 
+                    };   
+                    return  rss
         } 
-        const encPassword = crypto.createHash('md5').update(password).digest('hex') 
+        const encPassword =  CryptoJS.MD5(password);
+        //const encPassword = CryptoJS.createHash('md5').update(password).digest('hex') 
         const insert: any = {} 
         insert.profile_id = profile_id || 0;
         insert.first_name = first_name || '-';
@@ -562,9 +533,8 @@ export const UpdateUserInfo= async (req: FastifyRequest, res: FastifyReply, next
             data: insertDB,
             insert_id: insert_id, 
            // profile_id: profile_id2,
-        };
-        ok(res, rssD);    
-        return // exit loop ออกจากลูปการทำงาน 
+        }; 
+        return  rssD
      
     } catch (error: any) {
         res.send(serverError(error?.message));
@@ -572,7 +542,7 @@ export const UpdateUserInfo= async (req: FastifyRequest, res: FastifyReply, next
     }
 }
 
-export const getD= async (req: FastifyRequest, res: FastifyReply, next: FastifyInstance) => {
+export const TestTemplate= async (req: FastifyRequest, res: FastifyReply, next: FastifyInstance) => {
     const headers: any = req.headers  
     const body: any = req.body  
     const query: any = req.query   
@@ -602,72 +572,12 @@ export const getD= async (req: FastifyRequest, res: FastifyReply, next: FastifyI
                                     time_ms: null
                                 },
                                 data: null
-                            };
-                ok(res, DataRS); 
-                return // exit loop ออกจากลูปการทำงาน  
-                // next()            
+                            }; 
+                return  DataRS         
                 /*****************************************/    
     } catch (error: any) {
         res.send(serverError(error?.message));
         console.log(error); 
     }
 } 
-
-/*******function************************************/
-function toThaiDate(date: any) { 
-    let monthNames = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."]; 
-        let year = date.getFullYear() + 543;
-        let month = monthNames[date.getMonth()];
-        let numOfDay = date.getDate();
-        let hour = date.getHours().toString().padStart(2, "0");
-        let minutes = date.getMinutes().toString().padStart(2, "0");
-        let second = date.getSeconds().toString().padStart(2, "0");
-        return `${numOfDay} ${month} ${year} ` +`${hour}:${minutes}:${second} น.`;
-}
-
-function toEnDate(date: any) { 
-        let monthNames = ["Jan.", "Feb.", "Mar.", "Apr.", "May.", "Jun.", "Jul.", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."]; 
-        let monthNameslong = ["January", "February", "March.", "April", "May", "June", "July", "August", "September", "October", "November", "December"]; 
-            let year = date.getFullYear()+ 0;
-            let month = monthNameslong[date.getMonth()];
-            let numOfDay = date.getDate();
-            let hour = date.getHours().toString().padStart(2, "0");
-            let minutes = date.getMinutes().toString().padStart(2, "0");
-            let second = date.getSeconds().toString().padStart(2, "0");
-            return `${numOfDay} ${month} ${year} ` +`${hour}:${minutes}:${second}`;
-} 
-
-
-
-/*
-
-typeof  การตรวจสอบประเภทข้อมูล ในภาษา JavaScript ex keyword && typeof keyword == 'string'
-http://marcuscode.com/lang/javascript/type-checking-operators
-
-การตรวจสอบประเภทข้อมูล ในภาษา JavaScript
-20 August 2020
-ในบทนี้ คุณจะได้เรียนรู้เกี่ยวกับการตรวจสอบประเภทข้อมูลในภาษา JavaScript โดยการใช้ตัวดำเนินการ typeof สำหรับตรวจสอบประเภทข้อมูลในตัวแปรหรือ Literal และตัวดำเนินการ instanceof สำหรับตรวจสอบประเภทของออบเจ็คว่าสร้างมาจากคลาสที่กำหนดหรือไม่ นี่เป็นเนื้อหาในบทนี้
-
-การใช้งานตัวดำเนินการ typeof
-การใช้งานตัวดำเนินการ instanceof
-การใช้งานตัวดำเนินการ typeof
-ตัวดำเนินการ typeof ใช้ตรวจสอบประเภทข้อมูลของ Literal ตัวแปร หรือออบเจ็ค มันส่งค่ากลับเป็น String อธิบายข้อมูลประเภทนั้นๆ ยกตัวอย่างเช่น "number" สำหรับข้อมูลที่เป็นตัวเลข "string" สำหรับข้อมูลที่เป็นข้อความ หรือ "object" สำหรับออบเจ็คทุกประเภท นี่เป็นตัวอย่าง
-
-type_checking.js
-console.log(typeof 1);      // number
-console.log(typeof "1");    // string
-console.log(typeof "hello");// string
-console.log(typeof true);   // boolean
-console.log(typeof { id: 1, name: "Metin" });   // object
-console.log(typeof function () { });    // function
-
-let n = "24px";
-if (typeof n === "number") {
-    console.log("This is a real number");
-    console.log("So we can process it");
-} else {
-    console.log("This is not number");
-}
-Result: This is not number
-
-*/
+ 

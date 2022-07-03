@@ -1,6 +1,7 @@
 import app from './app'
-let port_main: any = (process.env.PORT);  
+const packageJSON = require('../package.json')
 console.log('NODE_ENV', process.env.NODE_ENV);
+let port_main: any = (packageJSON.port);  
 var start = async () => {
   try {
     await app.listen(port_main)
