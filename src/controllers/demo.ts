@@ -84,7 +84,7 @@ export default async function demo(fastify: FastifyInstance) {
       const rs: any = await userModel.read(db)
       reply.view('/views/content', { users: rs })
     } catch (error) {
-      reply.code(500).send({ ok: false, error: error.message })
+      reply.code(500).send({ ok: false, error: 'error 500'})
     }
 
 

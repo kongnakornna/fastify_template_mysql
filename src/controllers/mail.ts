@@ -36,7 +36,7 @@ export default async (fastify: FastifyInstance) => {
 
       reply.send({ info: sendMail, url: nodemailer.getTestMessageUrl(sendMail) })
     } catch (error) {
-      reply.code(500).send({ ok: false, message: error.message })
+      reply.code(500).send({ ok: false, error: 'error 500' })
     }
 
   })
@@ -70,7 +70,7 @@ export default async (fastify: FastifyInstance) => {
 
       reply.send({ info: sendMail, url: nodemailer.getTestMessageUrl(sendMail) })
     } catch (error) {
-      reply.code(500).send({ ok: false, message: error.message })
+      reply.code(500).send({ ok: false, error: 'error 500' })
     }
 
   })
@@ -105,7 +105,7 @@ export default async (fastify: FastifyInstance) => {
 
       reply.send({ info: sendMail, url: nodemailer.getTestMessageUrl(sendMail) })
     } catch (error) {
-      reply.code(500).send({ ok: false, message: error.message })
+      reply.code(500).send({ ok: false, error: 'error 500' })
     }
 
   })

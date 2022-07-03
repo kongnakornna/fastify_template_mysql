@@ -2,6 +2,7 @@ import * as knex from 'knex'
 import internal from 'stream';
 declare module 'fastify' {
 interface FastifyInstance {
+    
     knex: knex
     db: knex
     db1: knex
@@ -10,6 +11,7 @@ interface FastifyInstance {
     db4: typeorm
     jwt: any
     authenticate: any
+    connection: any
     ws: any
     io: any
     next: any
@@ -80,7 +82,8 @@ interface FastifyRequest {
     exit: any
 	req: any
 	res: any
-	id: number
+    id: number
+    connection: any
 	quantity: any
 	expiry_date: any
 	created_at: any
@@ -156,6 +159,7 @@ interface FastifyReply {
     req: any
     res: any
     id: any
+    connection: any
     quantity: any
     expiry_date: any
     created_at: any

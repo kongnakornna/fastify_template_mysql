@@ -106,7 +106,7 @@ export default async function upload(fastify: FastifyInstance) {
       }
 
     } catch (error) {
-      reply.code(500).send({ ok: false, error: error.message })
+      reply.code(500).send({ ok: false, error: 'error 500'})
     }
 
   })
